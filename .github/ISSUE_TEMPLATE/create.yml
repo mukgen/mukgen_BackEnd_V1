@@ -1,0 +1,16 @@
+name: "Create"
+description: "~~~ 기능 만들어 주세요"
+labels: 생성
+body:
+  - type: textarea
+    attributes:
+      label: 설명
+      description: |
+        추가할 기능을 작성해주세요.
+      placeholder: |
+        이기능을 추가할래요.
+  - type: textarea
+    attributes:
+      label: 추가사항
+      description: |
+        추가사항이 있어요!
