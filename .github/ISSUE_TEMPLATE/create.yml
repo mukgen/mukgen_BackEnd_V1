@@ -1,6 +1,7 @@
 name: "Create"
 description: "~~~ 기능 만들어 주세요"
 labels: 생성
+assignees: 담담자
 body:
   - type: textarea
     attributes:
