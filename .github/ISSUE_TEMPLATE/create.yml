@@ -1,7 +1,7 @@
 name: "📌 Create"
 description: "기능이나 파일들을 추가 및 생성하는 작업"
 labels: 생성
-assignees: your self
+assignees: yourself
 body:
   - type: textarea
     attributes:
