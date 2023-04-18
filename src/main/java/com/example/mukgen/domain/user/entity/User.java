@@ -1,12 +1,18 @@
 package com.example.mukgen.domain.user.entity;
 
 import com.example.mukgen.domain.user.entity.type.UserRole;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
+@Builder
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
 
     @Id

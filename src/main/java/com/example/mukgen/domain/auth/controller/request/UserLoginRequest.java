@@ -1,12 +1,12 @@
 package com.example.mukgen.domain.auth.controller.request;
 
-public class UserCreateRequest {
+import lombok.Getter;
 
-    private String name;
+@Getter
+public class UserLoginRequest {
 
     private String userId;
 
     private String password;
 
-    private String phoneNumber;
 }
