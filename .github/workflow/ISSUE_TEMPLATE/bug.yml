@@ -1,0 +1,17 @@
+name: "🔥 Bug"
+description: "픽스가 필요한 작업"
+labels: 버그
+assignees: assign yourself
+body:
+  - type: textarea
+    attributes:
+      label: 설명
+      description: |
+        일어난 오류에 대해서 작성해주세요.
+      placeholder: |
+        이버그가 일어났어요.
+  - type: textarea
+    attributes:
+      label: 추가사항
+      description: |
+        추가사항이 있어요!

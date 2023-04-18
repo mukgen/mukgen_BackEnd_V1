@@ -1,0 +1,17 @@
+name: "🍔 Update"
+description: "기능이나 파일들을 수정성하는 작업"
+labels: 수정
+assignees: assign yourself
+body:
+  - type: textarea
+    attributes:
+      label: 설명
+      description: |
+        수정사항을 작성해주세요.
+      placeholder: |
+        이걸 수정 할래요.
+  - type: textarea
+    attributes:
+      label: 추가사항
+      description: |
+        추가사항이 있어요!

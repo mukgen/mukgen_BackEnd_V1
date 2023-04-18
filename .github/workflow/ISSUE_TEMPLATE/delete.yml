@@ -1,0 +1,17 @@
+name: "☁️ Delete"
+description: "기능이나 파일들을 삭제성하는 작업"
+labels: 삭제
+assignees: assign yourself
+body:
+  - type: textarea
+    attributes:
+      label: 설명
+      description: |
+        삭제할 것을 작성해주세요.
+      placeholder: |
+        이걸 삭제할래요.
+  - type: textarea
+    attributes:
+      label: 추가사항
+      description: |
+        추가사항이 있어요!
