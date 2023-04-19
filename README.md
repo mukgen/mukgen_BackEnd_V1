@@ -13,7 +13,7 @@
 * MEMBER : 이태영 - BACKEND
 #
 ### ⚙️ 개발 환경 - BACKEND
-* JDK 17
+* 현재 JDK19 를 사용중이지만 추후 JDK17 로 낮출 예정입니다
 * Framework : Spring boot (2.7.10)
 * Database : 미정
 * ORM : JPA
