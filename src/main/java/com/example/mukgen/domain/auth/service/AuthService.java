@@ -5,6 +5,7 @@ import com.example.mukgen.domain.auth.controller.reponse.TokenResponse;
 import com.example.mukgen.domain.auth.controller.request.UserSignupRequest;
 import com.example.mukgen.domain.auth.controller.request.UserLoginRequest;
 import com.example.mukgen.domain.user.entity.User;
+import com.example.mukgen.domain.user.entity.type.UserRole;
 import com.example.mukgen.domain.user.repository.UserRepository;
 import com.example.mukgen.global.config.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -26,13 +27,14 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public void join(UserSignupRequest request){
+    public void signup(UserSignupRequest request){
 
         String password = passwordEncoder.encode(request.getPassword());
 
-        validateDuplicateMember(request);
+        validateDuplicateUser(request);
 
         User user = User.builder()
+                .role(UserRole.GENERAL)
                 .userId(request.getUserId())
                 .password(password)
                 .name(request.getName())
@@ -56,7 +58,7 @@ public class AuthService {
                .build();
     }
 
-    private void validateDuplicateMember(UserSignupRequest request){
+    private void validateDuplicateUser(UserSignupRequest request){
 
         if(userRepository.existsByUserId(request.getUserId())){
             throw new IllegalStateException("이미 존재하는 유저입니다.");

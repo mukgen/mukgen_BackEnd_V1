@@ -22,7 +22,7 @@ public class AuthController {
             @RequestBody
             UserSignupRequest request
             ){
-        authService.join(request);
+        authService.signup(request);
     }
 
     @PostMapping("/login")
