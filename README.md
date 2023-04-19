@@ -32,7 +32,7 @@
   * 급식, 리뷰 댓글 
   <br>
 * 리뷰
-  * NEIS OPEN API 사용 
+  * NEIS 급식 OPEN API 사용 
   <br>
 * 급식 건의
   * CRUD 
