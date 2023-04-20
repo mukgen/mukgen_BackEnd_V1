@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -23,7 +22,7 @@ public class UserService {
 
         return UserProfileResponse.builder()
                 .name(user.getName())
-                .userId(user.getUserId())
+                .userId(user.getAccountId())
                 .build();
 
     }

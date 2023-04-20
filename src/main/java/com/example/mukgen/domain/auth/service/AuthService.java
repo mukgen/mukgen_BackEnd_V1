@@ -35,7 +35,7 @@ public class AuthService {
 
         User user = User.builder()
                 .role(UserRole.GENERAL)
-                .userId(request.getUserId())
+                .accountId(request.getUserId())
                 .password(password)
                 .name(request.getName())
                 .phoneNumber(request.getPhoneNumber())
@@ -47,20 +47,20 @@ public class AuthService {
 
     @Transactional
     public TokenResponse login(UserLoginRequest request){
-       User user = userRepository.findByUserId(request.getUserId())
+       User user = userRepository.findByAccountId(request.getUserId())
                .orElseThrow(()-> new EntityNotFoundException("찾을 수 없는 유저입니다."));
 
        if(!passwordEncoder.matches(request.getPassword(),user.getPassword())){
            throw new IllegalStateException("잘못된 비밀번호 입니다.");
        }
        return TokenResponse.builder()
-               .accessToken(jwtTokenProvider.createToken(user.getUserId()))
+               .accessToken(jwtTokenProvider.createToken(user.getAccountId()))
                .build();
     }
 
     private void validateDuplicateUser(UserSignupRequest request){
 
-        if(userRepository.existsByUserId(request.getUserId())){
+        if(userRepository.existsByAccountId(request.getUserId())){
             throw new IllegalStateException("이미 존재하는 유저입니다.");
         }
     }

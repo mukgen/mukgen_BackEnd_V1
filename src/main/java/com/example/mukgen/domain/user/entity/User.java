@@ -1,11 +1,14 @@
 package com.example.mukgen.domain.user.entity;
 
+import com.example.mukgen.domain.board.entity.Board;
 import com.example.mukgen.domain.user.entity.type.UserRole;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
-@Entity
+@Entity(name = "user")
 @Builder
 @Getter
 @AllArgsConstructor
@@ -14,11 +17,10 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
-
-    @Column(name = "user_id")
-    private String userId;
+    @Column(name = "account_id")
+    private String accountId;
 
     private String name;
 
@@ -30,5 +32,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Board> boardList = new ArrayList<>();
 
 }

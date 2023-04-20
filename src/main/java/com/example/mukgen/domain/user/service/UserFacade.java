@@ -16,7 +16,7 @@ public class UserFacade {
 
     public User currentUser(){
         String userId = SecurityContextHolder.getContext().getAuthentication().getName();
-        return userRepository.findByUserId(userId)
+        return userRepository.findByAccountId(userId)
                 .orElseThrow(()-> new EntityNotFoundException("찾을 수 없는 엔티티 입니다."));
     }
 }
