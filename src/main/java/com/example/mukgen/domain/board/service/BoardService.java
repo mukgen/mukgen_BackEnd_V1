@@ -2,6 +2,8 @@ package com.example.mukgen.domain.board.service;
 
 import com.example.mukgen.domain.board.controller.dto.request.BoardCreateRequest;
 import com.example.mukgen.domain.board.controller.dto.request.BoardUpdateRequest;
+import com.example.mukgen.domain.board.controller.dto.response.BoardListResponse;
+import com.example.mukgen.domain.board.controller.dto.response.BoardResponse;
 import com.example.mukgen.domain.board.entity.Board;
 import com.example.mukgen.domain.board.repository.BoardRepository;
 import com.example.mukgen.domain.user.entity.User;
@@ -11,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -29,14 +30,7 @@ public class BoardService {
     ) {
         User curUser = userFacade.currentUser();
         boardRepository.save(
-                Board.builder()
-                    .userName(curUser.getName())
-                    .content(request.getContent())
-                    .title(request.getTitle())
-                    .createAt(LocalDateTime.now())
-                    .view(0)
-                    .likeCount(0)
-                    .build()
+                new Board(request.getTitle(), request.getContent(), curUser)
         );
     }
 
@@ -51,7 +45,21 @@ public class BoardService {
         board.updateBoard(request.getTitle(), request.getContent());
     }
 
-    public List<Board> findAll(){
-        return boardRepository.findAll();
+    public BoardListResponse findAll(){
+        List<BoardResponse> boardResponses = boardRepository.findAll().stream()
+                .map(it -> BoardResponse.builder()
+                        .title(it.getTitle())
+                        .content(it.getContent())
+                        .username(it.getUser().getName())
+                        .createAt(it.getCreateAt())
+                        .updateAt(it.getUpdateAt())
+                        .likeCount(it.getLikeCount())
+                        .viewCount(it.getViewCount())
+                        .build())
+                .toList();
+
+        return BoardListResponse.builder()
+                .boardResponseList(boardResponses)
+                .build();
     }
 }

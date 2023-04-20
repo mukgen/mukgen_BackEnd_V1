@@ -2,6 +2,7 @@ package com.example.mukgen.domain.board.controller;
 
 import com.example.mukgen.domain.board.controller.dto.request.BoardCreateRequest;
 import com.example.mukgen.domain.board.controller.dto.request.BoardUpdateRequest;
+import com.example.mukgen.domain.board.controller.dto.response.BoardListResponse;
 import com.example.mukgen.domain.board.entity.Board;
 import com.example.mukgen.domain.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +34,7 @@ public class BoardController {
     }
 
     @GetMapping("/list")
-    public List<Board> findAll(){
-        return boardService.findAll();
+    public BoardListResponse findAll() {
+            return boardService.findAll();
     }
 }
