@@ -12,15 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 public class Board {
 
-    public Board(String title, String content, User user) {
-        this.title = title;
-        this.content = content;
-        this.user = user;
-        this.likeCount = 0;
-        this.viewCount = 0;
-        this.createAt = LocalDateTime.now();
-        this.updateAt = LocalDateTime.now();
-    }
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,5 +38,14 @@ public class Board {
     public void updateBoard(String title, String content) {
         this.title = title;
         this.content = content;
+        this.updateAt = LocalDateTime.now();
+    }
+    public Board(String title, String content, User user) {
+        this.title = title;
+        this.content = content;
+        this.user = user;
+        this.likeCount = 0;
+        this.viewCount = 0;
+        this.createAt = LocalDateTime.now();
     }
 }

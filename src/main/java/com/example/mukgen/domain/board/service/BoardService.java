@@ -45,7 +45,7 @@ public class BoardService {
         board.updateBoard(request.getTitle(), request.getContent());
     }
 
-    public BoardListResponse findAll(){
+    public BoardListResponse findAllBoard(){
         List<BoardResponse> boardResponses = boardRepository.findAll().stream()
                 .map(it -> BoardResponse.builder()
                         .title(it.getTitle())
@@ -62,4 +62,27 @@ public class BoardService {
                 .boardResponseList(boardResponses)
                 .build();
     }
+
+
+    @Transactional
+    public void deleteBoard(
+            Long boardId
+    ){
+        boardRepository.deleteById(boardId);
+    }
+
+    public BoardResponse findOne(Long boardId){
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(() -> new EntityNotFoundException("찾을 수 없는 Board 입니다."));
+        return BoardResponse.builder()
+                .content(board.getContent())
+                .title(board.getTitle())
+                .username(board.getUser().getName())
+                .viewCount(board.getViewCount())
+                .likeCount(board.getLikeCount())
+                .createAt(board.getCreateAt())
+                .updateAt(board.getUpdateAt())
+                .build();
+    }
+
 }
