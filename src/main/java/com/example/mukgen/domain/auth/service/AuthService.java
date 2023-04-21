@@ -2,6 +2,7 @@ package com.example.mukgen.domain.auth.service;
 
 
 import com.example.mukgen.domain.auth.controller.reponse.TokenResponse;
+import com.example.mukgen.domain.auth.controller.request.UserModifyPasswordRequest;
 import com.example.mukgen.domain.auth.controller.request.UserSignupRequest;
 import com.example.mukgen.domain.auth.controller.request.UserLoginRequest;
 import com.example.mukgen.domain.user.entity.User;
@@ -56,6 +57,27 @@ public class AuthService {
        return TokenResponse.builder()
                .accessToken(jwtTokenProvider.createToken(user.getAccountId()))
                .build();
+    }
+
+    @Transactional
+    public void UserModifyPassword(
+            UserModifyPasswordRequest request,
+            String userId
+    ){
+
+        if(request.getNewPassword().equals(request.getOldPassword())){
+            throw new IllegalStateException("이전 비밀번호와 같습니다.");
+        }
+
+        String newPassword = passwordEncoder.encode(request.getNewPassword());
+
+        User user = userRepository.findByAccountId(userId)
+                .orElseThrow(()-> new EntityNotFoundException("찾을 수 없는 유저입니다."));
+
+        if(!passwordEncoder.matches(request.getOldPassword(),user.getPassword())){
+            throw new IllegalStateException("비밀번호가 일치하지 않습니다.");
+        }
+        user.changePassword(newPassword);
     }
 
     private void validateDuplicateUser(UserSignupRequest request){
