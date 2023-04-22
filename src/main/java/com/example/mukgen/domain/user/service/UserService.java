@@ -3,6 +3,7 @@ package com.example.mukgen.domain.user.service;
 import com.example.mukgen.domain.user.controller.response.UserProfileResponse;
 import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.repository.UserRepository;
+import com.example.mukgen.domain.user.service.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +19,7 @@ public class UserService {
 
     public UserProfileResponse findProfile(Long userId){
         User user = userRepository.findById(userId)
-                .orElseThrow( () -> new EntityNotFoundException("찾을 수 없는 엔티티 입니다."));
+                .orElseThrow( () -> UserNotFoundException.EXCEPTION);
 
         return UserProfileResponse.builder()
                 .name(user.getName())

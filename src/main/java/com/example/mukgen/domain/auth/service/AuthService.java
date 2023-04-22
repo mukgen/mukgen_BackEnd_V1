@@ -7,6 +7,9 @@ import com.example.mukgen.domain.auth.controller.request.UserLoginRequest;
 import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.entity.type.UserRole;
 import com.example.mukgen.domain.user.repository.UserRepository;
+import com.example.mukgen.domain.user.service.exception.PasswordMismatchException;
+import com.example.mukgen.domain.user.service.exception.UserAlreadyExistException;
+import com.example.mukgen.domain.user.service.exception.UserNotFoundException;
 import com.example.mukgen.global.config.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -48,10 +51,10 @@ public class AuthService {
     @Transactional
     public TokenResponse login(UserLoginRequest request){
        User user = userRepository.findByAccountId(request.getUserId())
-               .orElseThrow(()-> new EntityNotFoundException("찾을 수 없는 유저입니다."));
+               .orElseThrow(()-> UserNotFoundException.EXCEPTION);
 
        if(!passwordEncoder.matches(request.getPassword(),user.getPassword())){
-           throw new IllegalStateException("잘못된 비밀번호 입니다.");
+           throw PasswordMismatchException.EXCEPTION;
        }
        return TokenResponse.builder()
                .accessToken(jwtTokenProvider.createToken(user.getAccountId()))
@@ -61,7 +64,7 @@ public class AuthService {
     private void validateDuplicateUser(UserSignupRequest request){
 
         if(userRepository.existsByAccountId(request.getUserId())){
-            throw new IllegalStateException("이미 존재하는 유저입니다.");
+            throw UserAlreadyExistException.EXCEPTION;
         }
     }
 }

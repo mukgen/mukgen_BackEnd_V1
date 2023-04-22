@@ -6,6 +6,7 @@ import com.example.mukgen.domain.board.controller.dto.response.BoardListResponse
 import com.example.mukgen.domain.board.controller.dto.response.BoardResponse;
 import com.example.mukgen.domain.board.entity.Board;
 import com.example.mukgen.domain.board.repository.BoardRepository;
+import com.example.mukgen.domain.board.service.exception.BoardNotFoundException;
 import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.service.UserFacade;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +41,7 @@ public class BoardService {
             Long boardId
     ){
         Board board = boardRepository.findById(boardId)
-                .orElseThrow(() -> new EntityNotFoundException("찾을 수 없는 엔티티 입니다."));
+                .orElseThrow(() -> BoardNotFoundException.EXCEPTION);
 
         board.updateBoard(request.getTitle(), request.getContent());
     }
