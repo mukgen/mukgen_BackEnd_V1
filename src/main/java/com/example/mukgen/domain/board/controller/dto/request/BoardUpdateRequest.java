@@ -9,11 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BoardUpdateRequest {
 
-<<<<<<< Updated upstream
-    //test
-=======
-    //test1111
->>>>>>> Stashed changes
 
     private String title;
 
