@@ -6,13 +6,13 @@ import com.example.mukgen.domain.board.controller.dto.response.BoardListResponse
 import com.example.mukgen.domain.board.controller.dto.response.BoardResponse;
 import com.example.mukgen.domain.board.entity.Board;
 import com.example.mukgen.domain.board.repository.BoardRepository;
-import com.example.mukgen.domain.board.service.exception.BoardNotFoundException;
 import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.service.UserFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -40,7 +40,7 @@ public class BoardService {
             Long boardId
     ){
         Board board = boardRepository.findById(boardId)
-                .orElseThrow(() -> BoardNotFoundException.EXCEPTION);
+                .orElseThrow(() -> new EntityNotFoundException("엔티티을 찾을 수 없습니다."));
 
         board.updateBoard(request.getTitle(), request.getContent());
     }
