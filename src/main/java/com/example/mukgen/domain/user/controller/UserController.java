@@ -16,10 +16,11 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/profile/{userId}")
-    public UserProfileResponse getProfile(
+    public UserProfileResponse userDetails(
             @PathVariable Long userId
     ){
-        return userService.findProfile(userId);
+        return userService.findUser(userId);
     }
+    
 
 }

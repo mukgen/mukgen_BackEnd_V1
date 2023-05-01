@@ -17,7 +17,7 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public UserProfileResponse findProfile(Long userId){
+    public UserProfileResponse findUser(Long userId){
         User user = userRepository.findById(userId)
                 .orElseThrow( () -> UserNotFoundException.EXCEPTION);
 
