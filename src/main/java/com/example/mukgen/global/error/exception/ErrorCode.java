@@ -19,6 +19,8 @@ public enum ErrorCode {
     USER_ALREADY_EXISTS(409, "User already exists"),
     PASSWORD_MISMATCH(404, "Password mismatch"),
 
+    PASSWORD_SAME(400,"Same Password"),
+
     // board
     BOARD_NOT_FOUND(404, "Board not found"),
     BOARD_WRITER_MISMATCH(403, "Board writer mismatch"),

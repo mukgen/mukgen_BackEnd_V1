@@ -1,10 +1,9 @@
 package com.example.mukgen.global.config.security.jwt;
 
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import com.example.mukgen.global.exception.ExpiredTokenException;
+import com.example.mukgen.global.exception.InvalidTokenException;
+import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -51,7 +50,19 @@ public class JwtTokenProvider {
 
     //토큰에서 회원 정보 추출
     public String getUserPk(String token){
-        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+        try{
+            return Jwts
+                    .parser()
+                    .setSigningKey(secretKey)
+                    .parseClaimsJws(token)
+                    .getBody()
+                    .getSubject();
+        }catch (ExpiredJwtException e){
+            throw ExpiredTokenException.EXCEPTION;
+        } catch (Exception e){
+            throw InvalidTokenException.EXCEPTION;
+        }
+
     }
 
     public String resolveToken(HttpServletRequest request){

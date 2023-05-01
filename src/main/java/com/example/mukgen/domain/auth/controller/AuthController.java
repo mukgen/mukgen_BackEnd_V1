@@ -4,11 +4,9 @@ import com.example.mukgen.domain.auth.controller.reponse.TokenResponse;
 import com.example.mukgen.domain.auth.controller.request.UserLoginRequest;
 import com.example.mukgen.domain.auth.controller.request.UserSignupRequest;
 import com.example.mukgen.domain.auth.service.AuthService;
+import com.example.mukgen.domain.board.controller.dto.request.UserModifyPasswordRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,7 +19,7 @@ public class AuthController {
     public void signup(
             @RequestBody
             UserSignupRequest request
-            ){
+    ){
         authService.signup(request);
     }
 
@@ -29,8 +27,16 @@ public class AuthController {
     public TokenResponse login(
             @RequestBody
             UserLoginRequest request
-            ){
+    ){
         return authService.login(request);
+    }
+
+    @PostMapping("/change/password/{userId}")
+    public void modifyUserPassword(
+            @PathVariable String userId,
+            @RequestBody UserModifyPasswordRequest request
+    ){
+        authService.UserModifyPassword(request,userId);
     }
 
 

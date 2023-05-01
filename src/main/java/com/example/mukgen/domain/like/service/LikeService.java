@@ -2,6 +2,7 @@ package com.example.mukgen.domain.like.service;
 
 import com.example.mukgen.domain.board.entity.Board;
 import com.example.mukgen.domain.board.repository.BoardRepository;
+import com.example.mukgen.domain.board.service.exception.BoardNotFoundException;
 import com.example.mukgen.domain.like.controller.dto.request.LikeCreateRequest;
 import com.example.mukgen.domain.like.entity.Likes;
 import com.example.mukgen.domain.like.repository.LikeRepository;
@@ -27,7 +28,7 @@ public class LikeService {
 
         User curUser = userFacade.currentUser();
         Board board = boardRepository.findById(request.getBoardId())
-                .orElseThrow(()-> new IllegalStateException("오류."));
+                .orElseThrow(()-> BoardNotFoundException.EXCEPTION);
         if(likeRepository.existsByBoardAndUserName(board,curUser.getName())){
             board.removeLike();
             likeRepository.removeByBoardAndUserName(board,curUser.getName());

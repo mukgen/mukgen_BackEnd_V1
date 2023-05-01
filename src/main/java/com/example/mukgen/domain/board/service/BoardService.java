@@ -6,6 +6,8 @@ import com.example.mukgen.domain.board.controller.dto.response.BoardListResponse
 import com.example.mukgen.domain.board.controller.dto.response.BoardResponse;
 import com.example.mukgen.domain.board.entity.Board;
 import com.example.mukgen.domain.board.repository.BoardRepository;
+import com.example.mukgen.domain.board.service.exception.BoardNotFoundException;
+import com.example.mukgen.domain.like.controller.dto.response.LikeResponse;
 import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.service.UserFacade;
 import lombok.RequiredArgsConstructor;
@@ -40,14 +42,19 @@ public class BoardService {
             Long boardId
     ){
         Board board = boardRepository.findById(boardId)
-                .orElseThrow(() -> new EntityNotFoundException("찾을 수 없는 엔티티 입니다."));
+                .orElseThrow(() -> BoardNotFoundException.EXCEPTION);
 
         board.updateBoard(request.getTitle(), request.getContent());
     }
 
-    public BoardListResponse findAll(){
+    public BoardListResponse findAllBoard(){
         List<BoardResponse> boardResponses = boardRepository.findAll().stream()
                 .map(it -> BoardResponse.builder()
+                        .likeResponseList(it.getLikesList()
+                                .stream()
+                                .map(it1 -> LikeResponse.builder()
+                                        .boardId(it1.getBoard().getId())
+                                        .username(it1.getUserName()).build()).toList())
                         .title(it.getTitle())
                         .content(it.getContent())
                         .username(it.getUser().getName())
@@ -62,4 +69,37 @@ public class BoardService {
                 .boardResponseList(boardResponses)
                 .build();
     }
+
+
+    @Transactional
+    public void deleteBoard(
+            Long boardId
+    ){
+        if(!boardRepository.existsById(boardId)){
+            throw BoardNotFoundException.EXCEPTION;
+        }
+        boardRepository.deleteById(boardId);
+    }
+
+    @Transactional
+    public BoardResponse findOne(Long boardId){
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(() -> BoardNotFoundException.EXCEPTION);
+        board.addViewCount();
+        return BoardResponse.builder()
+                .likeResponseList(board.getLikesList()
+                        .stream()
+                        .map(it -> LikeResponse.builder()
+                                .boardId(it.getBoard().getId())
+                                .username(it.getUserName()).build()).toList())
+                .content(board.getContent())
+                .title(board.getTitle())
+                .username(board.getUser().getName())
+                .viewCount(board.getViewCount())
+                .likeCount(board.getLikeCount())
+                .createAt(board.getCreateAt())
+                .updateAt(board.getUpdateAt())
+                .build();
+    }
+
 }

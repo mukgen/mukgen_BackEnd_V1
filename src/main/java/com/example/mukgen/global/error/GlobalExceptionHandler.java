@@ -30,6 +30,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response,HttpStatus.valueOf(errorCode.getStatusCode()));
     }
 
+
+    @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleException(Exception e) {
 
         ErrorCode errorCode = ErrorCode.INTERNAL_SERVER_ERROR;
