@@ -35,4 +35,10 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Board> boardList = new ArrayList<>();
 
+    public void changePassword(
+            String password
+    ){
+        this.password = password;
+    }
+
 }
