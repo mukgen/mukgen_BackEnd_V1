@@ -1,5 +1,8 @@
-package com.example.mukgen.domain.meal;
+package com.example.mukgen.domain.meal.controller;
 
+import com.example.mukgen.domain.meal.MealApi;
+import com.example.mukgen.domain.meal.entity.Rice;
+import com.example.mukgen.domain.meal.entity.RiceType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,8 +15,8 @@ public class MealController {
     private final MealApi mealApi;
 
     @GetMapping("/meal/{riceType}/{year}/{month}/{day}")
-    public MealApi.Rice getMeal(
-            @PathVariable MealApi.RiceType riceType,
+    public Rice getMeal(
+            @PathVariable RiceType riceType,
             @PathVariable int year,
             @PathVariable int month,
             @PathVariable int day

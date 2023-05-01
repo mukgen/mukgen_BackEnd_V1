@@ -1,5 +1,7 @@
 package com.example.mukgen.domain.meal;
 
+import com.example.mukgen.domain.meal.entity.Rice;
+import com.example.mukgen.domain.meal.entity.RiceType;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
@@ -15,17 +17,6 @@ import java.util.List;
 
 @Component
 public class MealApi {
-    enum RiceType {
-        BREAKFAST("조식"),
-        LUNCH("중식"),
-        DINNER("석식");
-
-        private final String tag;
-
-        RiceType(String tag) {
-            this.tag = tag;
-        }
-    }
 
     private static String zeroValue(int value) {
         return value < 10 ? "0" + value : String.valueOf(value);
@@ -69,7 +60,7 @@ public class MealApi {
             int length = array.length();
             for (int i = 0; i < length; i++) {
                 final JSONObject json = array.getJSONObject(i);
-                if (json.getString("MMEAL_SC_NM").equals(riceType.tag)) {
+                if (json.getString("MMEAL_SC_NM").equals(riceType.getTag())) {
                     return new Rice(getRiceInfo(json.getString("DDISH_NM")));
                 }
             }
@@ -77,15 +68,5 @@ public class MealApi {
         return null;
     }
 
-    public static class Rice {
-        private final List<String> items;
 
-        public Rice(List<String> items) {
-            this.items = items;
-        }
-
-        public List<String> getItems() {
-            return items;
-        }
-    }
 }
