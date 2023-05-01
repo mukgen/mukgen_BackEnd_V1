@@ -3,7 +3,6 @@ package com.example.mukgen.domain.board.controller.dto.response;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
