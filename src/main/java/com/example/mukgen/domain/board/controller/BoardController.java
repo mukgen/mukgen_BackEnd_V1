@@ -3,12 +3,10 @@ package com.example.mukgen.domain.board.controller;
 import com.example.mukgen.domain.board.controller.dto.request.BoardCreateRequest;
 import com.example.mukgen.domain.board.controller.dto.request.BoardUpdateRequest;
 import com.example.mukgen.domain.board.controller.dto.response.BoardListResponse;
-import com.example.mukgen.domain.board.entity.Board;
+import com.example.mukgen.domain.board.controller.dto.response.BoardResponse;
 import com.example.mukgen.domain.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,7 +20,7 @@ public class BoardController {
             @RequestBody
             BoardCreateRequest request
     ){
-        boardService.createBoard(request);
+        boardService.addBoard(request);
     }
 
     @PutMapping("/{boardId}")
@@ -30,11 +28,25 @@ public class BoardController {
             @PathVariable Long boardId,
             @RequestBody BoardUpdateRequest request
     ){
-        boardService.updateBoard(request,boardId);
+        boardService.modifyBoard(request,boardId);
     }
 
     @GetMapping("/list")
-    public BoardListResponse findAll() {
-            return boardService.findAll();
+    public BoardListResponse findAllBoard() {
+        return boardService.findAllBoard();
+    }
+
+    @DeleteMapping("/{boardId}")
+    public void deleteBoard(
+            @PathVariable Long boardId
+    ){
+        boardService.deleteBoard(boardId);
+    }
+
+    @GetMapping("/{boardId}")
+    public BoardResponse findOneBoard(
+            @PathVariable Long boardId
+    ){
+        return boardService.findOne(boardId);
     }
 }
