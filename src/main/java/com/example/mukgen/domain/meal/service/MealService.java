@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
@@ -37,6 +38,10 @@ public class MealService {
             if(!mealRepository.existsById(id)){
                 rice = mealApi.getRice(riceType, year, month, day);
                 mealRepository.save(rice);
+            }
+            else {
+                rice = mealRepository.findById(id)
+                        .orElseThrow(()-> new EntityNotFoundException("찾을 수 없습니다."));
             }
             riceCache.put(id, rice);
         }
