@@ -52,10 +52,11 @@ public class MealApi {
 
     public Rice getRice(RiceType riceType, int year, int month, int day) {
         final JSONObject data = readJsonFromUrl(String.format("https://open.neis.go.kr/hub/mealServiceDietInfo?Type=json&ATPT_OFCDC_SC_CODE=%s&SD_SCHUL_CODE=%s&MLSV_YMD=%d%s%s", "G10", "7430310", year, zeroValue(month), zeroValue(day)));
-        int addId=0;
-        if(riceType == RiceType.BREAKFAST) addId=1;
-        if(riceType == RiceType.LUNCH) addId=2;
-        if(riceType == RiceType.DINNER) addId=3;
+        int addId = switch (riceType) {
+            case BREAKFAST -> 1;
+            case LUNCH -> 2;
+            case DINNER -> 3;
+        };
         int id = ( year * 10000 + month * 100 + day)*10 + addId;
         if (data.has("mealServiceDietInfo")) {
             final JSONArray array = data.getJSONArray("mealServiceDietInfo").getJSONObject(1).getJSONArray("row");
