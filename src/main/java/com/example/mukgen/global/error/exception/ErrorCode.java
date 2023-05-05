@@ -10,23 +10,26 @@ import lombok.Getter;
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum ErrorCode {
 
-    // jwt
+    // Bad Request
+    PASSWORD_SAME(400,"Same Password"),
+    BAD_REQUEST(400, "Bad request"),
+
+    // Un Authorized
     EXPIRED_TOKEN(401 , "Expired token"),
     INVALID_TOKEN(401, "Invalid token"),
 
-    // user
-    USER_NOT_FOUND(404,"User not found"),
-    USER_ALREADY_EXISTS(409, "User already exists"),
-    PASSWORD_MISMATCH(404, "Password mismatch"),
-
-    PASSWORD_SAME(400,"Same Password"),
-
-    // board
-    BOARD_NOT_FOUND(404, "Board not found"),
+    // Forbidden
     BOARD_WRITER_MISMATCH(403, "Board writer mismatch"),
 
-    // general
-    BAD_REQUEST(400, "Bad request"),
+    // Not Found
+    USER_NOT_FOUND(404,"User not found"),
+    PASSWORD_MISMATCH(404, "Password mismatch"),
+    BOARD_NOT_FOUND(404, "Board not found"),
+
+    // Conflict
+    USER_ALREADY_EXISTS(409, "User already exists"),
+
+    // Internal Server Error
     INTERNAL_SERVER_ERROR(500, "Internal server error");
 
     private final int statusCode;
