@@ -6,14 +6,9 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class LunchBoardCreateRequest {
+public class LunchBoardUpdateRequest {
 
     private String title;
 
     private String content;
-
-    public LunchBoardCreateRequest(String title, String content) {
-        this.title = title;
-        this.content = content;
-    }
 }
