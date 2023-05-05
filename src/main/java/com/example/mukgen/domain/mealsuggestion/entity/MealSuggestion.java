@@ -1,4 +1,4 @@
-package com.example.mukgen.domain.lunchboard.entity;
+package com.example.mukgen.domain.mealsuggestion.entity;
 
 import com.example.mukgen.domain.user.entity.User;
 import lombok.AccessLevel;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
-public class LunchBoard {
+public class MealSuggestion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,7 +37,7 @@ public class LunchBoard {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public void updateLunchBoard(
+    public void updateMealSuggestion(
             String title,
             String content
     ) {
@@ -46,11 +46,11 @@ public class LunchBoard {
         this.updateAt = LocalDateTime.now();
     }
 
-    public void deleteLunchBoard() {
+    public void deleteMealSuggestion() {
         this.deleted = true;
     }
 
-    public LunchBoard(String title, String content, User user) {
+    public MealSuggestion(String title, String content, User user) {
         this.title = title;
         this.content = content;
         this.user = user;

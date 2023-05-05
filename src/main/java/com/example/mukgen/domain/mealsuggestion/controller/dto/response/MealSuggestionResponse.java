@@ -1,4 +1,4 @@
-package com.example.mukgen.domain.lunchboard.controller.dto.response;
+package com.example.mukgen.domain.mealsuggestion.controller.dto.response;
 
 import lombok.Builder;
 import lombok.Data;
@@ -7,13 +7,13 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-public class LunchBoardResponse {
+public class MealSuggestionResponse {
 
     private String title;
 
     private String content;
 
-    private String username;
+    private String userName;
 
     private int likeCount;
 
