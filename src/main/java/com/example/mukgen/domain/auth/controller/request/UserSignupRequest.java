@@ -17,6 +17,7 @@ public class UserSignupRequest {
 
     @Size(max = 15, message = "아이디는 최대 15자 입니다.")
     private String userId;
+
     @Pattern(regexp = "^(?=.*[!@#$%^&*])(?=.{1,20}$).*",
             message = "비밀번호는 최대 20글자이고, 특수문자 한개가 포함되어야 합니다.")
     private String password;

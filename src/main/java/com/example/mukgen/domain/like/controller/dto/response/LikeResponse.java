@@ -9,5 +9,5 @@ public class LikeResponse {
 
     private Long boardId;
 
-    private String username;
+    private String userName;
 }

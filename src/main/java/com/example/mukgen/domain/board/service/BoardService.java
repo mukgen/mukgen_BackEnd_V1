@@ -14,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -54,10 +53,10 @@ public class BoardService {
                                 .stream()
                                 .map(it1 -> LikeResponse.builder()
                                         .boardId(it1.getBoard().getId())
-                                        .username(it1.getUserName()).build()).toList())
+                                        .userName(it1.getUserName()).build()).toList())
                         .title(it.getTitle())
                         .content(it.getContent())
-                        .username(it.getUser().getName())
+                        .userName(it.getUser().getName())
                         .createAt(it.getCreateAt())
                         .updateAt(it.getUpdateAt())
                         .likeCount(it.getLikeCount())
@@ -91,10 +90,10 @@ public class BoardService {
                         .stream()
                         .map(it -> LikeResponse.builder()
                                 .boardId(it.getBoard().getId())
-                                .username(it.getUserName()).build()).toList())
+                                .userName(it.getUserName()).build()).toList())
                 .content(board.getContent())
                 .title(board.getTitle())
-                .username(board.getUser().getName())
+                .userName(board.getUser().getName())
                 .viewCount(board.getViewCount())
                 .likeCount(board.getLikeCount())
                 .createAt(board.getCreateAt())
