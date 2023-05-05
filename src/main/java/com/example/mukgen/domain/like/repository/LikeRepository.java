@@ -8,9 +8,9 @@ import java.util.Optional;
 
 public interface LikeRepository extends JpaRepository<Likes,Long> {
 
-    void removeByBoardAndUserName(Board board, String username);
+    void removeByBoardAndUserName(Board board, String userName);
 
-    boolean existsByBoardAndUserName(Board board,String username);
+    boolean existsByBoardAndUserName(Board board,String userName);
 
-    Optional<Likes> findByUserName(String username);
+    Optional<Likes> findByUserName(String userName);
 }
