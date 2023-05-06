@@ -25,9 +25,11 @@ public enum ErrorCode {
     USER_NOT_FOUND(404,"User not found"),
     PASSWORD_MISMATCH(404, "Password mismatch"),
     BOARD_NOT_FOUND(404, "Board not found"),
+    MEAL_NOT_FOUND(404,"Meal not found"),
 
     // Conflict
     USER_ALREADY_EXISTS(409, "User already exists"),
+    REVIEW_ALREADY_EXISTS(409,"Review already exists"),
 
     // Internal Server Error
     INTERNAL_SERVER_ERROR(500, "Internal server error");

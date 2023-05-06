@@ -68,7 +68,7 @@ public class MealApi {
                 }
             }
         }
-        return null;
+        return new Rice(id);
     }
 
 

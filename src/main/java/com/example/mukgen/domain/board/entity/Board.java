@@ -36,8 +36,7 @@ public class Board {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany
-    @JoinColumn(name = "board_id")
+    @OneToMany(mappedBy = "board")
     private List<Likes> likesList = new ArrayList<>();
 
     public void updateBoard(String title, String content) {

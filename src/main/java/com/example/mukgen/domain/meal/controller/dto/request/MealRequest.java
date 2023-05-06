@@ -1,4 +1,4 @@
-package com.example.mukgen.domain.meal.entity.dto.request;
+package com.example.mukgen.domain.meal.controller.dto.request;
 
 import com.example.mukgen.domain.meal.entity.RiceType;
 import lombok.Data;

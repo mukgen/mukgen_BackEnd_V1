@@ -3,7 +3,8 @@ package com.example.mukgen.domain.meal.service;
 
 import com.example.mukgen.domain.meal.entity.Rice;
 import com.example.mukgen.domain.meal.entity.RiceType;
-import com.example.mukgen.domain.meal.entity.dto.request.MealRequest;
+import com.example.mukgen.domain.meal.controller.dto.request.MealRequest;
+import com.example.mukgen.domain.meal.controller.dto.response.MealResponse;
 import com.example.mukgen.domain.meal.repository.MealRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,7 @@ public class MealService {
     private final ConcurrentHashMap<Integer, Rice> riceCache = new ConcurrentHashMap<>();
 
     @Transactional
-    public Rice findRice(MealRequest request){
+    public MealResponse findRice(MealRequest request){
 
         RiceType riceType = request.getRiceType();
 
@@ -58,7 +59,31 @@ public class MealService {
             riceCache.put(id, rice);
         }
 
-        return rice;
+        return MealResponse.builder()
+                .item(rice.getItem())
+                .build();
+    }
+
+    @Transactional
+    public void downLoadAllRice(){
+
+        int day = 1;
+        while(day<=30){
+            try {
+                Rice rice = mealApi.getRice(RiceType.LUNCH, 2023, 5, day);
+                mealRepository.save(rice);
+                rice = mealApi.getRice(RiceType.BREAKFAST, 2023, 5, day);
+                mealRepository.save(rice);
+                rice = mealApi.getRice(RiceType.DINNER, 2023, 5, day);
+                mealRepository.save(rice);
+            } catch (Exception e) {
+                System.err.println("An error occurred while processing day " + day + ": " + e.getMessage());
+            } finally {
+                day++;
+            }
+        }
+
+
     }
 
 }
