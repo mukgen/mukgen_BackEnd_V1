@@ -29,4 +29,11 @@ public class ReviewController {
         return reviewService.findReview(mealId);
     }
 
+    @DeleteMapping("/{reviewId}")
+    public void reviewRemove(
+            @PathVariable Long reviewId
+    ){
+        reviewService.removeReview(reviewId);
+    }
+
 }

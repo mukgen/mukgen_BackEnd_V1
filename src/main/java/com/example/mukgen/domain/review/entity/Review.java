@@ -22,10 +22,10 @@ public class Review {
 
     private int count;
 
-    private String review;
+    private String reviewContent;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "rice_id")
+    @JoinColumn(name = "meal_id")
     private Meal meal;
 
     @ManyToOne(fetch = FetchType.LAZY)

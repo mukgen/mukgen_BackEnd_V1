@@ -17,9 +17,9 @@ public class ReviewResponse {
     public static ReviewResponse of(Review review){
 
         return ReviewResponse.builder()
-                .content(review.getReview())
+                .content(review.getReviewContent())
                 .count(review.getCount())
-                .userName(review.getReview()).build();
+                .userName(review.getReviewContent()).build();
 
     }
 }

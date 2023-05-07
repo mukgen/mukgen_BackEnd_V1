@@ -9,6 +9,8 @@ import com.example.mukgen.domain.review.entity.dto.response.ReviewResponseList;
 import com.example.mukgen.domain.review.repository.ReviewRepository;
 import com.example.mukgen.domain.meal.service.exception.MealNotFoundException;
 import com.example.mukgen.domain.review.service.exception.ReviewAlreadyExistsException;
+import com.example.mukgen.domain.review.service.exception.ReviewNotFoundException;
+import com.example.mukgen.domain.review.service.exception.ReviewWriterMissMatchException;
 import com.example.mukgen.domain.user.service.UserFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -36,7 +38,7 @@ public class ReviewService {
         Meal meal = mealRepository.findById(mealId)
                 .orElseThrow(()-> MealNotFoundException.EXCEPTION);
 
-        if(reviewRepository.existsByRiceAndUser(meal,userFacade.currentUser())){
+        if(reviewRepository.existsByMealAndUser(meal,userFacade.currentUser())){
             throw ReviewAlreadyExistsException.EXCEPTION;
         }
 
@@ -44,7 +46,7 @@ public class ReviewService {
                 .user(userFacade.currentUser())
                 .meal(meal)
                 .count(request.getCount())
-                .review(request.getReview())
+                .reviewContent(request.getReview())
                 .build();
 
         reviewRepository.save(review);
@@ -57,12 +59,26 @@ public class ReviewService {
                 .orElseThrow(()-> MealNotFoundException.EXCEPTION);
 
         List<ReviewResponse> reviewResponseList =
-                reviewRepository.findAllByRice(meal)
+                reviewRepository.findAllByMeal(meal)
                         .stream()
                         .map(ReviewResponse::of)
                                 .toList();
         return ReviewResponseList.builder()
                 .reviewResponseList(reviewResponseList)
                 .build();
+    }
+
+    @Transactional
+    public void removeReview(
+            Long reviewId
+    ){
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> ReviewNotFoundException.EXCEPTION);
+
+        if(!review.getUser().equals(userFacade.currentUser())){
+            throw ReviewWriterMissMatchException.EXCEPTION;
+        }
+
+        reviewRepository.deleteById(reviewId);
     }
 }
