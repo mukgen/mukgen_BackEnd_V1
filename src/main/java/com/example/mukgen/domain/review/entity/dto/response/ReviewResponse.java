@@ -8,6 +8,8 @@ import lombok.Data;
 @Builder
 public class ReviewResponse {
 
+    private int riceId;
+
     private int count;
 
     private String content;
@@ -17,6 +19,7 @@ public class ReviewResponse {
     public static ReviewResponse of(Review review){
 
         return ReviewResponse.builder()
+                .riceId(review.getRice().getId())
                 .content(review.getReview())
                 .count(review.getCount())
                 .userName(review.getUser().getName()).build();

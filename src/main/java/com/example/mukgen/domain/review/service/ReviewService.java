@@ -65,4 +65,15 @@ public class ReviewService {
                 .reviewResponseList(reviewResponseList)
                 .build();
     }
+
+    public ReviewResponseList findAllReview(){
+        List<ReviewResponse> reviewResponseList =
+            reviewRepository.findAllByUser(userFacade.currentUser())
+                    .stream()
+                    .map(ReviewResponse::of)
+                    .toList();
+        return ReviewResponseList.builder()
+                .reviewResponseList(reviewResponseList)
+                .build();
+    }
 }

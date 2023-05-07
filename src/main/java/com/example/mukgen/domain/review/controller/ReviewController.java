@@ -29,4 +29,9 @@ public class ReviewController {
         return reviewService.findReview(mealId);
     }
 
+    @GetMapping
+    public ReviewResponseList reviewList(){
+        return reviewService.findAllReview();
+    }
+
 }

@@ -12,4 +12,6 @@ public interface ReviewRepository extends JpaRepository<Review,Long> {
     List<Review> findAllByRice(Rice rice);
 
     boolean existsByRiceAndUser(Rice rice, User user);
+
+    List<Review> findAllByUser(User user);
 }
