@@ -7,7 +7,6 @@ import com.example.mukgen.domain.board.controller.dto.response.BoardResponse;
 import com.example.mukgen.domain.board.entity.Board;
 import com.example.mukgen.domain.board.repository.BoardRepository;
 import com.example.mukgen.domain.board.service.exception.BoardNotFoundException;
-import com.example.mukgen.domain.like.controller.dto.response.LikeResponse;
 import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.service.UserFacade;
 import lombok.RequiredArgsConstructor;
@@ -48,20 +47,7 @@ public class BoardService {
 
     public BoardListResponse findAllBoard(){
         List<BoardResponse> boardResponses = boardRepository.findAll().stream()
-                .map(it -> BoardResponse.builder()
-                        .likeResponseList(it.getLikesList()
-                                .stream()
-                                .map(it1 -> LikeResponse.builder()
-                                        .boardId(it1.getBoard().getId())
-                                        .userName(it1.getUserName()).build()).toList())
-                        .title(it.getTitle())
-                        .content(it.getContent())
-                        .userName(it.getUser().getName())
-                        .createAt(it.getCreateAt())
-                        .updateAt(it.getUpdateAt())
-                        .likeCount(it.getLikeCount())
-                        .viewCount(it.getViewCount())
-                        .build())
+                .map(BoardResponse::of)
                 .toList();
 
         return BoardListResponse.builder()
@@ -81,24 +67,11 @@ public class BoardService {
     }
 
     @Transactional
-    public BoardResponse findOne(Long boardId){
+    public BoardResponse findBoard(Long boardId){
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> BoardNotFoundException.EXCEPTION);
         board.addViewCount();
-        return BoardResponse.builder()
-                .likeResponseList(board.getLikesList()
-                        .stream()
-                        .map(it -> LikeResponse.builder()
-                                .boardId(it.getBoard().getId())
-                                .userName(it.getUserName()).build()).toList())
-                .content(board.getContent())
-                .title(board.getTitle())
-                .userName(board.getUser().getName())
-                .viewCount(board.getViewCount())
-                .likeCount(board.getLikeCount())
-                .createAt(board.getCreateAt())
-                .updateAt(board.getUpdateAt())
-                .build();
+        return BoardResponse.of(board);
     }
 
 }

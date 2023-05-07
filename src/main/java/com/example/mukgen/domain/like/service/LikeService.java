@@ -24,7 +24,7 @@ public class LikeService {
     private final BoardRepository boardRepository;
 
     @Transactional
-    public void clickLike(LikeCreateRequest request){
+    public void addLike(LikeCreateRequest request){
 
         User curUser = userFacade.currentUser();
         Board board = boardRepository.findById(request.getBoardId())

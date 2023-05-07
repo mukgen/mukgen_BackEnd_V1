@@ -1,8 +1,7 @@
 package com.example.mukgen.domain.review.service;
 
-import com.example.mukgen.domain.meal.entity.Rice;
+import com.example.mukgen.domain.meal.entity.Meal;
 import com.example.mukgen.domain.meal.repository.MealRepository;
-import com.example.mukgen.domain.meal.service.MealService;
 import com.example.mukgen.domain.review.entity.Review;
 import com.example.mukgen.domain.review.entity.dto.request.ReviewCreateRequest;
 import com.example.mukgen.domain.review.entity.dto.response.ReviewResponse;
@@ -22,8 +21,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReviewService {
 
-    private final MealService mealService;
-
     private final MealRepository mealRepository;
 
     private final ReviewRepository reviewRepository;
@@ -36,16 +33,16 @@ public class ReviewService {
             int mealId
     ){
 
-        Rice rice = mealRepository.findById(mealId)
+        Meal meal = mealRepository.findById(mealId)
                 .orElseThrow(()-> MealNotFoundException.EXCEPTION);
 
-        if(reviewRepository.existsByRiceAndUser(rice,userFacade.currentUser())){
+        if(reviewRepository.existsByRiceAndUser(meal,userFacade.currentUser())){
             throw ReviewAlreadyExistsException.EXCEPTION;
         }
 
         Review review = Review.builder()
                 .user(userFacade.currentUser())
-                .rice(rice)
+                .meal(meal)
                 .count(request.getCount())
                 .review(request.getReview())
                 .build();
@@ -56,16 +53,13 @@ public class ReviewService {
     public ReviewResponseList findReview(
             int mealId
     ){
-        Rice rice = mealRepository.findById(mealId)
+        Meal meal = mealRepository.findById(mealId)
                 .orElseThrow(()-> MealNotFoundException.EXCEPTION);
 
         List<ReviewResponse> reviewResponseList =
-                reviewRepository.findAllByRice(rice)
+                reviewRepository.findAllByRice(meal)
                         .stream()
-                        .map(it -> ReviewResponse.builder()
-                                .userName(it.getUser().getAccountId())
-                                .content(it.getReview())
-                                .count(it.getCount()).build())
+                        .map(ReviewResponse::of)
                                 .toList();
         return ReviewResponseList.builder()
                 .reviewResponseList(reviewResponseList)

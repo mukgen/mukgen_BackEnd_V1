@@ -1,5 +1,6 @@
 package com.example.mukgen.domain.review.entity.dto.response;
 
+import com.example.mukgen.domain.review.entity.Review;
 import lombok.Builder;
 import lombok.Data;
 
@@ -12,4 +13,13 @@ public class ReviewResponse {
     private String content;
 
     private String userName;
+
+    public static ReviewResponse of(Review review){
+
+        return ReviewResponse.builder()
+                .content(review.getReview())
+                .count(review.getCount())
+                .userName(review.getReview()).build();
+
+    }
 }
