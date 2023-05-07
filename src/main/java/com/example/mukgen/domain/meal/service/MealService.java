@@ -1,8 +1,8 @@
 package com.example.mukgen.domain.meal.service;
 
 
-import com.example.mukgen.domain.meal.entity.Rice;
-import com.example.mukgen.domain.meal.entity.RiceType;
+import com.example.mukgen.domain.meal.entity.Meal;
+import com.example.mukgen.domain.meal.entity.MealType;
 import com.example.mukgen.domain.meal.controller.dto.request.MealRequest;
 import com.example.mukgen.domain.meal.controller.dto.response.MealResponse;
 import com.example.mukgen.domain.meal.repository.MealRepository;
@@ -22,12 +22,12 @@ public class MealService {
 
     private final MealRepository mealRepository;
 
-    private final ConcurrentHashMap<Integer, Rice> riceCache = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<Integer, Meal> mealCache = new ConcurrentHashMap<>();
 
     @Transactional
-    public MealResponse findRice(MealRequest request){
+    public MealResponse findMeal(MealRequest request){
 
-        RiceType riceType = request.getRiceType();
+        MealType mealType = request.getMealType();
 
         int year = request.getYear();
 
@@ -35,7 +35,7 @@ public class MealService {
 
         int day = request.getDay();
 
-        int addId = switch (riceType) {
+        int addId = switch (mealType) {
             case BREAKFAST -> 1;
             case LUNCH -> 2;
             case DINNER -> 3;
@@ -43,39 +43,39 @@ public class MealService {
 
         int id = (year * 10000 + month * 100 + day) * 10 + addId;
 
-        Rice rice = riceCache.get(id);
+        Meal meal = mealCache.get(id);
 
-        if (rice == null) {
+        if (meal == null) {
 
             if(!mealRepository.existsById(id)){
-                rice = mealApi.getRice(riceType, year, month, day);
-                mealRepository.save(rice);
+                meal = mealApi.getMeal(mealType, year, month, day);
+                mealRepository.save(meal);
             }
 
             else {
-                rice = mealRepository.findById(id)
+                meal = mealRepository.findById(id)
                         .orElseThrow(()-> new EntityNotFoundException("찾을 수 없습니다."));
             }
-            riceCache.put(id, rice);
+            mealCache.put(id, meal);
         }
 
         return MealResponse.builder()
-                .item(rice.getItem())
+                .item(meal.getItem())
                 .build();
     }
 
     @Transactional
-    public void downLoadAllRice(){
+    public void downLoadAllMeal(){
 
         int day = 1;
         while(day<=30){
             try {
-                Rice rice = mealApi.getRice(RiceType.LUNCH, 2023, 5, day);
-                mealRepository.save(rice);
-                rice = mealApi.getRice(RiceType.BREAKFAST, 2023, 5, day);
-                mealRepository.save(rice);
-                rice = mealApi.getRice(RiceType.DINNER, 2023, 5, day);
-                mealRepository.save(rice);
+                Meal meal = mealApi.getMeal(MealType.LUNCH, 2023, 5, day);
+                mealRepository.save(meal);
+                meal = mealApi.getMeal(MealType.BREAKFAST, 2023, 5, day);
+                mealRepository.save(meal);
+                meal = mealApi.getMeal(MealType.DINNER, 2023, 5, day);
+                mealRepository.save(meal);
             } catch (Exception e) {
                 System.err.println("An error occurred while processing day " + day + ": " + e.getMessage());
             } finally {

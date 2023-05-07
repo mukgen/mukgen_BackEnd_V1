@@ -1,6 +1,6 @@
 package com.example.mukgen.domain.review.entity;
 
-import com.example.mukgen.domain.meal.entity.Rice;
+import com.example.mukgen.domain.meal.entity.Meal;
 import com.example.mukgen.domain.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,7 +26,7 @@ public class Review {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rice_id")
-    private Rice rice;
+    private Meal meal;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

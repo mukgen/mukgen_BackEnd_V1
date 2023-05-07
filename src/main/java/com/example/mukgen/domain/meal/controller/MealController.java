@@ -19,12 +19,12 @@ public class MealController {
     public MealResponse mealDetails(
             @RequestBody MealRequest request
             ){
-        return mealService.findRice(request);
+        return mealService.findMeal(request);
     }
 
     @PostMapping("/meal/download")
     public void mealDownload(){
-        mealService.downLoadAllRice();
+        mealService.downLoadAllMeal();
     }
 
 }
