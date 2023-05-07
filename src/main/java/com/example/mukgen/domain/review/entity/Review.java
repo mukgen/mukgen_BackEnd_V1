@@ -25,7 +25,7 @@ public class Review {
     private String review;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "rice_id")
+    @JoinColumn(name = "meal_id")
     private Meal meal;
 
     @ManyToOne(fetch = FetchType.LAZY)

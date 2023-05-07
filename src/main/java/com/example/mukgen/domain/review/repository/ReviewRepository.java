@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review,Long> {
 
-    List<Review> findAllByRice(Meal meal);
+    List<Review> findAllByMeal(Meal meal);
 
-    boolean existsByRiceAndUser(Meal meal, User user);
+    boolean existsByMealAndUser(Meal meal, User user);
 }

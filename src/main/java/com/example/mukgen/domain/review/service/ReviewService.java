@@ -36,7 +36,7 @@ public class ReviewService {
         Meal meal = mealRepository.findById(mealId)
                 .orElseThrow(()-> MealNotFoundException.EXCEPTION);
 
-        if(reviewRepository.existsByRiceAndUser(meal,userFacade.currentUser())){
+        if(reviewRepository.existsByMealAndUser(meal,userFacade.currentUser())){
             throw ReviewAlreadyExistsException.EXCEPTION;
         }
 
@@ -57,7 +57,7 @@ public class ReviewService {
                 .orElseThrow(()-> MealNotFoundException.EXCEPTION);
 
         List<ReviewResponse> reviewResponseList =
-                reviewRepository.findAllByRice(meal)
+                reviewRepository.findAllByMeal(meal)
                         .stream()
                         .map(ReviewResponse::of)
                                 .toList();
