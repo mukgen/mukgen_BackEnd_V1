@@ -1,6 +1,5 @@
 package com.example.mukgen.domain.review.entity.dto.response;
 
-import com.example.mukgen.domain.meal.controller.dto.response.MealResponse;
 import lombok.Builder;
 import lombok.Data;
 

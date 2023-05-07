@@ -1,6 +1,6 @@
 package com.example.mukgen.domain.review.repository;
 
-import com.example.mukgen.domain.meal.entity.Meal;
+import com.example.mukgen.domain.rice.entity.Rice;
 import com.example.mukgen.domain.review.entity.Review;
 import com.example.mukgen.domain.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review,Long> {
 
-    List<Review> findAllByMeal(Meal meal);
+    List<Review> findAllByRice(Rice rice);
 
-    boolean existsByMealAndUser(Meal meal, User user);
+    boolean existsByRiceAndUser(Rice rice, User user);
 }

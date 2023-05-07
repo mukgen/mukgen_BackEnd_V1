@@ -1,4 +1,4 @@
-package com.example.mukgen.domain.meal.service.exception;
+package com.example.mukgen.domain.rice.service.exception;
 
 import com.example.mukgen.global.error.exception.BusinessException;
 import com.example.mukgen.global.error.exception.ErrorCode;

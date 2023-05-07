@@ -35,6 +35,7 @@ public class BoardResponse {
                         .userName(it.getUserName()).build()).toList();
 
         return  BoardResponse.builder()
+                .title(board.getTitle())
                 .likeResponseList(likeResponses)
                 .content(board.getContent())
                 .userName(board.getUser().getName())

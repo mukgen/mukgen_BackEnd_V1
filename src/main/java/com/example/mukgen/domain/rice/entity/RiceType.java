@@ -1,16 +1,16 @@
-package com.example.mukgen.domain.meal.entity;
+package com.example.mukgen.domain.rice.entity;
 
 import lombok.Getter;
 
 @Getter
-public enum MealType {
+public enum RiceType {
     BREAKFAST("조식"),
     LUNCH("중식"),
     DINNER("석식");
 
     private final String tag;
 
-    MealType(String tag) {
+    RiceType(String tag) {
         this.tag = tag;
     }
 }

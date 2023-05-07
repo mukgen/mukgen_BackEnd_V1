@@ -1,13 +1,13 @@
 package com.example.mukgen.domain.review.service;
 
-import com.example.mukgen.domain.meal.entity.Meal;
-import com.example.mukgen.domain.meal.repository.MealRepository;
+import com.example.mukgen.domain.rice.entity.Rice;
+import com.example.mukgen.domain.rice.repository.RiceRepository;
 import com.example.mukgen.domain.review.entity.Review;
 import com.example.mukgen.domain.review.entity.dto.request.ReviewCreateRequest;
 import com.example.mukgen.domain.review.entity.dto.response.ReviewResponse;
 import com.example.mukgen.domain.review.entity.dto.response.ReviewResponseList;
 import com.example.mukgen.domain.review.repository.ReviewRepository;
-import com.example.mukgen.domain.meal.service.exception.MealNotFoundException;
+import com.example.mukgen.domain.rice.service.exception.MealNotFoundException;
 import com.example.mukgen.domain.review.service.exception.ReviewAlreadyExistsException;
 import com.example.mukgen.domain.user.service.UserFacade;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReviewService {
 
-    private final MealRepository mealRepository;
+    private final RiceRepository riceRepository;
 
     private final ReviewRepository reviewRepository;
 
@@ -33,16 +33,16 @@ public class ReviewService {
             int mealId
     ){
 
-        Meal meal = mealRepository.findById(mealId)
+        Rice rice = riceRepository.findById(mealId)
                 .orElseThrow(()-> MealNotFoundException.EXCEPTION);
 
-        if(reviewRepository.existsByMealAndUser(meal,userFacade.currentUser())){
+        if(reviewRepository.existsByRiceAndUser(rice,userFacade.currentUser())){
             throw ReviewAlreadyExistsException.EXCEPTION;
         }
 
         Review review = Review.builder()
                 .user(userFacade.currentUser())
-                .meal(meal)
+                .rice(rice)
                 .count(request.getCount())
                 .review(request.getReview())
                 .build();
@@ -53,11 +53,11 @@ public class ReviewService {
     public ReviewResponseList findReview(
             int mealId
     ){
-        Meal meal = mealRepository.findById(mealId)
+        Rice rice = riceRepository.findById(mealId)
                 .orElseThrow(()-> MealNotFoundException.EXCEPTION);
 
         List<ReviewResponse> reviewResponseList =
-                reviewRepository.findAllByMeal(meal)
+                reviewRepository.findAllByRice(rice)
                         .stream()
                         .map(ReviewResponse::of)
                                 .toList();

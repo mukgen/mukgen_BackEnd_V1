@@ -1,6 +1,6 @@
 package com.example.mukgen.domain.review.entity;
 
-import com.example.mukgen.domain.meal.entity.Meal;
+import com.example.mukgen.domain.rice.entity.Rice;
 import com.example.mukgen.domain.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "tbl_review")
 @Getter
 @Builder
 @AllArgsConstructor
@@ -25,8 +25,8 @@ public class Review {
     private String review;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "meal_id")
-    private Meal meal;
+    @JoinColumn(name = "rice_id")
+    private Rice rice;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

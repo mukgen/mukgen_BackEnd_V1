@@ -19,7 +19,7 @@ public class ReviewResponse {
         return ReviewResponse.builder()
                 .content(review.getReview())
                 .count(review.getCount())
-                .userName(review.getReview()).build();
+                .userName(review.getUser().getName()).build();
 
     }
 }
