@@ -15,7 +15,7 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @PostMapping("/{mealId}")
-    public void createReview(
+    public void reviewAdd(
             @PathVariable int mealId,
             @RequestBody ReviewCreateRequest request
     ){
@@ -23,9 +23,10 @@ public class ReviewController {
     }
 
     @GetMapping("/{mealId}")
-    public ReviewResponseList findReview(
+    public ReviewResponseList reviewDetails(
             @PathVariable int mealId
     ){
         return reviewService.findReview(mealId);
     }
+
 }

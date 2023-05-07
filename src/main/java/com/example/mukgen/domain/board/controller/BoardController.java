@@ -16,7 +16,7 @@ public class BoardController {
     private final BoardService boardService;
 
     @PostMapping
-    public void createBoard(
+    public void boardAdd(
             @RequestBody
             BoardCreateRequest request
     ){
@@ -24,7 +24,7 @@ public class BoardController {
     }
 
     @PutMapping("/{boardId}")
-    public void updateBoard(
+    public void boardModify(
             @PathVariable Long boardId,
             @RequestBody BoardUpdateRequest request
     ){
@@ -32,21 +32,21 @@ public class BoardController {
     }
 
     @GetMapping("/list")
-    public BoardListResponse findAllBoard() {
+    public BoardListResponse boardList() {
         return boardService.findAllBoard();
     }
 
     @DeleteMapping("/{boardId}")
-    public void deleteBoard(
+    public void boardRemove(
             @PathVariable Long boardId
     ){
         boardService.deleteBoard(boardId);
     }
 
     @GetMapping("/{boardId}")
-    public BoardResponse findOneBoard(
+    public BoardResponse boardDetails(
             @PathVariable Long boardId
     ){
-        return boardService.findOne(boardId);
+        return boardService.findBoard(boardId);
     }
 }

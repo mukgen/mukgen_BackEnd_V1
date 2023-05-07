@@ -16,14 +16,14 @@ public class MealController {
     private final MealService mealService;
 
     @GetMapping("/meal")
-    public MealResponse getMeal(
+    public MealResponse mealDetails(
             @RequestBody MealRequest request
             ){
         return mealService.findRice(request);
     }
 
     @PostMapping("/meal/download")
-    public void downloadAllMeal(){
+    public void mealDownload(){
         mealService.downLoadAllRice();
     }
 

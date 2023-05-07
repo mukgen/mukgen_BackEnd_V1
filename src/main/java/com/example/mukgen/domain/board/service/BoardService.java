@@ -81,7 +81,7 @@ public class BoardService {
     }
 
     @Transactional
-    public BoardResponse findOne(Long boardId){
+    public BoardResponse findBoard(Long boardId){
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> BoardNotFoundException.EXCEPTION);
         board.addViewCount();
