@@ -16,8 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
-
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -38,7 +36,7 @@ public class AuthService {
 
         User user = User.builder()
                 .role(UserRole.GENERAL)
-                .accountId(request.getUserId())
+                .accountId(request.getAccountId())
                 .password(password)
                 .name(request.getName())
                 .phoneNumber(request.getPhoneNumber())
@@ -50,7 +48,7 @@ public class AuthService {
 
     @Transactional
     public TokenResponse login(UserLoginRequest request){
-       User user = userRepository.findByAccountId(request.getUserId())
+       User user = userRepository.findByAccountId(request.getAccountId())
                .orElseThrow(()-> UserNotFoundException.EXCEPTION);
 
        if(!passwordEncoder.matches(request.getPassword(),user.getPassword())){
@@ -63,7 +61,7 @@ public class AuthService {
 
     private void validateDuplicateUser(UserSignupRequest request){
 
-        if(userRepository.existsByAccountId(request.getUserId())){
+        if(userRepository.existsByAccountId(request.getAccountId())){
             throw UserAlreadyExistException.EXCEPTION;
         }
     }
