@@ -20,5 +20,11 @@ public class BoardCommentController {
         boardCommentService.addBoardComment(request);
     }
 
+    @DeleteMapping("/{boardCommentId}")
+    public void boardCommentRemove(
+            @PathVariable Long boardCommentId
+    ){
+        boardCommentService.removeBoardComment(boardCommentId);
+    }
 
 }

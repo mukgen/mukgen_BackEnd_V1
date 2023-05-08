@@ -21,6 +21,7 @@ public enum ErrorCode {
     // Forbidden
     BOARD_WRITER_MISMATCH(403, "Board writer mismatch"),
     REVIEW_WRITER_MISMATCH(403, "Review writer mismatch"),
+    COMMENT_WRITER_MISMATCH(403, "Comment writer mismatch"),
 
     // Not Found
     USER_NOT_FOUND(404,"User not found"),
