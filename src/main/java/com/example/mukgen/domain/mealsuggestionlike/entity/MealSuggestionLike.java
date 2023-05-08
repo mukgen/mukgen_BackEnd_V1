@@ -4,17 +4,16 @@ import com.example.mukgen.domain.mealsuggestion.entity.MealSuggestion;
 import com.example.mukgen.domain.user.entity.User;
 import lombok.*;
 
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
-@Data
+@Entity(name = "tbl_mealSuggestionLikes")
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class MealSuggestionLike {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String userName;

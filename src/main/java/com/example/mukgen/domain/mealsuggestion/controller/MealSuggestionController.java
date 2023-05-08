@@ -4,14 +4,14 @@ import com.example.mukgen.domain.mealsuggestion.controller.dto.request.MealSugge
 import com.example.mukgen.domain.mealsuggestion.controller.dto.request.MealSuggestionUpdateRequest;
 import com.example.mukgen.domain.mealsuggestion.controller.dto.response.MealSuggestionResponse;
 import com.example.mukgen.domain.mealsuggestion.service.MealSuggestionService;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
-@RequestMapping
+@RequestMapping("/mealSuggestion")
 public class MealSuggestionController {
 
     private MealSuggestionService mealSuggestionService;
@@ -21,18 +21,6 @@ public class MealSuggestionController {
             @RequestBody MealSuggestionCreateRequest request
     ) {
         mealSuggestionService.createMealSuggestion(request);
-    }
-
-    /* @GetMapping("/list")
-    public MealSuggestionResponse findAllSuggestion() {
-        return mealSuggestionService.findAllSuggestion;
-    } */
-
-    @GetMapping("/{suggestionId}")
-    public MealSuggestionResponse findOneSuggestion(
-            @PathVariable Long suggestionId
-    ) {
-        return mealSuggestionService.findOneSuggestion(suggestionId);
     }
 
     @PutMapping("/{suggestionId}")
@@ -50,5 +38,15 @@ public class MealSuggestionController {
         mealSuggestionService.deleteMealSuggestion(suggestionId);
     }
 
+    @GetMapping("/{suggestionId}")
+    public MealSuggestionResponse findOneSuggestion(
+            @PathVariable Long suggestionId
+    ) {
+        return mealSuggestionService.findOneSuggestion(suggestionId);
+    }
 
+    @GetMapping("/list")
+    public List<MealSuggestionResponse> findAllSuggestion() {
+        return mealSuggestionService.findAllSuggestion();
+    }
 }

@@ -10,9 +10,7 @@ public class MealSuggestionLikeRequest {
 
     private Long suggestionId;
 
-    public MealSuggestionLikeRequest(
-            Long suggestionId
-    ) {
+    public MealSuggestionLikeRequest(Long suggestionId) {
         this.suggestionId = suggestionId;
     }
 }

@@ -5,12 +5,16 @@ import com.example.mukgen.domain.mealsuggestion.controller.dto.response.MealSugg
 import com.example.mukgen.domain.mealsuggestion.entity.MealSuggestion;
 import com.example.mukgen.domain.mealsuggestion.repository.MealSuggestionRepository;
 import com.example.mukgen.domain.mealsuggestion.controller.dto.request.MealSuggestionCreateRequest;
+import com.example.mukgen.domain.mealsuggestion.service.exception.MealSuggestionDeletedException;
 import com.example.mukgen.domain.mealsuggestion.service.exception.MealSuggestionNotFoundException;
+import com.example.mukgen.domain.mealsuggestion.service.exception.MealSuggestionWriterMissMatchException;
 import com.example.mukgen.domain.user.service.UserFacade;
 import com.example.mukgen.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -32,23 +36,6 @@ public class MealSuggestionService {
         );
     }
 
-    public MealSuggestionResponse findOneSuggestion(
-            Long suggestionId
-    ) {
-        MealSuggestion mealSuggestion = mealSuggestionRepository.findById(suggestionId)
-                .orElseThrow(() -> MealSuggestionNotFoundException.EXCEPTION);
-
-        return MealSuggestionResponse.builder()
-                .title(mealSuggestion.getTitle())
-                .content(mealSuggestion.getContent())
-                .userName(mealSuggestion.getUser().getName())
-                .likeCount(mealSuggestion.getLikeCount())
-                .viewCount(mealSuggestion.getViewCount())
-                .createAt(mealSuggestion.getCreateAt())
-                .updateAt(mealSuggestion.getUpdateAt())
-                .build();
-    }
-
     @Transactional
     public void updateMealSuggestion(
             MealSuggestionUpdateRequest request,
@@ -56,6 +43,12 @@ public class MealSuggestionService {
     ) {
         MealSuggestion mealSuggestion = mealSuggestionRepository.findById(suggestionId)
                 .orElseThrow(() -> MealSuggestionNotFoundException.EXCEPTION);
+
+        if (mealSuggestion.isDeleted())
+            throw MealSuggestionDeletedException.EXCEPTION;
+
+        if(mealSuggestion.getUser() != userFacade.currentUser())
+            throw MealSuggestionWriterMissMatchException.EXCEPTION;
 
         mealSuggestion.updateMealSuggestion(request.getTitle(), request.getContent());
     }
@@ -67,6 +60,33 @@ public class MealSuggestionService {
         MealSuggestion mealSuggestion = mealSuggestionRepository.findById(suggestionId)
                 .orElseThrow(() -> MealSuggestionNotFoundException.EXCEPTION);
 
+        if (mealSuggestion.isDeleted())
+            throw MealSuggestionDeletedException.EXCEPTION;
+
+        if(mealSuggestion.getUser() != userFacade.currentUser())
+            throw MealSuggestionWriterMissMatchException.EXCEPTION;
+
         mealSuggestion.deleteMealSuggestion();
+    }
+
+    public MealSuggestionResponse findOneSuggestion(
+            Long suggestionId
+    ) {
+        MealSuggestion mealSuggestion = mealSuggestionRepository.findById(suggestionId)
+                .orElseThrow(() -> MealSuggestionNotFoundException.EXCEPTION);
+
+        mealSuggestion.addViewCount();
+
+        return MealSuggestionResponse.of(mealSuggestion);
+    }
+
+    public List<MealSuggestionResponse> findAllSuggestion(
+    ) {
+        List<MealSuggestionResponse> mealSuggestionResponses =
+                mealSuggestionRepository.findAll()
+                        .stream()
+                        .map(MealSuggestionResponse::of)
+                        .toList();
+        return mealSuggestionResponses;
     }
 }
