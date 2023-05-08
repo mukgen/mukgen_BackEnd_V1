@@ -4,6 +4,7 @@ import com.example.mukgen.domain.board.entity.Board;
 import com.example.mukgen.domain.board.repository.BoardRepository;
 import com.example.mukgen.domain.board.service.exception.BoardNotFoundException;
 import com.example.mukgen.domain.boardcomment.controller.dto.request.BoardCommentCreateRequest;
+import com.example.mukgen.domain.boardcomment.controller.dto.request.BoardCommentUpdateRequest;
 import com.example.mukgen.domain.boardcomment.entity.BoardComment;
 import com.example.mukgen.domain.boardcomment.repository.BoardCommentRepository;
 import com.example.mukgen.domain.boardcomment.service.exception.BoardCommentNotFoundException;
@@ -57,5 +58,20 @@ public class BoardCommentService {
         }
 
         boardCommentRepository.deleteById(boardCommentId);
+    }
+
+    @Transactional
+    public void modifyBoardComment(
+            Long boardCommentId,
+            BoardCommentUpdateRequest request
+    ){
+        BoardComment boardComment = boardCommentRepository.findById(boardCommentId)
+                .orElseThrow(() -> BoardCommentNotFoundException.EXCEPTION);
+
+        if(!userFacade.currentUser().getAccountId().equals(boardComment.getWriter())){
+            throw BoardCommentWriterMissMatchException.EXCEPTION;
+        }
+
+        boardComment.updateBoardComment(request.getContent());
     }
 }

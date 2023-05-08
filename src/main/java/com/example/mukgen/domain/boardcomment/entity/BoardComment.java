@@ -30,4 +30,8 @@ public class BoardComment {
 
     private LocalDateTime createAt;
 
+    public void updateBoardComment(String content){
+        this.content = content;
+    }
+
 }

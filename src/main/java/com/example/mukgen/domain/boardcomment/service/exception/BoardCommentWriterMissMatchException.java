@@ -8,6 +8,6 @@ public class BoardCommentWriterMissMatchException extends BusinessException {
     public static final BusinessException EXCEPTION = new BoardCommentWriterMissMatchException();
 
     public BoardCommentWriterMissMatchException() {
-        super(ErrorCode.BOARD_COMMENT_NOT_FOUND);
+        super(ErrorCode.BOARD_WRITER_MISMATCH);
     }
 }

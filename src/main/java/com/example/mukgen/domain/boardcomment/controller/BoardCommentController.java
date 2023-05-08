@@ -1,6 +1,7 @@
 package com.example.mukgen.domain.boardcomment.controller;
 
 import com.example.mukgen.domain.boardcomment.controller.dto.request.BoardCommentCreateRequest;
+import com.example.mukgen.domain.boardcomment.controller.dto.request.BoardCommentUpdateRequest;
 import com.example.mukgen.domain.boardcomment.controller.dto.response.BoardCommentResponse;
 import com.example.mukgen.domain.boardcomment.service.BoardCommentService;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,14 @@ public class BoardCommentController {
             @PathVariable Long boardCommentId
     ){
         boardCommentService.removeBoardComment(boardCommentId);
+    }
+
+    @PutMapping("/{boardCommentId}")
+    public void boardCommentModify(
+            @RequestBody BoardCommentUpdateRequest request,
+            @PathVariable Long boardCommentId
+            ){
+        boardCommentService.modifyBoardComment(boardCommentId,request);
     }
 
 }
