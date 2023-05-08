@@ -1,6 +1,7 @@
 package com.example.mukgen.domain.board.controller.dto.response;
 
 import com.example.mukgen.domain.board.entity.Board;
+import com.example.mukgen.domain.boardcomment.controller.dto.response.BoardCommentResponse;
 import com.example.mukgen.domain.like.controller.dto.response.LikeResponse;
 import lombok.Builder;
 import lombok.Data;
@@ -20,7 +21,11 @@ public class BoardResponse {
 
     private int likeCount;
 
+    private int commentCount;
+
     private List<LikeResponse> likeResponseList;
+
+    private List<BoardCommentResponse> boardCommentList;
 
     private int viewCount;
 
@@ -34,7 +39,12 @@ public class BoardResponse {
                         .boardId(it.getBoard().getId())
                         .userName(it.getUserName()).build()).toList();
 
+        List<BoardCommentResponse> boardCommentResponseList = board.getBoardCommentList().stream()
+                .map(BoardCommentResponse::of).toList();
+
         return  BoardResponse.builder()
+                .commentCount(boardCommentResponseList.size())
+                .boardCommentList(boardCommentResponseList)
                 .title(board.getTitle())
                 .likeResponseList(likeResponses)
                 .content(board.getContent())

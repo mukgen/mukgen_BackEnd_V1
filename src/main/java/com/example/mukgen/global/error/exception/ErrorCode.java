@@ -21,6 +21,7 @@ public enum ErrorCode {
     // Forbidden
     BOARD_WRITER_MISMATCH(403, "Board writer mismatch"),
     REVIEW_WRITER_MISMATCH(403, "Review writer mismatch"),
+    COMMENT_WRITER_MISMATCH(403, "Comment writer mismatch"),
 
     // Not Found
     USER_NOT_FOUND(404,"User not found"),
@@ -28,6 +29,7 @@ public enum ErrorCode {
     BOARD_NOT_FOUND(404, "Board not found"),
     MEAL_NOT_FOUND(404,"Meal not found"),
     REVIEW_NOT_FOUND(404,"Review not found"),
+    BOARD_COMMENT_NOT_FOUND(404,"BoardCommnet not found"),
 
     // Conflict
     USER_ALREADY_EXISTS(409, "User already exists"),

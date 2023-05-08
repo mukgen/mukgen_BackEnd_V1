@@ -1,6 +1,7 @@
 package com.example.mukgen.domain.board.entity;
 
 import com.example.mukgen.domain.board.controller.dto.response.BoardListResponse;
+import com.example.mukgen.domain.boardcomment.entity.BoardComment;
 import com.example.mukgen.domain.like.entity.Likes;
 import com.example.mukgen.domain.user.entity.User;
 import lombok.*;
@@ -38,6 +39,9 @@ public class Board {
 
     @OneToMany(mappedBy = "board")
     private List<Likes> likesList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "board")
+    private List<BoardComment> boardCommentList = new ArrayList<>();
 
     public void updateBoard(String title, String content) {
         this.title = title;

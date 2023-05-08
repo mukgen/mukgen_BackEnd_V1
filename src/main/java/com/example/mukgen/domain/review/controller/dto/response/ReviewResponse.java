@@ -1,4 +1,4 @@
-package com.example.mukgen.domain.review.entity.dto.response;
+package com.example.mukgen.domain.review.controller.dto.response;
 
 import com.example.mukgen.domain.review.entity.Review;
 import lombok.Builder;

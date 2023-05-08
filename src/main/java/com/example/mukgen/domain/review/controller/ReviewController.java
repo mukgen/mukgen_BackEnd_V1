@@ -1,9 +1,8 @@
 package com.example.mukgen.domain.review.controller;
 
-import com.example.mukgen.domain.review.entity.dto.request.ReviewCreateRequest;
-import com.example.mukgen.domain.review.entity.dto.response.ReviewResponseList;
+import com.example.mukgen.domain.review.controller.dto.request.ReviewCreateRequest;
+import com.example.mukgen.domain.review.controller.dto.response.ReviewResponseList;
 import com.example.mukgen.domain.review.service.ReviewService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
