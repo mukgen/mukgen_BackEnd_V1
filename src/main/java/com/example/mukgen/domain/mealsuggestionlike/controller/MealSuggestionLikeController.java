@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/like")
+@RequestMapping("/mealSuggestion/like")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MealSuggestionLikeController {
 

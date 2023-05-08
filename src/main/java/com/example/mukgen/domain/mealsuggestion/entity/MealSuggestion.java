@@ -1,5 +1,6 @@
 package com.example.mukgen.domain.mealsuggestion.entity;
 
+import com.example.mukgen.domain.mealsuggestionlike.entity.MealSuggestionLike;
 import com.example.mukgen.domain.user.entity.User;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -8,8 +9,10 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-@Entity
+@Entity(name = "tbl_mealSuggestion")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
@@ -23,6 +26,14 @@ public class MealSuggestion {
 
     private String content;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToMany
+    @JoinColumn(name = "mealSuggestion_id")
+    private List<MealSuggestionLike> mealSuggestionLikeList = new ArrayList<>();
+
     private int likeCount;
 
     private int viewCount;
@@ -32,10 +43,6 @@ public class MealSuggestion {
     private LocalDateTime updateAt;
 
     private boolean deleted;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 
     public void updateMealSuggestion(
             String title,
@@ -60,10 +67,13 @@ public class MealSuggestion {
         this.deleted = false;
     }
 
-    public void addLike() {
+    public void addLike(String userName) {
         this.likeCount++;
+        MealSuggestionLike mealSuggestionLike = new MealSuggestionLike(this, userName);
+        mealSuggestionLikeList.add(mealSuggestionLike);
     }
-    public void removeLike() {
+    public void removeLike(String userName) {
+        mealSuggestionLikeList.remove(new MealSuggestionLike(this, userName));
         this.likeCount--;
     }
 

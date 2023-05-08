@@ -29,11 +29,11 @@ public class MealSuggestionLikeService {
         User curUser = userFacade.currentUser();
 
         if (mealSuggestionLikeRepository.existsByMealSuggestionAndUserName(mealSuggestion, curUser.getName())) {
-            mealSuggestion.removeLike();
+            mealSuggestion.removeLike(curUser.getName());
             mealSuggestionLikeRepository.removeByMealSuggestionAndUserName(mealSuggestion, curUser.getName());
         }
         else {
-            mealSuggestion.addLike();
+            mealSuggestion.addLike(curUser.getName());
             MealSuggestionLike mealSuggestionLike = new MealSuggestionLike(mealSuggestion, curUser.getName());
             mealSuggestionLikeRepository.save(mealSuggestionLike);
         }
