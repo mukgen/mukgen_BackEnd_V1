@@ -35,6 +35,18 @@ public class BoardService {
         return findAllBoard();
     }
 
+    @Transactional
+    public BoardResponse modifyBoard(
+            BoardUpdateRequest request,
+            Long boardId
+    ){
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(() -> BoardNotFoundException.EXCEPTION);
+
+        board.updateBoard(request.getTitle(), request.getContent());
+
+        return findBoard(boardId);
+    }
 
     public BoardListResponse findAllBoard(){
         List<BoardResponse> boardResponses = boardRepository.findAll().stream()
