@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserLoginRequest {
 
-    private String userId;
+    private String accountId;
 
     private String password;
 

@@ -9,17 +9,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("user")
+@RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
 
     @GetMapping("/profile/{userId}")
-    public UserProfileResponse getProfile(
+    public UserProfileResponse userDetails(
             @PathVariable Long userId
     ){
-        return userService.findProfile(userId);
+        return userService.findUser(userId);
     }
+    
 
 }

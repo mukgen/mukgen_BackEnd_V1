@@ -1,7 +1,6 @@
 package com.example.mukgen.domain.board.controller.dto.request;
 
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,7 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BoardUpdateRequest {
 
-    //test
 
     private String title;
 

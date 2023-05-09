@@ -23,6 +23,7 @@ public enum ErrorCode {
     REVIEW_WRITER_MISMATCH(403, "Review writer mismatch"),
     MEAL_SUGGESTION_WRITER_MISMATCH(403, "Meal suggestion writer mismatch"),
     MEAL_SUGGESTION_DELETED(403, "Meal suggestion has been deleted"),
+    COMMENT_WRITER_MISMATCH(403, "Comment writer mismatch"),
 
     // Not Found
     USER_NOT_FOUND(404,"User not found"),
@@ -31,6 +32,7 @@ public enum ErrorCode {
     MEAL_NOT_FOUND(404,"Meal not found"),
     REVIEW_NOT_FOUND(404,"Review not found"),
     MEAL_SUGGESTION_NOT_FOUND(404, "Meal suggestion not found"),
+    BOARD_COMMENT_NOT_FOUND(404,"BoardCommnet not found"),
 
     // Conflict
     USER_ALREADY_EXISTS(409, "User already exists"),
