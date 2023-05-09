@@ -24,7 +24,7 @@ public class LikeService {
     private final BoardRepository boardRepository;
 
     @Transactional
-    public void addLike(LikeCreateRequest request){
+    public Integer addLike(LikeCreateRequest request){
 
         User curUser = userFacade.currentUser();
         Board board = boardRepository.findById(request.getBoardId())
@@ -38,5 +38,7 @@ public class LikeService {
             likeRepository.save(like);
             board.addLike();
         }
+
+        return board.getLikeCount();
     }
 }

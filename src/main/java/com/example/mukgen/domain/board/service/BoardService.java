@@ -38,12 +38,19 @@ public class BoardService {
                         .user(curUser)
                         .build()
         );
+<<<<<<< HEAD
 
+=======
+>>>>>>> develop
         return findAllBoard();
     }
 
     @Transactional
+<<<<<<< HEAD
     public BoardMaximumResponse modifyBoard(
+=======
+    public BoardResponse modifyBoard(
+>>>>>>> develop
             BoardUpdateRequest request,
             Long boardId
     ){
@@ -53,6 +60,7 @@ public class BoardService {
 
         board.updateBoard(request.getTitle(), request.getContent());
 
+<<<<<<< HEAD
         return onlyFindBoard(boardId);
     }
     @Transactional
@@ -60,6 +68,9 @@ public class BoardService {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> BoardNotFoundException.EXCEPTION);
         return BoardMaximumResponse.of(board);
+=======
+        return findBoard(boardId);
+>>>>>>> develop
     }
 
     public BoardListResponse findAllBoard(){
