@@ -16,11 +16,11 @@ public class LikesController {
     private final LikeService likeService;
 
     @PostMapping
-    public void likeAdd(
+    public Integer likeAdd(
             @RequestBody
             LikeCreateRequest request
     ){
-        likeService.addLike(request);
+       return likeService.addLike(request);
     }
 
 }
