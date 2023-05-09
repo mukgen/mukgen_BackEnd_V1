@@ -13,33 +13,4 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/board")
 public class BoardController {
 
-    private final BoardService boardService;
-
-    @PostMapping
-    public BoardListResponse boardAdd(
-            @RequestBody
-            BoardCreateRequest request
-    ){
-        return boardService.addBoard(request);
-    }
-
-
-    @GetMapping("/list")
-    public BoardListResponse boardList() {
-        return boardService.findAllBoard();
-    }
-
-    @DeleteMapping("/{boardId}")
-    public void boardRemove(
-            @PathVariable Long boardId
-    ){
-        boardService.deleteBoard(boardId);
-    }
-
-    @GetMapping("/{boardId}")
-    public BoardResponse boardDetails(
-            @PathVariable Long boardId
-    ){
-        return boardService.findBoard(boardId);
-    }
 }
