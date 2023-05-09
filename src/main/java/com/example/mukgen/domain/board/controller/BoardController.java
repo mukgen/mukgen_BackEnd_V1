@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/board")
 public class BoardController {
 
-<<<<<<< HEAD
     private final BoardService boardService;
 
     @PostMapping
@@ -51,6 +50,5 @@ public class BoardController {
     ){
         return boardService.findBoard(boardId);
     }
-=======
->>>>>>> develop
+
 }
