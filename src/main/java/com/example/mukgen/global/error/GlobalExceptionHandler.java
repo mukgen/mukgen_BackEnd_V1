@@ -21,7 +21,7 @@ public class GlobalExceptionHandler {
         ErrorCode errorCode = ErrorCode.BAD_REQUEST;
         ErrorResponse response = ErrorResponse.of(errorCode, e.getFieldError().getDefaultMessage());
 
-       return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+       return new ResponseEntity<>(response, HttpStatus.valueOf(errorCode.getStatusCode()));
 
     }
 

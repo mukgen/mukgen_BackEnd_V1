@@ -1,6 +1,7 @@
 package com.example.mukgen.domain.rice.entity;
 
 import com.example.mukgen.domain.review.entity.Review;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,7 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Entity(name = "tbl_rice")
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Rice {
 
