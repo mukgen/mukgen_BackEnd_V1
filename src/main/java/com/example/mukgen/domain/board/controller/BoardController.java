@@ -23,13 +23,6 @@ public class BoardController {
         return boardService.addBoard(request);
     }
 
-    @PutMapping("/{boardId}")
-    public BoardResponse boardModify(
-            @PathVariable Long boardId,
-            @RequestBody BoardUpdateRequest request
-    ){
-        return boardService.modifyBoard(request,boardId);
-    }
 
     @GetMapping("/list")
     public BoardListResponse boardList() {
