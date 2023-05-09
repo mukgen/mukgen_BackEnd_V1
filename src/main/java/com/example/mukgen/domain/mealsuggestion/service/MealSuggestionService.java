@@ -82,11 +82,9 @@ public class MealSuggestionService {
 
     public List<MealSuggestionResponse> findAllSuggestion(
     ) {
-        List<MealSuggestionResponse> mealSuggestionResponses =
-                mealSuggestionRepository.findAll()
-                        .stream()
-                        .map(MealSuggestionResponse::of)
-                        .toList();
-        return mealSuggestionResponses;
+        return mealSuggestionRepository.findAll()
+                .stream()
+                .map(MealSuggestionResponse::of)
+                .toList();
     }
 }

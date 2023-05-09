@@ -30,8 +30,7 @@ public class MealSuggestion {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany
-    @JoinColumn(name = "mealSuggestion_id")
+    @OneToMany(mappedBy = "mealSuggestion")
     private List<MealSuggestionLike> mealSuggestionLikeList = new ArrayList<>();
 
     private int likeCount;
@@ -42,7 +41,7 @@ public class MealSuggestion {
 
     private LocalDateTime updateAt;
 
-    private boolean deleted;
+    private boolean deleted = false;
 
     public void updateMealSuggestion(
             String title,
@@ -64,7 +63,6 @@ public class MealSuggestion {
         this.likeCount = 0;
         this.viewCount = 0;
         this.createAt = LocalDateTime.now();
-        this.deleted = false;
     }
 
     public void addLike(String userName) {
