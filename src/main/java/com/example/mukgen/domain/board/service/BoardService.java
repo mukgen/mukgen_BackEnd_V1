@@ -25,17 +25,18 @@ public class BoardService {
     private final UserFacade userFacade;
 
     @Transactional
-    public void addBoard(
+    public BoardListResponse addBoard(
             BoardCreateRequest request
     ) {
         User curUser = userFacade.currentUser();
         boardRepository.save(
                 new Board(request.getTitle(), request.getContent(), curUser)
         );
+        return findAllBoard();
     }
 
     @Transactional
-    public void modifyBoard(
+    public BoardResponse modifyBoard(
             BoardUpdateRequest request,
             Long boardId
     ){
@@ -43,6 +44,8 @@ public class BoardService {
                 .orElseThrow(() -> BoardNotFoundException.EXCEPTION);
 
         board.updateBoard(request.getTitle(), request.getContent());
+
+        return findBoard(boardId);
     }
 
     public BoardListResponse findAllBoard(){

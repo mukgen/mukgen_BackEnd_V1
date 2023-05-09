@@ -16,19 +16,19 @@ public class BoardController {
     private final BoardService boardService;
 
     @PostMapping
-    public void boardAdd(
+    public BoardListResponse boardAdd(
             @RequestBody
             BoardCreateRequest request
     ){
-        boardService.addBoard(request);
+        return boardService.addBoard(request);
     }
 
     @PutMapping("/{boardId}")
-    public void boardModify(
+    public BoardResponse boardModify(
             @PathVariable Long boardId,
             @RequestBody BoardUpdateRequest request
     ){
-        boardService.modifyBoard(request,boardId);
+        return boardService.modifyBoard(request,boardId);
     }
 
     @GetMapping("/list")
