@@ -3,7 +3,8 @@ package com.example.mukgen.domain.board.controller;
 import com.example.mukgen.domain.board.controller.dto.request.BoardCreateRequest;
 import com.example.mukgen.domain.board.controller.dto.request.BoardUpdateRequest;
 import com.example.mukgen.domain.board.controller.dto.response.BoardListResponse;
-import com.example.mukgen.domain.board.controller.dto.response.BoardResponse;
+import com.example.mukgen.domain.board.controller.dto.response.BoardMaximumResponse;
+import com.example.mukgen.domain.board.controller.dto.response.BoardMinimumResponse;
 import com.example.mukgen.domain.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class BoardController {
     }
 
     @PutMapping("/{boardId}")
-    public void boardModify(
+    public BoardMaximumResponse boardModify(
             @PathVariable Long boardId,
             @RequestBody BoardUpdateRequest request
     ){
@@ -44,7 +45,7 @@ public class BoardController {
     }
 
     @GetMapping("/{boardId}")
-    public BoardResponse boardDetails(
+    public BoardMaximumResponse boardDetails(
             @PathVariable Long boardId
     ){
         return boardService.findBoard(boardId);

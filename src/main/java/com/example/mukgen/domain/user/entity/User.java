@@ -20,14 +20,16 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "account_id")
+    @Column(name = "account_id", nullable = false, length = 15)
     private String accountId;
 
+    @Column(name = "name", nullable = false, length = 4)
     private String name;
 
+    @Column(name = "password", nullable = false, length = 1000)
     private String password;
 
-    @Column(name = "phone_number")
+    @Column(name = "phone_number", length = 12, nullable = false, columnDefinition = "char(12)")
     private String phoneNumber;
 
     @Enumerated(EnumType.STRING)
@@ -36,7 +38,7 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Board> boardList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Review> reviewList = new ArrayList<>();
 
 }

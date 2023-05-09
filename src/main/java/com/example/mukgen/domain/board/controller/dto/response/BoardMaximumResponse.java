@@ -11,7 +11,7 @@ import java.util.List;
 
 @Data
 @Builder
-public class BoardResponse {
+public class BoardMaximumResponse {
 
     private String title;
 
@@ -29,20 +29,17 @@ public class BoardResponse {
 
     private int viewCount;
 
-    private LocalDateTime createAt;
-
     private LocalDateTime updateAt;
 
-    public static BoardResponse of(Board board){
+    public static BoardMaximumResponse of(Board board){
         List<LikeResponse> likeResponses = board.getLikesList().stream()
                 .map(it -> LikeResponse.builder()
-                        .boardId(it.getBoard().getId())
                         .userName(it.getUserName()).build()).toList();
 
         List<BoardCommentResponse> boardCommentResponseList = board.getBoardCommentList().stream()
                 .map(BoardCommentResponse::of).toList();
 
-        return  BoardResponse.builder()
+        return  BoardMaximumResponse.builder()
                 .commentCount(boardCommentResponseList.size())
                 .boardCommentList(boardCommentResponseList)
                 .title(board.getTitle())
@@ -51,7 +48,6 @@ public class BoardResponse {
                 .userName(board.getUser().getName())
                 .likeCount(board.getLikeCount())
                 .viewCount(board.getViewCount())
-                .createAt(board.getCreateAt())
                 .updateAt(board.getUpdateAt()).build();
     }
 }

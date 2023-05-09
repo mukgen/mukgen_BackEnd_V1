@@ -7,7 +7,5 @@ import lombok.Data;
 @Builder
 public class LikeResponse {
 
-    private Long boardId;
-
     private String userName;
 }
