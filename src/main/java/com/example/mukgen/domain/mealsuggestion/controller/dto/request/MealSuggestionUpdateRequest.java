@@ -12,13 +12,4 @@ public class MealSuggestionUpdateRequest {
     private String title;
 
     private String content;
-
-    @Builder
-    public MealSuggestionUpdateRequest(
-            String title,
-            String content
-    ) {
-        this.title = title;
-        this.content = content;
-    }
 }

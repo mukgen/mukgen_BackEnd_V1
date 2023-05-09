@@ -45,7 +45,7 @@ public class MealSuggestion {
     private LocalDateTime updateAt;
 
     @Column(name = "deleted", nullable = false)
-    private boolean deleted;
+    private boolean deleted = false;
 
     public void updateMealSuggestion(
             String title,
