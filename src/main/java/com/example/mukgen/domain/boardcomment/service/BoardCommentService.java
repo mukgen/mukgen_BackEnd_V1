@@ -38,9 +38,11 @@ public class BoardCommentService {
         BoardComment comment = BoardComment.builder()
                 .board(board)
                 .content(request.getContent())
-                .writer(userFacade.currentUser().getAccountId())
+                .writer(userFacade.currentUser().getName())
                 .createAt(LocalDateTime.now())
                 .build();
+
+         board.addCommentCount();
 
         boardCommentRepository.save(comment);
     }
@@ -57,7 +59,10 @@ public class BoardCommentService {
             throw BoardCommentWriterMissMatchException.EXCEPTION;
         }
 
+        boardComment.getBoard().removeCommentCount();
+
         boardCommentRepository.deleteById(boardCommentId);
+
     }
 
     @Transactional

@@ -1,49 +1,54 @@
 package com.example.mukgen.global.config.security.auth;
 
+import com.example.mukgen.domain.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
 
 @Getter
-@AllArgsConstructor
-public class CustomUserDetail implements UserDetails {
+@RequiredArgsConstructor
+public class CustomUserDetails implements UserDetails {
 
-    private final String username;
+    private final User user;
 
     @Override
     public String getUsername() {
-        return username;
+        return user.getAccountId();
     }
 
+    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.emptyList();
+        return new ArrayList<>(Collections.singleton(new SimpleGrantedAuthority(user.getRole().toString())));
     }
 
     @Override
     public String getPassword() {
-        return null;
+        return user.getPassword();
     }
 
     @Override
-    public boolean isAccountNonExpired() { return true; }
+    public boolean isAccountNonExpired() { return false; }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return false;
     }
 }

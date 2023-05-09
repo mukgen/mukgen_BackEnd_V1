@@ -3,7 +3,8 @@ package com.example.mukgen.domain.board.service;
 import com.example.mukgen.domain.board.controller.dto.request.BoardCreateRequest;
 import com.example.mukgen.domain.board.controller.dto.request.BoardUpdateRequest;
 import com.example.mukgen.domain.board.controller.dto.response.BoardListResponse;
-import com.example.mukgen.domain.board.controller.dto.response.BoardResponse;
+import com.example.mukgen.domain.board.controller.dto.response.BoardMaximumResponse;
+import com.example.mukgen.domain.board.controller.dto.response.BoardMinimumResponse;
 import com.example.mukgen.domain.board.entity.Board;
 import com.example.mukgen.domain.board.repository.BoardRepository;
 import com.example.mukgen.domain.board.service.exception.BoardNotFoundException;
@@ -29,20 +30,56 @@ public class BoardService {
             BoardCreateRequest request
     ) {
         User curUser = userFacade.currentUser();
+
         boardRepository.save(
-                new Board(request.getTitle(), request.getContent(), curUser)
+                Board.builder()
+                        .title(request.getTitle())
+                        .content(request.getContent())
+                        .user(curUser)
+                        .build()
         );
+<<<<<<< HEAD
+
+=======
+>>>>>>> develop
         return findAllBoard();
     }
 
+    @Transactional
+<<<<<<< HEAD
+    public BoardMaximumResponse modifyBoard(
+=======
+    public BoardResponse modifyBoard(
+>>>>>>> develop
+            BoardUpdateRequest request,
+            Long boardId
+    ){
+
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(() -> BoardNotFoundException.EXCEPTION);
+
+        board.updateBoard(request.getTitle(), request.getContent());
+
+<<<<<<< HEAD
+        return onlyFindBoard(boardId);
+    }
+    @Transactional
+    public BoardMaximumResponse onlyFindBoard(Long boardId){
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(() -> BoardNotFoundException.EXCEPTION);
+        return BoardMaximumResponse.of(board);
+=======
+        return findBoard(boardId);
+>>>>>>> develop
+    }
 
     public BoardListResponse findAllBoard(){
-        List<BoardResponse> boardResponses = boardRepository.findAll().stream()
-                .map(BoardResponse::of)
+        List<BoardMinimumResponse> boardMinimumResponseList = boardRepository.findAll().stream()
+                .map(BoardMinimumResponse::of)
                 .toList();
 
         return BoardListResponse.builder()
-                .boardResponseList(boardResponses)
+                .boardMinimumResponseList(boardMinimumResponseList)
                 .build();
     }
 
@@ -58,11 +95,11 @@ public class BoardService {
     }
 
     @Transactional
-    public BoardResponse findBoard(Long boardId){
+    public BoardMaximumResponse findBoard(Long boardId){
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> BoardNotFoundException.EXCEPTION);
         board.addViewCount();
-        return BoardResponse.of(board);
+        return BoardMaximumResponse.of(board);
     }
 
 }

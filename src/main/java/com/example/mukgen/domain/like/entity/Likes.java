@@ -1,10 +1,7 @@
 package com.example.mukgen.domain.like.entity;
 
 import com.example.mukgen.domain.board.entity.Board;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -18,6 +15,7 @@ public class Likes {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "user_name")
     private String userName;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -25,6 +23,7 @@ public class Likes {
     private Board board;
 
 
+    @Builder
     public Likes(Board board, String userName) {
         this.board = board;
         this.userName = userName;
