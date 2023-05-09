@@ -1,6 +1,7 @@
 package com.example.mukgen.domain.mealsuggestion.controller.dto.request;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ public class MealSuggestionUpdateRequest {
 
     private String content;
 
+    @Builder
     public MealSuggestionUpdateRequest(
             String title,
             String content

@@ -10,7 +10,7 @@ import java.util.List;
 
 @Data
 @Builder
-public class MealSuggestionResponse {
+public class MealSuggestionMaximumResponse {
 
     private String title;
 
@@ -30,14 +30,17 @@ public class MealSuggestionResponse {
 
     private boolean deleted;
 
-    public static MealSuggestionResponse of(MealSuggestion mealSuggestion) {
+    public static MealSuggestionMaximumResponse of(MealSuggestion mealSuggestion) {
         List<MealSuggestionLikeResponse> mealSuggestionLikeResponses =
                 mealSuggestion.getMealSuggestionLikeList().stream()
-                        .map(it -> MealSuggestionLikeResponse.builder()
-                                .mealSuggestionId(mealSuggestion.getId())
-                                .userName(mealSuggestion.getUser().getName()).build()).toList();
+                        .map(it ->
+                                MealSuggestionLikeResponse.builder()
+                                        .mealSuggestionId(mealSuggestion.getId())
+                                        .userName(mealSuggestion.getUser().getName())
+                                        .build())
+                        .toList();
 
-        return MealSuggestionResponse.builder()
+        return MealSuggestionMaximumResponse.builder()
                 .title(mealSuggestion.getTitle())
                 .content(mealSuggestion.getContent())
                 .userName(mealSuggestion.getUser().getName())

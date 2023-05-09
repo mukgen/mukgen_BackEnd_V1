@@ -6,7 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Entity(name = "tbl_mealSuggestionLikes")
+@Entity(name = "tbl_suggestion_like")
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -16,12 +16,14 @@ public class MealSuggestionLike {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "user_name")
     private String userName;
 
     @ManyToOne
     @JoinColumn(name = "suggestion_id")
     private MealSuggestion mealSuggestion;
 
+    @Builder
     public MealSuggestionLike(
             MealSuggestion mealSuggestion,
             String userName

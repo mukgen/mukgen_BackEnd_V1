@@ -5,7 +5,6 @@ import com.example.mukgen.domain.mealsuggestion.repository.MealSuggestionReposit
 import com.example.mukgen.domain.mealsuggestion.service.exception.MealSuggestionNotFoundException;
 import com.example.mukgen.domain.mealsuggestionlike.entity.MealSuggestionLike;
 import com.example.mukgen.domain.mealsuggestionlike.repositery.MealSuggestionLikeRepository;
-import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.service.UserFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,16 +25,19 @@ public class MealSuggestionLikeService {
         MealSuggestion mealSuggestion = mealSuggestionRepository.findById(suggestionId)
                 .orElseThrow(() -> MealSuggestionNotFoundException.EXCEPTION);
 
-        User curUser = userFacade.currentUser();
+        String userName = userFacade.currentUser().getName();
 
-        if (mealSuggestionLikeRepository.existsByMealSuggestionAndUserName(mealSuggestion, curUser.getName())) {
-            mealSuggestion.removeLike(curUser.getName());
-            mealSuggestionLikeRepository.removeByMealSuggestionAndUserName(mealSuggestion, curUser.getName());
+        if (mealSuggestionLikeRepository.existsByMealSuggestionAndUserName(mealSuggestion, userName)) {
+            mealSuggestion.removeLike(userName);
+            mealSuggestionLikeRepository.save(
+                    MealSuggestionLike.builder()
+                            .mealSuggestion(mealSuggestion)
+                            .userName(userName)
+                            .build());
         }
         else {
-            mealSuggestion.addLike(curUser.getName());
-            MealSuggestionLike mealSuggestionLike = new MealSuggestionLike(mealSuggestion, curUser.getName());
-            mealSuggestionLikeRepository.save(mealSuggestionLike);
+            mealSuggestion.addLike(userName);
+            mealSuggestionLikeRepository.removeByMealSuggestionAndUserName(mealSuggestion, userName);
         }
     }
 }

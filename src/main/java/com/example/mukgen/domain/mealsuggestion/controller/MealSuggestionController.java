@@ -2,7 +2,8 @@ package com.example.mukgen.domain.mealsuggestion.controller;
 
 import com.example.mukgen.domain.mealsuggestion.controller.dto.request.MealSuggestionCreateRequest;
 import com.example.mukgen.domain.mealsuggestion.controller.dto.request.MealSuggestionUpdateRequest;
-import com.example.mukgen.domain.mealsuggestion.controller.dto.response.MealSuggestionResponse;
+import com.example.mukgen.domain.mealsuggestion.controller.dto.response.MealSuggestionMaximumResponse;
+import com.example.mukgen.domain.mealsuggestion.controller.dto.response.MealSuggestionMinimumResponse;
 import com.example.mukgen.domain.mealsuggestion.service.MealSuggestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -39,14 +40,14 @@ public class MealSuggestionController {
     }
 
     @GetMapping("/{suggestionId}")
-    public MealSuggestionResponse findOneSuggestion(
+    public MealSuggestionMaximumResponse mealSuggestionDetails(
             @PathVariable Long suggestionId
     ) {
-        return mealSuggestionService.findOneSuggestion(suggestionId);
+        return mealSuggestionService.findMealSuggestion(suggestionId);
     }
 
     @GetMapping("/list")
-    public List<MealSuggestionResponse> findAllSuggestion() {
-        return mealSuggestionService.findAllSuggestion();
+    public List<MealSuggestionMinimumResponse> mealSuggestionList() {
+        return mealSuggestionService.findAllSuggestions();
     }
 }

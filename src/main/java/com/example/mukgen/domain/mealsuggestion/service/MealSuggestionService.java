@@ -1,7 +1,8 @@
 package com.example.mukgen.domain.mealsuggestion.service;
 
 import com.example.mukgen.domain.mealsuggestion.controller.dto.request.MealSuggestionUpdateRequest;
-import com.example.mukgen.domain.mealsuggestion.controller.dto.response.MealSuggestionResponse;
+import com.example.mukgen.domain.mealsuggestion.controller.dto.response.MealSuggestionMaximumResponse;
+import com.example.mukgen.domain.mealsuggestion.controller.dto.response.MealSuggestionMinimumResponse;
 import com.example.mukgen.domain.mealsuggestion.entity.MealSuggestion;
 import com.example.mukgen.domain.mealsuggestion.repository.MealSuggestionRepository;
 import com.example.mukgen.domain.mealsuggestion.controller.dto.request.MealSuggestionCreateRequest;
@@ -29,10 +30,14 @@ public class MealSuggestionService {
     public void createMealSuggestion(
             MealSuggestionCreateRequest request
     ) {
-        User curUser = userFacade.currentUser();
+        User user = userFacade.currentUser();
 
         mealSuggestionRepository.save(
-                new MealSuggestion(request.getTitle(), request.getContent(), curUser)
+                MealSuggestion.builder()
+                        .title(request.getTitle())
+                        .content(request.getContent())
+                        .user(user)
+                        .build()
         );
     }
 
@@ -69,7 +74,8 @@ public class MealSuggestionService {
         mealSuggestion.deleteMealSuggestion();
     }
 
-    public MealSuggestionResponse findOneSuggestion(
+    @Transactional
+    public MealSuggestionMaximumResponse findMealSuggestion(
             Long suggestionId
     ) {
         MealSuggestion mealSuggestion = mealSuggestionRepository.findById(suggestionId)
@@ -77,14 +83,14 @@ public class MealSuggestionService {
 
         mealSuggestion.addViewCount();
 
-        return MealSuggestionResponse.of(mealSuggestion);
+        return MealSuggestionMaximumResponse.of(mealSuggestion);
     }
 
-    public List<MealSuggestionResponse> findAllSuggestion(
+    public List<MealSuggestionMinimumResponse> findAllSuggestions(
     ) {
         return mealSuggestionRepository.findAll()
                 .stream()
-                .map(MealSuggestionResponse::of)
+                .map(MealSuggestionMinimumResponse::of)
                 .toList();
     }
 }

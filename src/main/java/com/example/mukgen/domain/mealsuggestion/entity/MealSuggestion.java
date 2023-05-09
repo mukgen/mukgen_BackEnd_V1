@@ -2,19 +2,15 @@ package com.example.mukgen.domain.mealsuggestion.entity;
 
 import com.example.mukgen.domain.mealsuggestionlike.entity.MealSuggestionLike;
 import com.example.mukgen.domain.user.entity.User;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "tbl_mealSuggestion")
+@Entity(name = "tbl_meal_suggestion")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 @Getter
 public class MealSuggestion {
 
@@ -22,8 +18,10 @@ public class MealSuggestion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "title", length = 30, nullable = false)
     private String title;
 
+    @Column(name = "content", length = 300, nullable = false)
     private String content;
 
     @ManyToOne
@@ -31,17 +29,23 @@ public class MealSuggestion {
     private User user;
 
     @OneToMany(mappedBy = "mealSuggestion")
+    @Column(name = "suggestion_likes")
     private List<MealSuggestionLike> mealSuggestionLikeList = new ArrayList<>();
 
-    private int likeCount;
+    @Column(name = "like_count", nullable = false)
+    private int likeCount = 0;
 
-    private int viewCount;
+    @Column(name = "view_count", nullable = false)
+    private int viewCount = 0;
 
-    private LocalDateTime createAt;
+    @Column(name = "create_at", nullable = false)
+    private final LocalDateTime createAt = LocalDateTime.now();
 
+    @Column(name = "update_at")
     private LocalDateTime updateAt;
 
-    private boolean deleted = false;
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted;
 
     public void updateMealSuggestion(
             String title,
@@ -56,26 +60,32 @@ public class MealSuggestion {
         this.deleted = true;
     }
 
-    public MealSuggestion(String title, String content, User user) {
-        this.title = title;
-        this.content = content;
-        this.user = user;
-        this.likeCount = 0;
-        this.viewCount = 0;
-        this.createAt = LocalDateTime.now();
+    public void addLike(String userName) {
+        mealSuggestionLikeList.add(
+                MealSuggestionLike.builder()
+                        .mealSuggestion(this)
+                        .userName(userName)
+                        .build());
+        this.likeCount++;
     }
 
-    public void addLike(String userName) {
-        this.likeCount++;
-        MealSuggestionLike mealSuggestionLike = new MealSuggestionLike(this, userName);
-        mealSuggestionLikeList.add(mealSuggestionLike);
-    }
     public void removeLike(String userName) {
-        mealSuggestionLikeList.remove(new MealSuggestionLike(this, userName));
+        mealSuggestionLikeList.remove(
+                MealSuggestionLike.builder()
+                        .mealSuggestion(this)
+                        .userName(userName)
+                        .build());
         this.likeCount--;
     }
 
     public void addViewCount() {
         this.viewCount++;
+    }
+
+    @Builder
+    public MealSuggestion(String title, String content, User user) {
+        this.title = title;
+        this.content = content;
+        this.user = user;
     }
 }
