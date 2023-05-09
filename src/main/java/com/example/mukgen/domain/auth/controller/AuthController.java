@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth")
@@ -19,7 +21,7 @@ public class AuthController {
 
     @PostMapping("/signup/general")
     public void signup(
-            @RequestBody
+            @RequestBody @Valid
             UserSignupRequest request
             ){
         authService.signup(request);

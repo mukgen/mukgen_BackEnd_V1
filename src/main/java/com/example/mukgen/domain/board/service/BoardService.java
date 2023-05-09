@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -26,7 +25,7 @@ public class BoardService {
     private final UserFacade userFacade;
 
     @Transactional
-    public void createBoard(
+    public void addBoard(
             BoardCreateRequest request
     ) {
         User curUser = userFacade.currentUser();
@@ -36,7 +35,7 @@ public class BoardService {
     }
 
     @Transactional
-    public void updateBoard(
+    public void modifyBoard(
             BoardUpdateRequest request,
             Long boardId
     ){
@@ -46,21 +45,33 @@ public class BoardService {
         board.updateBoard(request.getTitle(), request.getContent());
     }
 
-    public BoardListResponse findAll(){
+    public BoardListResponse findAllBoard(){
         List<BoardResponse> boardResponses = boardRepository.findAll().stream()
-                .map(it -> BoardResponse.builder()
-                        .title(it.getTitle())
-                        .content(it.getContent())
-                        .username(it.getUser().getName())
-                        .createAt(it.getCreateAt())
-                        .updateAt(it.getUpdateAt())
-                        .likeCount(it.getLikeCount())
-                        .viewCount(it.getViewCount())
-                        .build())
+                .map(BoardResponse::of)
                 .toList();
 
         return BoardListResponse.builder()
                 .boardResponseList(boardResponses)
                 .build();
     }
+
+
+    @Transactional
+    public void deleteBoard(
+            Long boardId
+    ){
+        if(!boardRepository.existsById(boardId)){
+            throw BoardNotFoundException.EXCEPTION;
+        }
+        boardRepository.deleteById(boardId);
+    }
+
+    @Transactional
+    public BoardResponse findBoard(Long boardId){
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(() -> BoardNotFoundException.EXCEPTION);
+        board.addViewCount();
+        return BoardResponse.of(board);
+    }
+
 }

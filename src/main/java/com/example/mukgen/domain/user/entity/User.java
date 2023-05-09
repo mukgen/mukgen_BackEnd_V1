@@ -1,6 +1,7 @@
 package com.example.mukgen.domain.user.entity;
 
 import com.example.mukgen.domain.board.entity.Board;
+import com.example.mukgen.domain.review.entity.Review;
 import com.example.mukgen.domain.user.entity.type.UserRole;
 import lombok.*;
 
@@ -8,7 +9,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "user")
+@Entity(name = "tbl_user")
 @Builder
 @Getter
 @AllArgsConstructor
@@ -34,5 +35,8 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Board> boardList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Review> reviewList = new ArrayList<>();
 
 }
