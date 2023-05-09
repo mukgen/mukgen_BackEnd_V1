@@ -34,7 +34,6 @@ public class Board {
     @Column(name = "comment_count", nullable = false)
     private int commentCount = 0;
 
-    @Column
     private Boolean is_updated = false;
 
     @Column(name = "update_at")
@@ -44,10 +43,10 @@ public class Board {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "board")
+    @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
     private List<Likes> likesList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "board")
+    @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
     private List<BoardComment> boardCommentList = new ArrayList<>();
 
     public void updateBoard(String title, String content) {

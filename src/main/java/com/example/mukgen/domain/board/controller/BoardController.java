@@ -29,7 +29,7 @@ public class BoardController {
             @PathVariable Long boardId,
             @RequestBody BoardUpdateRequest request
     ){
-        boardService.modifyBoard(request,boardId);
+        return boardService.modifyBoard(request,boardId);
     }
 
     @GetMapping("/list")

@@ -8,5 +8,6 @@ import java.util.List;
 @Data
 @Builder
 public class BoardListResponse {
+
     private List<BoardMinimumResponse> boardMinimumResponseList;
 }

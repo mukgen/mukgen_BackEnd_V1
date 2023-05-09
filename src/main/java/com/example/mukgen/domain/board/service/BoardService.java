@@ -26,7 +26,7 @@ public class BoardService {
     private final UserFacade userFacade;
 
     @Transactional
-    public void addBoard(
+    public BoardListResponse addBoard(
             BoardCreateRequest request
     ) {
         User curUser = userFacade.currentUser();
