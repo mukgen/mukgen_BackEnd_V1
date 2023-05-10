@@ -1,5 +1,6 @@
 package com.example.mukgen.domain.review.service;
 
+<<<<<<< Updated upstream
 import com.example.mukgen.domain.rice.entity.Rice;
 import com.example.mukgen.domain.rice.repository.RiceRepository;
 import com.example.mukgen.domain.review.entity.Review;
@@ -9,6 +10,19 @@ import com.example.mukgen.domain.review.controller.dto.response.ReviewResponseLi
 import com.example.mukgen.domain.review.repository.ReviewRepository;
 import com.example.mukgen.domain.rice.service.exception.RiceNotFoundException;
 import com.example.mukgen.domain.review.service.exception.ReviewAlreadyExistsException;
+=======
+import com.example.mukgen.domain.review.controller.dto.request.ReviewCreateRequest;
+import com.example.mukgen.domain.review.controller.dto.response.*;
+import com.example.mukgen.domain.review.entity.Review;
+import com.example.mukgen.domain.review.repository.ReviewRepository;
+import com.example.mukgen.domain.review.service.exception.ReviewAlreadyExistsException;
+import com.example.mukgen.domain.review.service.exception.ReviewNotFoundException;
+import com.example.mukgen.domain.rice.entity.Rice;
+import com.example.mukgen.domain.rice.repository.RiceRepository;
+import com.example.mukgen.domain.rice.service.RiceService;
+import com.example.mukgen.domain.rice.service.exception.RiceNotFoundException;
+import com.example.mukgen.domain.user.entity.User;
+>>>>>>> Stashed changes
 import com.example.mukgen.domain.user.service.UserFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,6 +46,13 @@ public class ReviewService {
             ReviewCreateRequest request,
             int mealId
     ){
+
+        LocalDate curDate = LocalDate.now();
+        int curId = (curDate.getYear()*10000 + curDate.getMonthValue()*100 + curDate.getDayOfMonth())*10;
+
+        if(mealId>curId){
+            throw new IllegalStateException("오류 시발!");
+        }
 
         Rice rice = riceRepository.findById(mealId)
                 .orElseThrow(()-> RiceNotFoundException.EXCEPTION);

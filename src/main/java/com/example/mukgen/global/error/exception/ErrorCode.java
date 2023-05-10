@@ -14,7 +14,7 @@ public enum ErrorCode {
     PASSWORD_SAME(400,"Same Password"),
     BAD_REQUEST(400, "Bad request"),
 
-    // Un Authorized
+    // UnAuthorized
     EXPIRED_TOKEN(401 , "Expired token"),
     INVALID_TOKEN(401, "Invalid token"),
 
