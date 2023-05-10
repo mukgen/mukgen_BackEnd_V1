@@ -9,6 +9,7 @@ import com.example.mukgen.domain.review.controller.dto.request.ReviewCreateReque
 import com.example.mukgen.domain.review.repository.ReviewRepository;
 import com.example.mukgen.domain.rice.service.RiceService;
 import com.example.mukgen.domain.review.service.exception.ReviewAlreadyExistsException;
+import com.example.mukgen.domain.rice.service.exception.MealNotFoundException;
 import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.service.UserFacade;
 import lombok.RequiredArgsConstructor;
@@ -43,7 +44,7 @@ public class ReviewService {
     ){
 
         Rice rice = riceRepository.findById(mealId)
-                .orElseThrow(()-> RiceNotFoundException.EXCEPTION);
+                .orElseThrow(()-> MealNotFoundException.EXCEPTION);
 
         if(reviewRepository.existsByRiceAndUser(rice,userFacade.currentUser())){
             throw ReviewAlreadyExistsException.EXCEPTION;
@@ -75,7 +76,7 @@ public class ReviewService {
     public ReviewResponseList findReview(int riceId){
 
         Rice rice = riceRepository.findById(riceId)
-                .orElseThrow(()-> RiceNotFoundException.EXCEPTION);
+                .orElseThrow(()->  MealNotFoundException.EXCEPTION);
 
         List<ReviewResponse> reviewResponseList = reviewRepository.findAllByRice(rice)
                 .stream().map(ReviewResponse::of).toList();
