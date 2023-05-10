@@ -2,15 +2,14 @@ package com.example.mukgen.domain.board.service;
 
 import com.example.mukgen.domain.board.controller.dto.request.BoardCreateRequest;
 import com.example.mukgen.domain.board.controller.dto.request.BoardUpdateRequest;
-import com.example.mukgen.domain.board.controller.dto.response.BoardListResponse;
-import com.example.mukgen.domain.board.controller.dto.response.BoardMaximumResponse;
-import com.example.mukgen.domain.board.controller.dto.response.BoardMinimumResponse;
+import com.example.mukgen.domain.board.controller.dto.response.*;
 import com.example.mukgen.domain.board.entity.Board;
 import com.example.mukgen.domain.board.repository.BoardRepository;
 import com.example.mukgen.domain.board.service.exception.BoardNotFoundException;
 import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.service.UserFacade;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -89,5 +88,19 @@ public class BoardService {
         board.addViewCount();
         return BoardMaximumResponse.of(board);
     }
+
+    public BoardPopularResponseList findPopularBoard(){
+        List<BoardPopularResponse> boardPopularResponseList =
+                boardRepository.findAll(Sort.by(Sort.Direction.DESC, "viewCount"))
+                        .stream()
+                        .map(BoardPopularResponse::of)
+                        .limit(3)
+                        .toList();
+
+        return BoardPopularResponseList.builder()
+                .boardPopularResponseList(boardPopularResponseList)
+                .build();
+    }
+
 
 }

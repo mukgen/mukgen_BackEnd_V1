@@ -4,7 +4,7 @@ import com.example.mukgen.domain.board.controller.dto.request.BoardCreateRequest
 import com.example.mukgen.domain.board.controller.dto.request.BoardUpdateRequest;
 import com.example.mukgen.domain.board.controller.dto.response.BoardListResponse;
 import com.example.mukgen.domain.board.controller.dto.response.BoardMaximumResponse;
-import com.example.mukgen.domain.board.controller.dto.response.BoardMinimumResponse;
+import com.example.mukgen.domain.board.controller.dto.response.BoardPopularResponseList;
 import com.example.mukgen.domain.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -50,5 +50,11 @@ public class BoardController {
     ){
         return boardService.findBoard(boardId);
     }
+
+    @GetMapping("/hot")
+    public BoardPopularResponseList boardPopularList(){
+        return boardService.findPopularBoard();
+    }
+
 
 }
