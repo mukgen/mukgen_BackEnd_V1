@@ -1,8 +1,7 @@
 package com.example.mukgen.domain.review.controller;
 
 import com.example.mukgen.domain.review.controller.dto.request.ReviewCreateRequest;
-import com.example.mukgen.domain.review.controller.dto.response.ReviewRankResponse;
-import com.example.mukgen.domain.review.controller.dto.response.ReviewResponseList;
+import com.example.mukgen.domain.review.controller.dto.response.*;
 import com.example.mukgen.domain.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -22,15 +21,20 @@ public class ReviewController {
         reviewService.addReview(request,mealId);
     }
 
-    @GetMapping("/{mealId}")
-    public ReviewResponseList reviewDetails(
-            @PathVariable int mealId
+    @GetMapping("/{reviewId}")
+    public ReviewMaximumResponse reviewDetails(
+            @PathVariable Long reviewId
     ){
-        return reviewService.findReview(mealId);
+        return reviewService.findReview(reviewId);
+    }
+
+    @GetMapping("/today")
+    public ReviewTodayListResponse reviewTodayList(){
+        return reviewService.findTodayReview();
     }
 
     @GetMapping("/rank")
-    public ReviewRankResponse reviewRankList(){
+    public ReviewRankResponseList reviewRankList(){
         return reviewService.findRankReview();
     }
 

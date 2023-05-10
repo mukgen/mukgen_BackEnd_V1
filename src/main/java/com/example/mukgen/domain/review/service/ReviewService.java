@@ -1,29 +1,26 @@
 package com.example.mukgen.domain.review.service;
 
-import com.example.mukgen.domain.review.controller.dto.response.ReviewMinimumResponse;
-import com.example.mukgen.domain.review.controller.dto.response.ReviewRankResponse;
+import com.example.mukgen.domain.review.controller.dto.response.*;
+import com.example.mukgen.domain.review.service.exception.ReviewNotFoundException;
 import com.example.mukgen.domain.rice.entity.Rice;
 import com.example.mukgen.domain.rice.repository.RiceRepository;
 import com.example.mukgen.domain.review.entity.Review;
 import com.example.mukgen.domain.review.controller.dto.request.ReviewCreateRequest;
-import com.example.mukgen.domain.review.controller.dto.response.ReviewResponse;
-import com.example.mukgen.domain.review.controller.dto.response.ReviewResponseList;
 import com.example.mukgen.domain.review.repository.ReviewRepository;
-import com.example.mukgen.domain.rice.service.exception.MealNotFoundException;
+import com.example.mukgen.domain.rice.service.RiceService;
+import com.example.mukgen.domain.rice.service.exception.RiceNotFoundException;
 import com.example.mukgen.domain.review.service.exception.ReviewAlreadyExistsException;
 import com.example.mukgen.domain.user.entity.User;
-import com.example.mukgen.domain.user.repository.UserRepository;
 import com.example.mukgen.domain.user.service.UserFacade;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.JpaSort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 @Service
 @Transactional(readOnly = true)
@@ -36,7 +33,7 @@ public class ReviewService {
 
     private final UserFacade userFacade;
 
-    private final UserRepository userRepository;
+    private final RiceService riceService;
 
     private final EntityManager entityManager;
 
@@ -47,7 +44,7 @@ public class ReviewService {
     ){
 
         Rice rice = riceRepository.findById(mealId)
-                .orElseThrow(()-> MealNotFoundException.EXCEPTION);
+                .orElseThrow(()-> RiceNotFoundException.EXCEPTION);
 
         if(reviewRepository.existsByRiceAndUser(rice,userFacade.currentUser())){
             throw ReviewAlreadyExistsException.EXCEPTION;
@@ -63,21 +60,32 @@ public class ReviewService {
         reviewRepository.save(review);
     }
 
-    public ReviewResponseList findReview(
-            int mealId
+    public ReviewMaximumResponse findReview(
+            Long reviewId
     ){
-        Rice rice = riceRepository.findById(mealId)
-                .orElseThrow(()-> MealNotFoundException.EXCEPTION);
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(()-> ReviewNotFoundException.EXCEPTION);
 
-        List<ReviewResponse> reviewResponseList =
-                reviewRepository.findAllByRice(rice)
-                        .stream()
-                        .map(ReviewResponse::of)
-                                .toList();
-        return ReviewResponseList.builder()
-                .reviewResponseList(reviewResponseList)
+        return ReviewMaximumResponse.builder()
+                .content(review.getReview())
+                .userName(review.getUser().getName())
+                .count(review.getCount())
                 .build();
     }
+
+    public ReviewResponseList findReview(int riceId){
+
+        Rice rice = riceRepository.findById(riceId)
+                .orElseThrow(()-> RiceNotFoundException.EXCEPTION);
+
+        List<ReviewResponse> reviewResponseList = reviewRepository.findAllByRice(rice)
+                .stream().map(ReviewResponse::of).toList();
+
+        return ReviewResponseList.builder()
+                    .reviewResponseList(reviewResponseList)
+                    .build();
+    }
+
 
     public ReviewResponseList findAllReview(){
         List<ReviewResponse> reviewResponseList =
@@ -90,18 +98,36 @@ public class ReviewService {
                 .build();
     }
 
-    public ReviewRankResponse findRankReview(){
+    public ReviewRankResponseList findRankReview(){
 
         String jpql = "SELECT e FROM tbl_user e ORDER BY SIZE(e.reviewList) DESC";
 
         List<User> userSortList = entityManager.createQuery(jpql, User.class).setMaxResults(3).getResultList();
 
-        List<ReviewMinimumResponse> reviewMinimumResponseList = userSortList.stream()
-                .map(ReviewMinimumResponse::of).toList();
+        List<ReviewRankResponse> reviewRankResponseList = userSortList.stream()
+                .map(ReviewRankResponse::of).toList();
 
-        return ReviewRankResponse.builder()
-                .reviewMinimumResponseList(reviewMinimumResponseList)
+        return ReviewRankResponseList.builder()
+                .reviewRankResponseList(reviewRankResponseList)
                 .build();
+    }
+
+    public ReviewTodayListResponse findTodayReview(){
+
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        int riceId = Integer.parseInt(currentDate.format(formatter))*10;
+
+        List<ReviewResponseList> reviewResponseLists = new ArrayList<>();
+
+        reviewResponseLists.add(findReview(riceId + 1));
+        reviewResponseLists.add(findReview(riceId + 2));
+        reviewResponseLists.add(findReview(riceId + 3));
+
+        return ReviewTodayListResponse.builder()
+                .reviewResponseLists(reviewResponseLists)
+                .build();
+
     }
 
 
