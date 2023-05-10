@@ -8,7 +8,6 @@ import com.example.mukgen.domain.review.entity.Review;
 import com.example.mukgen.domain.review.controller.dto.request.ReviewCreateRequest;
 import com.example.mukgen.domain.review.repository.ReviewRepository;
 import com.example.mukgen.domain.rice.service.RiceService;
-import com.example.mukgen.domain.rice.service.exception.RiceNotFoundException;
 import com.example.mukgen.domain.review.service.exception.ReviewAlreadyExistsException;
 import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.service.UserFacade;
