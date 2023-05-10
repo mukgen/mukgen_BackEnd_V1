@@ -27,7 +27,7 @@ public enum ErrorCode {
     USER_NOT_FOUND(404,"User not found"),
     PASSWORD_MISMATCH(404, "Password mismatch"),
     BOARD_NOT_FOUND(404, "Board not found"),
-    MEAL_NOT_FOUND(404,"Meal not found"),
+    RICE_NOT_FOUND(404,"Meal not found"),
     REVIEW_NOT_FOUND(404,"Review not found"),
     BOARD_COMMENT_NOT_FOUND(404,"BoardCommnet not found"),
 
