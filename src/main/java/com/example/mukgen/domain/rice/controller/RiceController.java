@@ -25,7 +25,7 @@ public class RiceController {
 
     @GetMapping("/meal/today")
     public RiceTodayResponse mealTodayList(){
-        return riceService.findTodayRice(2023,5,10);
+        return riceService.findTodayRice();
     }
 
     @PostMapping("/meal/download")

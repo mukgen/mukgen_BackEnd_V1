@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -68,7 +69,14 @@ public class RiceService {
     }
 
     @Transactional
-    public RiceTodayResponse findTodayRice(int year, int month, int day){
+    public RiceTodayResponse findTodayRice(){
+
+        LocalDate curDate = LocalDate.now();
+
+        int day = curDate.getDayOfMonth();
+        int month = curDate.getMonthValue();
+        int year = curDate.getYear();
+
         List<RiceResponse> riceResponseList = new ArrayList<>();
 
         riceResponseList.add(findRice(
