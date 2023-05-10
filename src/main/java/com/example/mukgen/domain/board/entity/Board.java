@@ -39,6 +39,9 @@ public class Board {
     @Column(name = "update_at")
     private LocalDateTime updateAt;
 
+    @Column(name = "create_at")
+    private LocalDateTime createAt;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -83,7 +86,7 @@ public class Board {
         this.user = user;
         this.likeCount = 0;
         this.viewCount = 0;
-        this.updateAt = LocalDateTime.now();
+        this.createAt = LocalDateTime.now();
     }
 
     @Builder

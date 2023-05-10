@@ -22,6 +22,8 @@ public class BoardMinimumResponse {
 
     private int viewCount;
 
+    private LocalDateTime createAt;
+
     private LocalDateTime updateAt;
 
     private boolean isUpdated;
@@ -29,6 +31,7 @@ public class BoardMinimumResponse {
     public static BoardMinimumResponse of(Board board){
 
         return BoardMinimumResponse.builder()
+                .createAt(board.getCreateAt())
                 .commentCount(board.getCommentCount())
                 .title(board.getTitle())
                 .content(board.getContent())
