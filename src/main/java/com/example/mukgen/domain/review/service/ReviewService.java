@@ -63,8 +63,6 @@ public class ReviewService {
     public ReviewMaximumResponse findReview(
             Long reviewId
     ){
-        Review review = reviewRepository.findById(reviewId)
-                .orElseThrow(()-> ReviewNotFoundException.EXCEPTION);
 
         return ReviewMaximumResponse.builder()
                 .content(review.getReview())
