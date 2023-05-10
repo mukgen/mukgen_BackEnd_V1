@@ -1,6 +1,5 @@
 package com.example.mukgen.domain.review.service;
 
-<<<<<<< Updated upstream
 import com.example.mukgen.domain.rice.entity.Rice;
 import com.example.mukgen.domain.rice.repository.RiceRepository;
 import com.example.mukgen.domain.review.entity.Review;
@@ -10,24 +9,12 @@ import com.example.mukgen.domain.review.controller.dto.response.ReviewResponseLi
 import com.example.mukgen.domain.review.repository.ReviewRepository;
 import com.example.mukgen.domain.rice.service.exception.RiceNotFoundException;
 import com.example.mukgen.domain.review.service.exception.ReviewAlreadyExistsException;
-=======
-import com.example.mukgen.domain.review.controller.dto.request.ReviewCreateRequest;
-import com.example.mukgen.domain.review.controller.dto.response.*;
-import com.example.mukgen.domain.review.entity.Review;
-import com.example.mukgen.domain.review.repository.ReviewRepository;
-import com.example.mukgen.domain.review.service.exception.ReviewAlreadyExistsException;
-import com.example.mukgen.domain.review.service.exception.ReviewNotFoundException;
-import com.example.mukgen.domain.rice.entity.Rice;
-import com.example.mukgen.domain.rice.repository.RiceRepository;
-import com.example.mukgen.domain.rice.service.RiceService;
-import com.example.mukgen.domain.rice.service.exception.RiceNotFoundException;
-import com.example.mukgen.domain.user.entity.User;
->>>>>>> Stashed changes
 import com.example.mukgen.domain.user.service.UserFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
