@@ -22,10 +22,13 @@ public class Rice {
 
     private String item;
 
+    private RiceType riceType;
+
     @OneToMany(mappedBy = "rice")
     private List<Review> reviewList = new ArrayList<>();
 
-    public Rice(String[] item, int id) {
+    public Rice(String[] item, int id, RiceType riceType) {
+        this.riceType = riceType;
         this.item = Arrays.toString(item);
         this.id = id;
     }

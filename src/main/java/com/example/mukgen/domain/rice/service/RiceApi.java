@@ -64,7 +64,7 @@ public class RiceApi {
             for (int i = 0; i < length; i++) {
                 final JSONObject json = array.getJSONObject(i);
                 if (json.getString("MMEAL_SC_NM").equals(riceType.getTag())) {
-                    return new Rice(getRiceInfo(json.getString("DDISH_NM")),id);
+                    return new Rice(getRiceInfo(json.getString("DDISH_NM")),id,riceType);
                 }
             }
         }

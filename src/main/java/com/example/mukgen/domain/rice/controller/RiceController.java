@@ -2,6 +2,7 @@ package com.example.mukgen.domain.rice.controller;
 
 import com.example.mukgen.domain.rice.controller.dto.request.RiceRequest;
 import com.example.mukgen.domain.rice.controller.dto.response.RiceResponse;
+import com.example.mukgen.domain.rice.controller.dto.response.RiceTodayResponse;
 import com.example.mukgen.domain.rice.service.RiceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,11 @@ public class RiceController {
             @RequestBody RiceRequest request
             ){
         return riceService.findRice(request);
+    }
+
+    @GetMapping("/meal/today")
+    public RiceTodayResponse mealTodayList(){
+        return riceService.findTodayRice(2023,5,10);
     }
 
     @PostMapping("/meal/download")

@@ -1,6 +1,7 @@
 package com.example.mukgen.domain.rice.service;
 
 
+import com.example.mukgen.domain.rice.controller.dto.response.RiceTodayResponse;
 import com.example.mukgen.domain.rice.entity.Rice;
 import com.example.mukgen.domain.rice.entity.RiceType;
 import com.example.mukgen.domain.rice.controller.dto.request.RiceRequest;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
@@ -61,6 +64,40 @@ public class RiceService {
 
         return RiceResponse.builder()
                 .item(rice.getItem())
+                .build();
+    }
+
+    @Transactional
+    public RiceTodayResponse findTodayRice(int year, int month, int day){
+        List<RiceResponse> riceResponseList = new ArrayList<>();
+
+        riceResponseList.add(findRice(
+                RiceRequest.builder()
+                        .riceType(RiceType.BREAKFAST)
+                        .day(day)
+                        .month(month)
+                        .year(year)
+                        .build()
+        ));
+        riceResponseList.add(findRice(
+                RiceRequest.builder()
+                        .riceType(RiceType.LUNCH)
+                        .day(day)
+                        .month(month)
+                        .year(year)
+                        .build()
+        ));
+        riceResponseList.add(findRice(
+                RiceRequest.builder()
+                        .riceType(RiceType.DINNER)
+                        .day(day)
+                        .month(month)
+                        .year(year)
+                        .build()
+        ));
+
+        return RiceTodayResponse.builder()
+                .responseList(riceResponseList)
                 .build();
     }
 
