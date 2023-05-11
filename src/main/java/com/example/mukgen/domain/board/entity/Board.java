@@ -91,7 +91,7 @@ public class Board {
 
     @Builder
     public Board(Long id, String title, String content, int likeCount,
-            int viewCount, LocalDateTime updateAt, User user, List<Likes> likesList
+            int viewCount, User user, List<Likes> likesList
             , List<BoardComment> boardCommentList
     ) {
         this.id = id;
@@ -99,7 +99,6 @@ public class Board {
         this.content = content;
         this.likeCount = likeCount;
         this.viewCount = viewCount;
-        this.updateAt = updateAt;
         this.user = user;
         this.likesList = likesList;
         this.boardCommentList = boardCommentList;

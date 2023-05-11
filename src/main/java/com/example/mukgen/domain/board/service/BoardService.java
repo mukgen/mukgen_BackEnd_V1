@@ -13,6 +13,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.WeekFields;
 import java.util.List;
 
 @Service
@@ -89,7 +92,7 @@ public class BoardService {
         return BoardMaximumResponse.of(board);
     }
 
-    public BoardPopularResponseList findPopularBoard(){
+    public BoardPopularListResponse findPopularBoard(){
         List<BoardPopularResponse> boardPopularResponseList =
                 boardRepository.findAll(Sort.by(Sort.Direction.DESC, "viewCount"))
                         .stream()
@@ -97,8 +100,32 @@ public class BoardService {
                         .limit(3)
                         .toList();
 
-        return BoardPopularResponseList.builder()
+        return BoardPopularListResponse.builder()
                 .boardPopularResponseList(boardPopularResponseList)
+                .build();
+    }
+
+    public BoardListResponse findDayBoard(){
+
+        LocalDateTime curDateTime = LocalDateTime.now().minusDays(1);
+        List<BoardMinimumResponse> boardMinimumResponseList =
+                boardRepository.findAllByCreateAtGreaterThan(curDateTime)
+                        .stream()
+                        .map(BoardMinimumResponse::of)
+                        .toList();
+        return BoardListResponse.builder()
+                .boardMinimumResponseList(boardMinimumResponseList)
+                .build();
+    }
+
+    public BoardListResponse findWeekBoard(){
+        int thisWeek = LocalDate.now().get(WeekFields.ISO.weekOfWeekBasedYear());
+
+        List<BoardMinimumResponse> boardMinimumResponseList =
+                boardRepository.findByWeek(thisWeek).stream()
+                        .map(BoardMinimumResponse::of).toList();
+        return BoardListResponse.builder()
+                .boardMinimumResponseList(boardMinimumResponseList)
                 .build();
     }
 

@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 @Builder
-public class BoardPopularResponseList {
+public class BoardPopularListResponse {
 
     private List<BoardPopularResponse> boardPopularResponseList;
 

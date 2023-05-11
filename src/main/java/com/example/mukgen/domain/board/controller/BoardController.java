@@ -4,7 +4,7 @@ import com.example.mukgen.domain.board.controller.dto.request.BoardCreateRequest
 import com.example.mukgen.domain.board.controller.dto.request.BoardUpdateRequest;
 import com.example.mukgen.domain.board.controller.dto.response.BoardListResponse;
 import com.example.mukgen.domain.board.controller.dto.response.BoardMaximumResponse;
-import com.example.mukgen.domain.board.controller.dto.response.BoardPopularResponseList;
+import com.example.mukgen.domain.board.controller.dto.response.BoardPopularListResponse;
 import com.example.mukgen.domain.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -52,9 +52,18 @@ public class BoardController {
     }
 
     @GetMapping("/hot")
-    public BoardPopularResponseList boardPopularList(){
+    public BoardPopularListResponse boardPopularList(){
         return boardService.findPopularBoard();
     }
 
+    @GetMapping("/day")
+    public BoardListResponse boardDayList(){
+        return boardService.findDayBoard();
+    }
+
+    @GetMapping("/week")
+    public BoardListResponse boardWeekList(){
+        return boardService.findWeekBoard();
+    }
 
 }
