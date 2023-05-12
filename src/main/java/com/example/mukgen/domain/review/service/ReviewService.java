@@ -51,10 +51,14 @@ public class ReviewService {
             int mealId
     ){
 
+        int tempMealId = mealId;
+
+        int day = (tempMealId/=10) % 100; // 12
+
         LocalDate curDate = LocalDate.now();
         int curId = (curDate.getYear()*10000 + curDate.getMonthValue()*100 + curDate.getDayOfMonth())*10;
 
-        if(mealId>curId){
+        if(day!=curDate.getDayOfMonth()){
             throw new IllegalStateException("오류 시발!");
         }
 
@@ -136,11 +140,11 @@ public class ReviewService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         int riceId = Integer.parseInt(currentDate.format(formatter))*10;
 
-        List<ReviewResponseList> reviewResponseLists = new ArrayList<>();
-
-        reviewResponseLists.add(findReview(riceId + 1));
-        reviewResponseLists.add(findReview(riceId + 2));
-        reviewResponseLists.add(findReview(riceId + 3));
+        var reviewResponseLists = List.of(
+                findReview(riceId + 1),
+                findReview(riceId + 2),
+                findReview(riceId + 3)
+        );
 
         return ReviewTodayListResponse.builder()
                 .reviewResponseLists(reviewResponseLists)
