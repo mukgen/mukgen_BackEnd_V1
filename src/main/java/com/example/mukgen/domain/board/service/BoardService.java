@@ -130,8 +130,10 @@ public class BoardService {
 
         List<BoardPopularResponse> boardPopularResponseList = new ArrayList<>();
 
-        boardPopularResponseList.add(popularBoard.getBoardPopularResponseList().get(0));
-        boardPopularResponseList.add(popularBoard.getBoardPopularResponseList().get(1));
+        if(popularBoard.getBoardPopularResponseList().size()>1){
+            boardPopularResponseList.add(popularBoard.getBoardPopularResponseList().get(0));
+            boardPopularResponseList.add(popularBoard.getBoardPopularResponseList().get(1));
+        }
 
         return BoardTabListResponse.builder()
                 .boardListResponse(boardListResponse)
