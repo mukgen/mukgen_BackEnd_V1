@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("/mealSuggestion")
 public class MealSuggestionController {
 
-    private MealSuggestionService mealSuggestionService;
+    private final MealSuggestionService mealSuggestionService;
 
     @PostMapping
     public void mealSuggestionAdd(
