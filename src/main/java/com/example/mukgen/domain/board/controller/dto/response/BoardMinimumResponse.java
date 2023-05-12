@@ -38,7 +38,7 @@ public class BoardMinimumResponse {
                 .userName(board.getUser().getName())
                 .likeCount(board.getLikeCount())
                 .viewCount(board.getViewCount())
-                .isUpdated(board.getIs_updated())
+                .isUpdated(board.getIsUpdated())
                 .updateAt(board.getUpdateAt())
                 .build();
     }
