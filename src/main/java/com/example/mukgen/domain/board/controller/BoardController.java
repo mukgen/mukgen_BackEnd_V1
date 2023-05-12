@@ -63,9 +63,4 @@ public class BoardController {
         return boardService.findWeekBoard();
     }
 
-    @GetMapping("/total")
-    public BoardTabListResponse boardList() {
-        return boardService.findAllBoard();
-    }
-
 }
