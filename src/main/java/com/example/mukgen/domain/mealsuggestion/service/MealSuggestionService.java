@@ -27,7 +27,7 @@ public class MealSuggestionService {
     private final UserFacade userFacade;
 
     @Transactional
-    public void createMealSuggestion(
+    public void addMealSuggestion(
             MealSuggestionCreateRequest request
     ) {
         User user = userFacade.currentUser();
@@ -42,7 +42,7 @@ public class MealSuggestionService {
     }
 
     @Transactional
-    public void updateMealSuggestion(
+    public void modifyMealSuggestion(
             MealSuggestionUpdateRequest request,
             Long suggestionId
     ) {
@@ -59,7 +59,7 @@ public class MealSuggestionService {
     }
 
     @Transactional
-    public void deleteMealSuggestion(
+    public void removeMealSuggestion(
             Long suggestionId
     ) {
         MealSuggestion mealSuggestion = mealSuggestionRepository.findById(suggestionId)
@@ -86,7 +86,7 @@ public class MealSuggestionService {
         return MealSuggestionMaximumResponse.of(mealSuggestion);
     }
 
-    public List<MealSuggestionMinimumResponse> findAllSuggestions(
+    public List<MealSuggestionMinimumResponse> findAllSuggestion(
     ) {
         return mealSuggestionRepository.findAll()
                 .stream()

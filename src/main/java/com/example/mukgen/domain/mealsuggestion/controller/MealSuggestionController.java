@@ -18,25 +18,25 @@ public class MealSuggestionController {
     private MealSuggestionService mealSuggestionService;
 
     @PostMapping
-    public void createMealSuggestion(
+    public void mealSuggestionAdd(
             @RequestBody MealSuggestionCreateRequest request
     ) {
-        mealSuggestionService.createMealSuggestion(request);
+        mealSuggestionService.addMealSuggestion(request);
     }
 
     @PutMapping("/{suggestionId}")
-    public void updateMealSuggestion(
+    public void mealSuggestionModify(
             @RequestBody MealSuggestionUpdateRequest request,
             @PathVariable Long suggestionId
     ) {
-        mealSuggestionService.updateMealSuggestion(request, suggestionId);
+        mealSuggestionService.modifyMealSuggestion(request, suggestionId);
     }
 
     @DeleteMapping("/{suggestionId}")
-    public void deleteMealSuggestion(
+    public void mealSuggestionRemove(
             @PathVariable Long suggestionId
     ) {
-        mealSuggestionService.deleteMealSuggestion(suggestionId);
+        mealSuggestionService.removeMealSuggestion(suggestionId);
     }
 
     @GetMapping("/{suggestionId}")
@@ -48,6 +48,6 @@ public class MealSuggestionController {
 
     @GetMapping("/list")
     public List<MealSuggestionMinimumResponse> mealSuggestionList() {
-        return mealSuggestionService.findAllSuggestions();
+        return mealSuggestionService.findAllSuggestion();
     }
 }
