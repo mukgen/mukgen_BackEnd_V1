@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.WeekFields;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -105,7 +106,9 @@ public class BoardService {
                 .build();
     }
 
-    public BoardListResponse findDayBoard(){
+    public BoardTabListResponse findDayBoard(){
+
+        BoardPopularListResponse popularBoard = findPopularBoard();
 
         LocalDateTime curDateTime = LocalDateTime.now().minusDays(1);
         List<BoardMinimumResponse> boardMinimumResponseList =
@@ -113,8 +116,19 @@ public class BoardService {
                         .stream()
                         .map(BoardMinimumResponse::of)
                         .toList();
-        return BoardListResponse.builder()
+
+        BoardListResponse boardListResponse = BoardListResponse.builder()
                 .boardMinimumResponseList(boardMinimumResponseList)
+                .build();
+
+        List<BoardPopularResponse> boardPopularResponseList = new ArrayList<>();
+
+        boardPopularResponseList.add(popularBoard.getBoardPopularResponseList().get(0));
+        boardPopularResponseList.add(popularBoard.getBoardPopularResponseList().get(1));
+
+        return BoardTabListResponse.builder()
+                .boardListResponse(boardListResponse)
+                .boardPopularResponseList(boardPopularResponseList)
                 .build();
     }
 
