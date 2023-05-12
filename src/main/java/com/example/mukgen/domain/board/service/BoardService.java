@@ -2,18 +2,21 @@ package com.example.mukgen.domain.board.service;
 
 import com.example.mukgen.domain.board.controller.dto.request.BoardCreateRequest;
 import com.example.mukgen.domain.board.controller.dto.request.BoardUpdateRequest;
-import com.example.mukgen.domain.board.controller.dto.response.BoardListResponse;
-import com.example.mukgen.domain.board.controller.dto.response.BoardMaximumResponse;
-import com.example.mukgen.domain.board.controller.dto.response.BoardMinimumResponse;
+import com.example.mukgen.domain.board.controller.dto.response.*;
 import com.example.mukgen.domain.board.entity.Board;
 import com.example.mukgen.domain.board.repository.BoardRepository;
 import com.example.mukgen.domain.board.service.exception.BoardNotFoundException;
 import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.service.UserFacade;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.WeekFields;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,7 +29,7 @@ public class BoardService {
     private final UserFacade userFacade;
 
     @Transactional
-    public BoardListResponse addBoard(
+    public void addBoard(
             BoardCreateRequest request
     ) {
         User curUser = userFacade.currentUser();
@@ -38,7 +41,7 @@ public class BoardService {
                         .user(curUser)
                         .build()
         );
-        return findAllBoard();
+
     }
 
     @Transactional
@@ -61,13 +64,20 @@ public class BoardService {
         return BoardMaximumResponse.of(board);
     }
 
-    public BoardListResponse findAllBoard(){
+    public BoardTabListResponse findAllBoard(){
         List<BoardMinimumResponse> boardMinimumResponseList = boardRepository.findAll().stream()
                 .map(BoardMinimumResponse::of)
                 .toList();
 
-        return BoardListResponse.builder()
+        BoardListResponse boardListResponse = BoardListResponse.builder()
                 .boardMinimumResponseList(boardMinimumResponseList)
+                .build();
+
+        List<BoardPopularResponse> boardPopularResponseList = findPopularBoard().getBoardPopularResponseList();
+
+        return BoardTabListResponse.builder()
+                .boardListResponse(boardListResponse)
+                .boardPopularListResponse(findPopularBoard())
                 .build();
     }
 
@@ -89,5 +99,56 @@ public class BoardService {
         board.addViewCount();
         return BoardMaximumResponse.of(board);
     }
+
+    public BoardPopularListResponse findPopularBoard(){
+        List<BoardPopularResponse> boardPopularResponseList =
+                boardRepository.findAll(Sort.by(Sort.Direction.DESC, "viewCount"))
+                        .stream()
+                        .map(BoardPopularResponse::of)
+                        .limit(3)
+                        .toList();
+
+        return BoardPopularListResponse.builder()
+                .boardPopularResponseList(boardPopularResponseList)
+                .build();
+    }
+
+    public BoardTabListResponse findDayBoard(){
+
+        BoardPopularListResponse popularBoard = findPopularBoard();
+
+        LocalDateTime curDateTime = LocalDateTime.now().minusDays(1);
+        List<BoardMinimumResponse> boardMinimumResponseList =
+                boardRepository.findAllByCreateAtGreaterThan(curDateTime)
+                        .stream()
+                        .map(BoardMinimumResponse::of)
+                        .toList();
+
+        BoardListResponse boardListResponse = BoardListResponse.builder()
+                .boardMinimumResponseList(boardMinimumResponseList)
+                .build();
+
+        List<BoardPopularResponse> boardPopularResponseList = new ArrayList<>();
+
+        boardPopularResponseList.add(popularBoard.getBoardPopularResponseList().get(0));
+        boardPopularResponseList.add(popularBoard.getBoardPopularResponseList().get(1));
+
+        return BoardTabListResponse.builder()
+                .boardListResponse(boardListResponse)
+                .boardPopularListResponse(findPopularBoard())
+                .build();
+    }
+
+    public BoardListResponse findWeekBoard(){
+        int thisWeek = LocalDate.now().get(WeekFields.ISO.weekOfWeekBasedYear());
+
+        List<BoardMinimumResponse> boardMinimumResponseList =
+                boardRepository.findByWeek(thisWeek).stream()
+                        .map(BoardMinimumResponse::of).toList();
+        return BoardListResponse.builder()
+                .boardMinimumResponseList(boardMinimumResponseList)
+                .build();
+    }
+
 
 }

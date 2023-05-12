@@ -39,6 +39,9 @@ public class Board {
     @Column(name = "update_at")
     private LocalDateTime updateAt;
 
+    @Column(name = "create_at")
+    private LocalDateTime createAt;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -83,12 +86,12 @@ public class Board {
         this.user = user;
         this.likeCount = 0;
         this.viewCount = 0;
-        this.updateAt = LocalDateTime.now();
+        this.createAt = LocalDateTime.now();
     }
 
     @Builder
     public Board(Long id, String title, String content, int likeCount,
-            int viewCount, LocalDateTime updateAt, User user, List<Likes> likesList
+            int viewCount, User user, List<Likes> likesList
             , List<BoardComment> boardCommentList
     ) {
         this.id = id;
@@ -96,7 +99,6 @@ public class Board {
         this.content = content;
         this.likeCount = likeCount;
         this.viewCount = viewCount;
-        this.updateAt = updateAt;
         this.user = user;
         this.likesList = likesList;
         this.boardCommentList = boardCommentList;

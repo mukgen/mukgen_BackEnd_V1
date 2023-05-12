@@ -1,33 +1,25 @@
 package com.example.mukgen.domain.review.service;
 
+import com.example.mukgen.domain.review.controller.dto.request.ReviewCreateRequest;
 import com.example.mukgen.domain.review.controller.dto.response.*;
+import com.example.mukgen.domain.review.entity.Review;
+import com.example.mukgen.domain.review.repository.ReviewRepository;
+import com.example.mukgen.domain.review.service.exception.ReviewAlreadyExistsException;
 import com.example.mukgen.domain.review.service.exception.ReviewNotFoundException;
 import com.example.mukgen.domain.rice.entity.Rice;
 import com.example.mukgen.domain.rice.repository.RiceRepository;
-import com.example.mukgen.domain.review.entity.Review;
-import com.example.mukgen.domain.review.controller.dto.request.ReviewCreateRequest;
-import com.example.mukgen.domain.review.repository.ReviewRepository;
-<<<<<<< HEAD
-import com.example.mukgen.domain.rice.service.exception.RiceNotFoundException;
-=======
 import com.example.mukgen.domain.rice.service.RiceService;
->>>>>>> review
-import com.example.mukgen.domain.review.service.exception.ReviewAlreadyExistsException;
-import com.example.mukgen.domain.rice.service.exception.MealNotFoundException;
+import com.example.mukgen.domain.rice.service.exception.RiceNotFoundException;
 import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.service.UserFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-<<<<<<< HEAD
-import java.time.LocalDate;
-=======
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
->>>>>>> review
 import java.util.List;
 
 @Service
@@ -82,11 +74,9 @@ public class ReviewService {
     public ReviewMaximumResponse findReview(
             Long reviewId
     ){
-<<<<<<< HEAD
-        Rice rice = riceRepository.findById(mealId)
-                .orElseThrow(()-> RiceNotFoundException.EXCEPTION);
-=======
->>>>>>> review
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(()->ReviewNotFoundException.EXCEPTION);
+
 
         return ReviewMaximumResponse.builder()
                 .content(review.getReview())
@@ -98,7 +88,7 @@ public class ReviewService {
     public ReviewResponseList findReview(int riceId){
 
         Rice rice = riceRepository.findById(riceId)
-                .orElseThrow(()->  MealNotFoundException.EXCEPTION);
+                .orElseThrow(()->  RiceNotFoundException.EXCEPTION);
 
         List<ReviewResponse> reviewResponseList = reviewRepository.findAllByRice(rice)
                 .stream().map(ReviewResponse::of).toList();
