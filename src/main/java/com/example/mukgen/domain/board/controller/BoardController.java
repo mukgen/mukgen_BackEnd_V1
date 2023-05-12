@@ -33,10 +33,6 @@ public class BoardController {
         return boardService.modifyBoard(request,boardId);
     }
 
-    @GetMapping("/list")
-    public BoardListResponse boardList() {
-        return boardService.findAllBoard();
-    }
 
     @DeleteMapping("/{boardId}")
     public void boardRemove(
@@ -65,6 +61,11 @@ public class BoardController {
     @GetMapping("/week")
     public BoardListResponse boardWeekList(){
         return boardService.findWeekBoard();
+    }
+
+    @GetMapping("/total")
+    public BoardListResponse boardList() {
+        return boardService.findAllBoard();
     }
 
 }
