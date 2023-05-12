@@ -11,5 +11,5 @@ public class BoardTabListResponse {
 
     private BoardListResponse boardListResponse;
 
-    private List<BoardPopularResponse> boardPopularResponseList;
+    private BoardPopularListResponse boardPopularListResponse;
 }

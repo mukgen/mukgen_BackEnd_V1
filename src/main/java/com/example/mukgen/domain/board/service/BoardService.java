@@ -29,7 +29,7 @@ public class BoardService {
     private final UserFacade userFacade;
 
     @Transactional
-    public BoardListResponse addBoard(
+    public void addBoard(
             BoardCreateRequest request
     ) {
         User curUser = userFacade.currentUser();
@@ -41,7 +41,7 @@ public class BoardService {
                         .user(curUser)
                         .build()
         );
-        return findAllBoard();
+
     }
 
     @Transactional
@@ -64,13 +64,20 @@ public class BoardService {
         return BoardMaximumResponse.of(board);
     }
 
-    public BoardListResponse findAllBoard(){
+    public BoardTabListResponse findAllBoard(){
         List<BoardMinimumResponse> boardMinimumResponseList = boardRepository.findAll().stream()
                 .map(BoardMinimumResponse::of)
                 .toList();
 
-        return BoardListResponse.builder()
+        BoardListResponse boardListResponse = BoardListResponse.builder()
                 .boardMinimumResponseList(boardMinimumResponseList)
+                .build();
+
+        List<BoardPopularResponse> boardPopularResponseList = findPopularBoard().getBoardPopularResponseList();
+
+        return BoardTabListResponse.builder()
+                .boardListResponse(boardListResponse)
+                .boardPopularListResponse(findPopularBoard())
                 .build();
     }
 
@@ -128,7 +135,7 @@ public class BoardService {
 
         return BoardTabListResponse.builder()
                 .boardListResponse(boardListResponse)
-                .boardPopularResponseList(boardPopularResponseList)
+                .boardPopularListResponse(findPopularBoard())
                 .build();
     }
 

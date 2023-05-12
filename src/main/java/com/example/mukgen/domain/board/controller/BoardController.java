@@ -64,7 +64,7 @@ public class BoardController {
     }
 
     @GetMapping("/total")
-    public BoardListResponse boardList() {
+    public BoardTabListResponse boardList() {
         return boardService.findAllBoard();
     }
 
