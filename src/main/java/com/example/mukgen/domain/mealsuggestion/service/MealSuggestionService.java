@@ -6,7 +6,6 @@ import com.example.mukgen.domain.mealsuggestion.controller.dto.response.MealSugg
 import com.example.mukgen.domain.mealsuggestion.entity.MealSuggestion;
 import com.example.mukgen.domain.mealsuggestion.repository.MealSuggestionRepository;
 import com.example.mukgen.domain.mealsuggestion.controller.dto.request.MealSuggestionCreateRequest;
-import com.example.mukgen.domain.mealsuggestion.service.exception.MealSuggestionDeletedException;
 import com.example.mukgen.domain.mealsuggestion.service.exception.MealSuggestionNotFoundException;
 import com.example.mukgen.domain.mealsuggestion.service.exception.MealSuggestionWriterMissMatchException;
 import com.example.mukgen.domain.user.service.UserFacade;
@@ -49,9 +48,6 @@ public class MealSuggestionService {
         MealSuggestion mealSuggestion = mealSuggestionRepository.findById(suggestionId)
                 .orElseThrow(() -> MealSuggestionNotFoundException.EXCEPTION);
 
-        if (mealSuggestion.isDeleted())
-            throw MealSuggestionDeletedException.EXCEPTION;
-
         if(mealSuggestion.getUser() != userFacade.currentUser())
             throw MealSuggestionWriterMissMatchException.EXCEPTION;
 
@@ -65,13 +61,10 @@ public class MealSuggestionService {
         MealSuggestion mealSuggestion = mealSuggestionRepository.findById(suggestionId)
                 .orElseThrow(() -> MealSuggestionNotFoundException.EXCEPTION);
 
-        if (mealSuggestion.isDeleted())
-            throw MealSuggestionDeletedException.EXCEPTION;
-
         if(mealSuggestion.getUser() != userFacade.currentUser())
             throw MealSuggestionWriterMissMatchException.EXCEPTION;
 
-        mealSuggestion.deleteMealSuggestion();
+        mealSuggestionRepository.delete(mealSuggestion);
     }
 
     @Transactional

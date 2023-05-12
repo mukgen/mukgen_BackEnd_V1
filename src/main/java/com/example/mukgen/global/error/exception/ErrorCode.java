@@ -22,7 +22,6 @@ public enum ErrorCode {
     BOARD_WRITER_MISMATCH(403, "Board writer mismatch"),
     REVIEW_WRITER_MISMATCH(403, "Review writer mismatch"),
     MEAL_SUGGESTION_WRITER_MISMATCH(403, "Meal suggestion writer mismatch"),
-    MEAL_SUGGESTION_DELETED(403, "Meal suggestion has been deleted"),
     COMMENT_WRITER_MISMATCH(403, "Comment writer mismatch"),
 
     // Not Found

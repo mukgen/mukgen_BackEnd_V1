@@ -3,7 +3,7 @@ package com.example.mukgen.domain.mealsuggestionlike.controller.dto.response;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
-import javax.persistence.Column;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 

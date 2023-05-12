@@ -3,6 +3,8 @@ package com.example.mukgen.domain.mealsuggestion.entity;
 import com.example.mukgen.domain.mealsuggestionlike.entity.MealSuggestionLike;
 import com.example.mukgen.domain.user.entity.User;
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,6 +14,8 @@ import java.util.List;
 @Entity(name = "tbl_meal_suggestion")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@SQLDelete(sql = "UPDATE tbl_meal_suggestion SET deleted = true WHERE id = ?")
+@Where(clause = "deleted = false")
 public class MealSuggestion {
 
     @Id
@@ -44,8 +48,9 @@ public class MealSuggestion {
     @Column(name = "update_at")
     private LocalDateTime updateAt;
 
-    @Column(name = "deleted", nullable = false)
-    private boolean deleted = false;
+    private boolean isUpdated = false;
+
+    private boolean isDeleted = false;
 
     public void updateMealSuggestion(
             String title,
@@ -54,10 +59,7 @@ public class MealSuggestion {
         this.title = title;
         this.content = content;
         this.updateAt = LocalDateTime.now();
-    }
-
-    public void deleteMealSuggestion() {
-        this.deleted = true;
+        this.isUpdated = true;
     }
 
     public void addLike(String userName) {
@@ -83,9 +85,27 @@ public class MealSuggestion {
     }
 
     @Builder
-    public MealSuggestion(String title, String content, User user) {
+    public MealSuggestion(
+            Long id,
+            String title,
+            String content,
+            User user,
+            List<MealSuggestionLike> mealSuggestionLikeList,
+            int likeCount,
+            int viewCount,
+            LocalDateTime updateAt,
+            boolean isUpdated,
+            boolean isDeleted
+    ) {
+        this.id = id;
         this.title = title;
         this.content = content;
         this.user = user;
+        this.mealSuggestionLikeList = mealSuggestionLikeList;
+        this.likeCount = likeCount;
+        this.viewCount = viewCount;
+        this.updateAt = updateAt;
+        this.isUpdated = isUpdated;
+        this.isDeleted = isDeleted;
     }
 }
