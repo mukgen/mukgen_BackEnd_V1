@@ -59,7 +59,7 @@ public class BoardController {
     }
 
     @GetMapping("/week")
-    public BoardListResponse boardWeekList(){
+    public BoardTabListResponse boardWeekList(){
         return boardService.findWeekBoard();
     }
 
