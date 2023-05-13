@@ -24,7 +24,7 @@ public class MealSuggestionMinimumResponse {
 
     private LocalDateTime updateAt;
 
-    private boolean deleted;
+    private boolean isUpdated;
 
     public static MealSuggestionMinimumResponse of(MealSuggestion mealSuggestion) {
         return MealSuggestionMinimumResponse.builder()
@@ -34,6 +34,7 @@ public class MealSuggestionMinimumResponse {
                 .viewCount(mealSuggestion.getViewCount())
                 .createAt(mealSuggestion.getCreateAt())
                 .updateAt(mealSuggestion.getUpdateAt())
+                .isUpdated(mealSuggestion.isUpdated())
                 .build();
     }
 }

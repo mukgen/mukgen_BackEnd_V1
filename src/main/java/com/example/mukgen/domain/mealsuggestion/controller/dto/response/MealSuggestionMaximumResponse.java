@@ -28,7 +28,7 @@ public class MealSuggestionMaximumResponse {
 
     private LocalDateTime updateAt;
 
-    private boolean deleted;
+    private boolean isUpdated;
 
     public static MealSuggestionMaximumResponse of(MealSuggestion mealSuggestion) {
         List<MealSuggestionLikeResponse> mealSuggestionLikeResponses =
@@ -49,6 +49,7 @@ public class MealSuggestionMaximumResponse {
                 .viewCount(mealSuggestion.getViewCount())
                 .createAt(mealSuggestion.getCreateAt())
                 .updateAt(mealSuggestion.getUpdateAt())
+                .isUpdated(mealSuggestion.isUpdated())
                 .build();
     }
 }
