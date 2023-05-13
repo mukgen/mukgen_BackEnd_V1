@@ -2,6 +2,8 @@ package com.example.mukgen.domain.like.entity;
 
 import com.example.mukgen.domain.board.entity.Board;
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
@@ -9,6 +11,8 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
+@Where(clause = "is_deleted = false")
+@SQLDelete(sql = "UPDATE `tbl_likes` SET is_deleted = true where id = ?")
 public class Likes {
 
     @Id
@@ -22,6 +26,8 @@ public class Likes {
     @JoinColumn(name = "board_id")
     private Board board;
 
+    @Column(name = "is_deleted")
+    private Boolean isDeleted = false;
 
     @Builder
     public Likes(Board board, String userName) {
