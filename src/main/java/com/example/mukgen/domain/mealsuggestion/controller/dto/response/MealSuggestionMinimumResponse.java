@@ -12,8 +12,6 @@ import java.util.List;
 @Builder
 public class MealSuggestionMinimumResponse {
 
-    private String title;
-
     private String userName;
 
     private int likeCount;
@@ -28,7 +26,6 @@ public class MealSuggestionMinimumResponse {
 
     public static MealSuggestionMinimumResponse of(MealSuggestion mealSuggestion) {
         return MealSuggestionMinimumResponse.builder()
-                .title(mealSuggestion.getTitle())
                 .userName(mealSuggestion.getUser().getName())
                 .likeCount(mealSuggestion.getLikeCount())
                 .viewCount(mealSuggestion.getViewCount())
