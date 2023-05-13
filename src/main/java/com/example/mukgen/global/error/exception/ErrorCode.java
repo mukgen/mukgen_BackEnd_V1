@@ -29,7 +29,8 @@ public enum ErrorCode {
     BOARD_NOT_FOUND(404, "Board not found"),
     RICE_NOT_FOUND(404,"Meal not found"),
     REVIEW_NOT_FOUND(404,"Review not found"),
-    BOARD_COMMENT_NOT_FOUND(404,"BoardCommnet not found"),
+    BOARD_COMMENT_NOT_FOUND(404,"BoardComment not found"),
+    DELIVERY_PARTY_NOT_FOUND(404,"Delivery Party not found"),
 
     // Conflict
     USER_ALREADY_EXISTS(409, "User already exists"),
