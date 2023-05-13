@@ -23,11 +23,9 @@ public class MealSuggestionLike {
 
     @Builder
     public MealSuggestionLike(
-            Long id,
             MealSuggestion mealSuggestion,
             String userName
     ) {
-        this.id = id;
         this.mealSuggestion = mealSuggestion;
         this.userName = userName;
     }
