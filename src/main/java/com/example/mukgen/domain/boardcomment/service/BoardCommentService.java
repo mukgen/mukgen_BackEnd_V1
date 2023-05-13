@@ -36,6 +36,7 @@ public class BoardCommentService {
                         .orElseThrow(()-> BoardNotFoundException.EXCEPTION);
 
         BoardComment comment = BoardComment.builder()
+                .isDeleted(false)
                 .board(board)
                 .content(request.getContent())
                 .writer(userFacade.currentUser().getName())

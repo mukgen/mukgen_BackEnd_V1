@@ -17,9 +17,12 @@ public class ReviewResponse {
 
     private RiceType riceType;
 
+    private Long reviewId;
+
     public static ReviewResponse of(Review review){
 
         return ReviewResponse.builder()
+                .reviewId(review.getId())
                 .riceType(review.getRice().getRiceType())
                 .riceId(review.getRice().getId())
                 .count(review.getCount())

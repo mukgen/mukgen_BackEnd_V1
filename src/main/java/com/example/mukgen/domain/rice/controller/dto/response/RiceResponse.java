@@ -8,4 +8,6 @@ import lombok.Data;
 public class RiceResponse {
 
     private String item;
+
+    private int riceId;
 }
