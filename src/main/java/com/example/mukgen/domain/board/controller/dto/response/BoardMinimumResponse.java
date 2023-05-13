@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 @Builder
 public class BoardMinimumResponse {
 
+    private Long boardId;
+
     private String title;
 
     private String content;
@@ -31,6 +33,7 @@ public class BoardMinimumResponse {
     public static BoardMinimumResponse of(Board board){
 
         return BoardMinimumResponse.builder()
+                .boardId(board.getId())
                 .createAt(board.getCreateAt())
                 .commentCount(board.getCommentCount())
                 .title(board.getTitle())
