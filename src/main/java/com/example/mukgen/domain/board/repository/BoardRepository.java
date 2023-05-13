@@ -13,6 +13,6 @@ public interface BoardRepository extends JpaRepository<Board,Long> {
 
     List<Board> findAllByCreateAtGreaterThan(LocalDateTime dateTime);
 
-    @Query(value = "SELECT * FROM tbl_board WHERE WEEK(create_at) = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM tbl_board WHERE WEEK(create_at) = ?1 and is_deleted = false", nativeQuery = true)
     List<Board> findByWeek(int week);
 }
