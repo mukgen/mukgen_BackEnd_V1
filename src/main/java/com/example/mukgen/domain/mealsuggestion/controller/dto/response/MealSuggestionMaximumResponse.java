@@ -12,8 +12,6 @@ import java.util.List;
 @Builder
 public class MealSuggestionMaximumResponse {
 
-    private String title;
-
     private String content;
 
     private String userName;
@@ -41,7 +39,6 @@ public class MealSuggestionMaximumResponse {
                         .toList();
 
         return MealSuggestionMaximumResponse.builder()
-                .title(mealSuggestion.getTitle())
                 .content(mealSuggestion.getContent())
                 .userName(mealSuggestion.getUser().getName())
                 .mealSuggestionLikeResponseList(mealSuggestionLikeResponses)

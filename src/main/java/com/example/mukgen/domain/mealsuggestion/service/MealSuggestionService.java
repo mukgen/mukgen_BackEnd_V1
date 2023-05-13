@@ -33,7 +33,6 @@ public class MealSuggestionService {
 
         mealSuggestionRepository.save(
                 MealSuggestion.builder()
-                        .title(request.getTitle())
                         .content(request.getContent())
                         .user(user)
                         .build()
@@ -51,7 +50,7 @@ public class MealSuggestionService {
         if(mealSuggestion.getUser() != userFacade.currentUser())
             throw MealSuggestionWriterMissMatchException.EXCEPTION;
 
-        mealSuggestion.updateMealSuggestion(request.getTitle(), request.getContent());
+        mealSuggestion.updateMealSuggestion(request.getContent());
     }
 
     @Transactional

@@ -22,9 +22,6 @@ public class MealSuggestion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "title", length = 30, nullable = false)
-    private String title;
-
     @Column(name = "content", length = 300, nullable = false)
     private String content;
 
@@ -66,10 +63,8 @@ public class MealSuggestion {
     }
 
     public void updateMealSuggestion(
-            String title,
             String content
     ) {
-        this.title = title;
         this.content = content;
         this.updateAt = LocalDateTime.now();
         this.isUpdated = true;
@@ -89,7 +84,6 @@ public class MealSuggestion {
             boolean isDeleted
     ) {
         this.id = id;
-        this.title = title;
         this.content = content;
         this.user = user;
         this.mealSuggestionLikeList = mealSuggestionLikeList;
