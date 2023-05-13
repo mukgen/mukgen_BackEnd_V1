@@ -12,10 +12,10 @@ import javax.validation.constraints.Size;
 public class UserSignupRequest {
 
 
-    @Size(max = 4, message = "이름은 최대 4자 입니다.")
+    @Size(min = 1, max = 4, message = "이름은 최소 1자, 최대 4자 입니다.")
     private String name;
 
-    @Size(max = 15, message = "아이디는 최대 15자 입니다.")
+    @Size(min = 5, max = 15, message = "아이디는 최소 5자, 최대 15자 입니다.")
     private String accountId;
 
     @Pattern(regexp = "^(?=.*[!@#$%^&*])(?=.{1,20}$).*",
