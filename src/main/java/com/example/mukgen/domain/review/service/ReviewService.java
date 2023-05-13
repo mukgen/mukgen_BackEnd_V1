@@ -62,6 +62,7 @@ public class ReviewService {
         }
 
         Review review = Review.builder()
+                .isDeleted(false)
                 .user(userFacade.currentUser())
                 .rice(rice)
                 .count(request.getCount())
