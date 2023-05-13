@@ -34,6 +34,7 @@ public class BoardMaximumResponse {
     private LocalDateTime updateAt;
 
     public static BoardMaximumResponse of(Board board){
+
         List<LikeResponse> likeResponses = board.getLikesList().stream()
                 .map(it -> LikeResponse.builder()
                         .userName(it.getUserName()).build()).toList();
