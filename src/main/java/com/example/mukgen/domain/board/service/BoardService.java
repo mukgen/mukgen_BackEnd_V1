@@ -128,12 +128,6 @@ public class BoardService {
                 .boardMinimumResponseList(boardMinimumResponseList)
                 .build();
 
-        List<BoardPopularResponse> boardPopularResponseList = new ArrayList<>();
-
-        if(popularBoard.getBoardPopularResponseList().size()>1){
-            boardPopularResponseList.add(popularBoard.getBoardPopularResponseList().get(0));
-            boardPopularResponseList.add(popularBoard.getBoardPopularResponseList().get(1));
-        }
 
         return BoardTabListResponse.builder()
                 .boardListResponse(boardListResponse)
@@ -141,14 +135,22 @@ public class BoardService {
                 .build();
     }
 
-    public BoardListResponse findWeekBoard(){
+    public BoardTabListResponse findWeekBoard(){
         int thisWeek = LocalDate.now().get(WeekFields.ISO.weekOfWeekBasedYear());
 
         List<BoardMinimumResponse> boardMinimumResponseList =
                 boardRepository.findByWeek(thisWeek).stream()
                         .map(BoardMinimumResponse::of).toList();
-        return BoardListResponse.builder()
+
+        BoardListResponse boardListResponse = BoardListResponse.builder()
                 .boardMinimumResponseList(boardMinimumResponseList)
+                .build();
+
+        List<BoardPopularResponse> boardPopularResponseList = new ArrayList<>();
+
+        return BoardTabListResponse.builder()
+                .boardListResponse(boardListResponse)
+                .boardPopularListResponse(findPopularBoard())
                 .build();
     }
 

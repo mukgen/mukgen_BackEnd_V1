@@ -4,6 +4,8 @@ import com.example.mukgen.domain.boardcomment.entity.BoardComment;
 import com.example.mukgen.domain.like.entity.Likes;
 import com.example.mukgen.domain.user.entity.User;
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "tbl_board")
+@Where(clause = "is_deleted = false")
+@SQLDelete(sql = "UPDATE `tbl_board` SET is_deleted = true where id = ?")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Board {
@@ -34,7 +38,11 @@ public class Board {
     @Column(name = "comment_count", nullable = false)
     private int commentCount = 0;
 
-    private Boolean is_updated = false;
+    @Column(name = "is_updated")
+    private Boolean isUpdated = false;
+
+    @Column(name = "is_deleted")
+    private Boolean isDeleted = false;
 
     @Column(name = "update_at")
     private LocalDateTime updateAt;
@@ -56,7 +64,7 @@ public class Board {
         this.title = title;
         this.content = content;
         this.updateAt = LocalDateTime.now();
-        this.is_updated = true;
+        this.isUpdated = true;
     }
 
     public void addLike(){
