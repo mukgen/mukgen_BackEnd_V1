@@ -5,16 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MealSuggestionLikeResponse {
 
-    @Column(name = "suggestion_id")
     private Long mealSuggestionId;
 
-    @Column(name = "user_name")
     private String userName;
 
     @Builder

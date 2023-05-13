@@ -8,8 +8,10 @@ import com.example.mukgen.domain.mealsuggestionlike.repositery.MealSuggestionLik
 import com.example.mukgen.domain.user.service.UserFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class MealSuggestionLikeService {
 
@@ -19,6 +21,7 @@ public class MealSuggestionLikeService {
 
     private final UserFacade userFacade;
 
+    @Transactional
     public void clickLike(
             Long suggestionId
     ) {
@@ -28,16 +31,16 @@ public class MealSuggestionLikeService {
         String userName = userFacade.currentUser().getName();
 
         if (mealSuggestionLikeRepository.existsByMealSuggestionAndUserName(mealSuggestion, userName)) {
-            mealSuggestion.removeLike(userName);
+            mealSuggestion.removeLike();
+            mealSuggestionLikeRepository.removeByMealSuggestionAndUserName(mealSuggestion, userName);
+        }
+        else {
+            mealSuggestion.addLike();
             mealSuggestionLikeRepository.save(
                     MealSuggestionLike.builder()
                             .mealSuggestion(mealSuggestion)
                             .userName(userName)
                             .build());
-        }
-        else {
-            mealSuggestion.addLike(userName);
-            mealSuggestionLikeRepository.removeByMealSuggestionAndUserName(mealSuggestion, userName);
         }
     }
 }

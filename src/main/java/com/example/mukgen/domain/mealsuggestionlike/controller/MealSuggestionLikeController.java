@@ -1,9 +1,7 @@
 package com.example.mukgen.domain.mealsuggestionlike.controller;
 
-import com.example.mukgen.domain.mealsuggestion.repository.MealSuggestionRepository;
 import com.example.mukgen.domain.mealsuggestionlike.service.MealSuggestionLikeService;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,10 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/mealSuggestion/like")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@RequiredArgsConstructor
 public class MealSuggestionLikeController {
 
-    private MealSuggestionLikeService mealSuggestionLikeService;
+    private final MealSuggestionLikeService mealSuggestionLikeService;
 
     @PostMapping("/{suggestionId}")
     public void clickLike(

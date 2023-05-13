@@ -1,13 +1,11 @@
 package com.example.mukgen.domain.mealsuggestionlike.entity;
 
 import com.example.mukgen.domain.mealsuggestion.entity.MealSuggestion;
-import com.example.mukgen.domain.user.entity.User;
 import lombok.*;
 
 import javax.persistence.*;
 
 @Entity(name = "tbl_suggestion_like")
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class MealSuggestionLike {
@@ -25,9 +23,11 @@ public class MealSuggestionLike {
 
     @Builder
     public MealSuggestionLike(
+            Long id,
             MealSuggestion mealSuggestion,
             String userName
     ) {
+        this.id = id;
         this.mealSuggestion = mealSuggestion;
         this.userName = userName;
     }
