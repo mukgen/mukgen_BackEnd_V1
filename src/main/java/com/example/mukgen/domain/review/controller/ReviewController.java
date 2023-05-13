@@ -38,9 +38,5 @@ public class ReviewController {
         return reviewService.findRankReview();
     }
 
-    @GetMapping
-    public ReviewResponseList reviewList(){
-        return reviewService.findAllReview();
-    }
 
 }

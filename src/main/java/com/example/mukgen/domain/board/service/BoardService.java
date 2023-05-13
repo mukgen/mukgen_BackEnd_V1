@@ -154,5 +154,17 @@ public class BoardService {
                 .build();
     }
 
+    public BoardListResponse findMyBoard(){
+
+        User user = userFacade.currentUser();
+
+        List<BoardMinimumResponse> boardMinimumResponseList = boardRepository.findAllByUser(user)
+                .stream().map(BoardMinimumResponse::of).toList();
+
+        return BoardListResponse.builder()
+                .boardMinimumResponseList(boardMinimumResponseList)
+                .build();
+
+    }
 
 }
