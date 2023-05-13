@@ -14,8 +14,8 @@ import java.util.List;
 @Entity(name = "tbl_meal_suggestion")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@SQLDelete(sql = "UPDATE tbl_meal_suggestion SET deleted = true WHERE id = ?")
-@Where(clause = "deleted = false")
+@SQLDelete(sql = "UPDATE tbl_meal_suggestion SET is_deleted = true WHERE id = ?")
+@Where(clause = "isDeleted = false")
 public class MealSuggestion {
 
     @Id
@@ -32,10 +32,6 @@ public class MealSuggestion {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "mealSuggestion")
-    @Column(name = "suggestion_likes")
-    private List<MealSuggestionLike> mealSuggestionLikeList = new ArrayList<>();
-
     @Column(name = "like_count", nullable = false)
     private int likeCount = 0;
 
@@ -48,9 +44,26 @@ public class MealSuggestion {
     @Column(name = "update_at")
     private LocalDateTime updateAt;
 
+    @Column(name = "is_updated")
     private boolean isUpdated = false;
 
+    @Column(name = "is_deleted")
     private boolean isDeleted = false;
+
+    @OneToMany(mappedBy = "mealSuggestion", cascade = CascadeType.REMOVE)
+    private List<MealSuggestionLike> mealSuggestionLikeList = new ArrayList<>();
+
+    public void addLike() {
+        this.likeCount++;
+    }
+
+    public void removeLike() {
+        this.likeCount--;
+    }
+
+    public void addViewCount() {
+        this.viewCount++;
+    }
 
     public void updateMealSuggestion(
             String title,
@@ -60,28 +73,6 @@ public class MealSuggestion {
         this.content = content;
         this.updateAt = LocalDateTime.now();
         this.isUpdated = true;
-    }
-
-    public void addLike(String userName) {
-        mealSuggestionLikeList.add(
-                MealSuggestionLike.builder()
-                        .mealSuggestion(this)
-                        .userName(userName)
-                        .build());
-        this.likeCount++;
-    }
-
-    public void removeLike(String userName) {
-        mealSuggestionLikeList.remove(
-                MealSuggestionLike.builder()
-                        .mealSuggestion(this)
-                        .userName(userName)
-                        .build());
-        this.likeCount--;
-    }
-
-    public void addViewCount() {
-        this.viewCount++;
     }
 
     @Builder
