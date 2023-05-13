@@ -100,7 +100,7 @@ public class ReviewService {
     }
 
 
-    public ReviewResponseList findAllReview(){
+    public ReviewResponseList findMyReview(){
         List<ReviewResponse> reviewResponseList =
             reviewRepository.findAllByUser(userFacade.currentUser())
                     .stream()
