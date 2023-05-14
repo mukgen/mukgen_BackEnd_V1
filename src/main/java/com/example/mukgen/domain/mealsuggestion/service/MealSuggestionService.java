@@ -6,8 +6,10 @@ import com.example.mukgen.domain.mealsuggestion.controller.dto.response.MealSugg
 import com.example.mukgen.domain.mealsuggestion.entity.MealSuggestion;
 import com.example.mukgen.domain.mealsuggestion.repository.MealSuggestionRepository;
 import com.example.mukgen.domain.mealsuggestion.controller.dto.request.MealSuggestionCreateRequest;
+import com.example.mukgen.domain.user.service.exception.NoPermissionException;
 import com.example.mukgen.domain.mealsuggestion.service.exception.MealSuggestionNotFoundException;
 import com.example.mukgen.domain.mealsuggestion.service.exception.MealSuggestionWriterMissMatchException;
+import com.example.mukgen.domain.user.entity.type.UserRole;
 import com.example.mukgen.domain.user.service.UserFacade;
 import com.example.mukgen.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
@@ -84,5 +86,21 @@ public class MealSuggestionService {
                 .stream()
                 .map(MealSuggestionMinimumResponse::of)
                 .toList();
+    }
+
+    @Transactional
+    public void clickCheck(
+            Long mealSuggestionId
+    ) {
+        MealSuggestion mealSuggestion =
+                mealSuggestionRepository.findById(mealSuggestionId)
+                        .orElseThrow(() -> MealSuggestionNotFoundException.EXCEPTION);
+
+        User user = userFacade.currentUser();
+
+        if (user.getRole() != UserRole.CHEF)
+            throw NoPermissionException.EXCEPTION;
+
+        mealSuggestion.clickCheck();
     }
 }

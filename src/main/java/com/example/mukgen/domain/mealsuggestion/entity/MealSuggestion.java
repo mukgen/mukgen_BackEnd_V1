@@ -65,7 +65,9 @@ public class MealSuggestion {
         this.viewCount++;
     }
 
-    public void setChecked(boolean isChecked) {this.isChecked = isChecked;}
+    public void clickCheck() {
+        this.isChecked = !this.isChecked;
+    }
 
     public void updateMealSuggestion(
             String content
