@@ -23,6 +23,7 @@ public enum ErrorCode {
     REVIEW_WRITER_MISMATCH(403, "Review writer mismatch"),
     MEAL_SUGGESTION_WRITER_MISMATCH(403, "Meal suggestion writer mismatch"),
     COMMENT_WRITER_MISMATCH(403, "Comment writer mismatch"),
+    MEAL_SUGGESTION_CHECK_NO_PERMISSION(403, "No permissions"),
 
     // Not Found
     USER_NOT_FOUND(404,"User not found"),
