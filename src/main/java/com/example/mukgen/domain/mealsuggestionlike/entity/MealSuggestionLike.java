@@ -1,5 +1,6 @@
 package com.example.mukgen.domain.mealsuggestionlike.entity;
 
+import com.example.mukgen.domain.BaseTimeEntity;
 import com.example.mukgen.domain.mealsuggestion.entity.MealSuggestion;
 import lombok.*;
 
@@ -8,7 +9,7 @@ import javax.persistence.*;
 @Entity(name = "tbl_suggestion_like")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class MealSuggestionLike {
+public class MealSuggestionLike extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
