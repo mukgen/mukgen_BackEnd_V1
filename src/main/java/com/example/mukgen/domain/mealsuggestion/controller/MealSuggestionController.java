@@ -8,6 +8,7 @@ import com.example.mukgen.domain.mealsuggestion.service.MealSuggestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -19,14 +20,14 @@ public class MealSuggestionController {
 
     @PostMapping
     public void mealSuggestionAdd(
-            @RequestBody MealSuggestionCreateRequest request
+            @RequestBody @Valid MealSuggestionCreateRequest request
     ) {
         mealSuggestionService.addMealSuggestion(request);
     }
 
     @PutMapping("/{suggestionId}")
     public void mealSuggestionModify(
-            @RequestBody MealSuggestionUpdateRequest request,
+            @RequestBody @Valid MealSuggestionUpdateRequest request,
             @PathVariable Long suggestionId
     ) {
         mealSuggestionService.modifyMealSuggestion(request, suggestionId);
