@@ -7,6 +7,8 @@ import com.example.mukgen.domain.boardcomment.service.BoardCommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/boardComment")
 @RequiredArgsConstructor
@@ -16,7 +18,7 @@ public class BoardCommentController {
 
     @PostMapping
     public void boardCommentAdd(
-            @RequestBody BoardCommentCreateRequest request
+            @RequestBody @Valid BoardCommentCreateRequest request
             ){
         boardCommentService.addBoardComment(request);
     }
@@ -30,7 +32,7 @@ public class BoardCommentController {
 
     @PutMapping("/{boardCommentId}")
     public void boardCommentModify(
-            @RequestBody BoardCommentUpdateRequest request,
+            @RequestBody @Valid BoardCommentUpdateRequest request,
             @PathVariable Long boardCommentId
             ){
         boardCommentService.modifyBoardComment(boardCommentId,request);

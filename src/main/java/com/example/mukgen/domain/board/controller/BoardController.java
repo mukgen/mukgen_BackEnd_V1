@@ -10,6 +10,8 @@ import com.example.mukgen.domain.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/board")
@@ -19,8 +21,7 @@ public class BoardController {
 
     @PostMapping
     public void boardAdd(
-            @RequestBody
-            BoardCreateRequest request
+            @RequestBody @Valid BoardCreateRequest request
     ){
         boardService.addBoard(request);
     }
@@ -28,7 +29,7 @@ public class BoardController {
     @PutMapping("/{boardId}")
     public BoardMaximumResponse boardModify(
             @PathVariable Long boardId,
-            @RequestBody BoardUpdateRequest request
+            @RequestBody @Valid BoardUpdateRequest request
     ){
         return boardService.modifyBoard(request,boardId);
     }

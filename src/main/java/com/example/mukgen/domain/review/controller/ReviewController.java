@@ -6,6 +6,8 @@ import com.example.mukgen.domain.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/review")
@@ -16,7 +18,7 @@ public class ReviewController {
     @PostMapping("/{mealId}")
     public void reviewAdd(
             @PathVariable int mealId,
-            @RequestBody ReviewCreateRequest request
+            @RequestBody @Valid ReviewCreateRequest request
     ){
         reviewService.addReview(request,mealId);
     }
