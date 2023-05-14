@@ -32,17 +32,8 @@ public class MealSuggestion {
     @Column(name = "like_count", nullable = false)
     private int likeCount = 0;
 
-    @Column(name = "view_count", nullable = false)
-    private int viewCount = 0;
-
     @Column(name = "create_at", nullable = false)
     private final LocalDateTime createAt = LocalDateTime.now();
-
-    @Column(name = "update_at")
-    private LocalDateTime updateAt;
-
-    @Column(name = "is_updated")
-    private boolean isUpdated = false;
 
     @Column(name = "is_deleted")
     private boolean isDeleted = false;
@@ -61,10 +52,6 @@ public class MealSuggestion {
         this.likeCount--;
     }
 
-    public void addViewCount() {
-        this.viewCount++;
-    }
-
     public void clickCheck() {
         this.isChecked = !this.isChecked;
     }
@@ -73,20 +60,14 @@ public class MealSuggestion {
             String content
     ) {
         this.content = content;
-        this.updateAt = LocalDateTime.now();
-        this.isUpdated = true;
     }
 
     @Builder
     public MealSuggestion(
-            String title,
             String content,
             User user,
             List<MealSuggestionLike> mealSuggestionLikeList,
             int likeCount,
-            int viewCount,
-            LocalDateTime updateAt,
-            boolean isUpdated,
             boolean isDeleted,
             boolean isChecked
     ) {
@@ -94,9 +75,6 @@ public class MealSuggestion {
         this.user = user;
         this.mealSuggestionLikeList = mealSuggestionLikeList;
         this.likeCount = likeCount;
-        this.viewCount = viewCount;
-        this.updateAt = updateAt;
-        this.isUpdated = isUpdated;
         this.isDeleted = isDeleted;
         this.isChecked = isChecked;
     }

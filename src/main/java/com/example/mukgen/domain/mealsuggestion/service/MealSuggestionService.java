@@ -1,8 +1,7 @@
 package com.example.mukgen.domain.mealsuggestion.service;
 
 import com.example.mukgen.domain.mealsuggestion.controller.dto.request.MealSuggestionUpdateRequest;
-import com.example.mukgen.domain.mealsuggestion.controller.dto.response.MealSuggestionMaximumResponse;
-import com.example.mukgen.domain.mealsuggestion.controller.dto.response.MealSuggestionMinimumResponse;
+import com.example.mukgen.domain.mealsuggestion.controller.dto.response.MealSuggestionResponse;
 import com.example.mukgen.domain.mealsuggestion.entity.MealSuggestion;
 import com.example.mukgen.domain.mealsuggestion.repository.MealSuggestionRepository;
 import com.example.mukgen.domain.mealsuggestion.controller.dto.request.MealSuggestionCreateRequest;
@@ -68,23 +67,11 @@ public class MealSuggestionService {
         mealSuggestionRepository.delete(mealSuggestion);
     }
 
-    @Transactional
-    public MealSuggestionMaximumResponse findMealSuggestion(
-            Long suggestionId
-    ) {
-        MealSuggestion mealSuggestion = mealSuggestionRepository.findById(suggestionId)
-                .orElseThrow(() -> MealSuggestionNotFoundException.EXCEPTION);
-
-        mealSuggestion.addViewCount();
-
-        return MealSuggestionMaximumResponse.of(mealSuggestion);
-    }
-
-    public List<MealSuggestionMinimumResponse> findAllSuggestion(
+    public List<MealSuggestionResponse> findAllSuggestion(
     ) {
         return mealSuggestionRepository.findAll()
                 .stream()
-                .map(MealSuggestionMinimumResponse::of)
+                .map(MealSuggestionResponse::of)
                 .toList();
     }
 
