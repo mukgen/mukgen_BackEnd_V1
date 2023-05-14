@@ -12,6 +12,9 @@ import java.util.List;
 @Builder
 public class MealSuggestionResponse {
 
+
+    private Long id;
+
     private String content;
 
     private String userName;
@@ -35,6 +38,7 @@ public class MealSuggestionResponse {
                         .toList();
 
         return MealSuggestionResponse.builder()
+                .id(mealSuggestion.getId())
                 .content(mealSuggestion.getContent())
                 .userName(mealSuggestion.getUser().getName())
                 .mealSuggestionLikeResponseList(mealSuggestionLikeResponses)
