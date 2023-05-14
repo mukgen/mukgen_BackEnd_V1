@@ -10,7 +10,7 @@ import java.util.List;
 
 @Data
 @Builder
-public class MealSuggestionMaximumResponse {
+public class MealSuggestionResponse {
 
     private String content;
 
@@ -20,17 +20,11 @@ public class MealSuggestionMaximumResponse {
 
     private int likeCount;
 
-    private int viewCount;
-
     private LocalDateTime createAt;
-
-    private LocalDateTime updateAt;
-
-    private boolean isUpdated;
 
     private boolean isChecked;
 
-    public static MealSuggestionMaximumResponse of(MealSuggestion mealSuggestion) {
+    public static MealSuggestionResponse of(MealSuggestion mealSuggestion) {
         List<MealSuggestionLikeResponse> mealSuggestionLikeResponses =
                 mealSuggestion.getMealSuggestionLikeList().stream()
                         .map(it ->
@@ -40,15 +34,12 @@ public class MealSuggestionMaximumResponse {
                                         .build())
                         .toList();
 
-        return MealSuggestionMaximumResponse.builder()
+        return MealSuggestionResponse.builder()
                 .content(mealSuggestion.getContent())
                 .userName(mealSuggestion.getUser().getName())
                 .mealSuggestionLikeResponseList(mealSuggestionLikeResponses)
                 .likeCount(mealSuggestion.getLikeCount())
-                .viewCount(mealSuggestion.getViewCount())
                 .createAt(mealSuggestion.getCreateAt())
-                .updateAt(mealSuggestion.getUpdateAt())
-                .isUpdated(mealSuggestion.isUpdated())
                 .isChecked(mealSuggestion.isChecked())
                 .build();
     }
