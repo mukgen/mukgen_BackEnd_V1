@@ -51,4 +51,11 @@ public class MealSuggestionController {
     public List<MealSuggestionMinimumResponse> mealSuggestionList() {
         return mealSuggestionService.findAllSuggestion();
     }
+
+    @PostMapping("/{mealSuggestionId}")
+    public void checkClick(
+            @PathVariable Long mealSuggestionId
+    ) {
+        mealSuggestionService.clickCheck(mealSuggestionId);
+    }
 }

@@ -24,6 +24,8 @@ public class MealSuggestionMinimumResponse {
 
     private boolean isUpdated;
 
+    private boolean isChecked;
+
     public static MealSuggestionMinimumResponse of(MealSuggestion mealSuggestion) {
         return MealSuggestionMinimumResponse.builder()
                 .userName(mealSuggestion.getUser().getName())
@@ -32,6 +34,7 @@ public class MealSuggestionMinimumResponse {
                 .createAt(mealSuggestion.getCreateAt())
                 .updateAt(mealSuggestion.getUpdateAt())
                 .isUpdated(mealSuggestion.isUpdated())
+                .isChecked(mealSuggestion.isChecked())
                 .build();
     }
 }

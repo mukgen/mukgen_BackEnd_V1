@@ -28,6 +28,8 @@ public class MealSuggestionMaximumResponse {
 
     private boolean isUpdated;
 
+    private boolean isChecked;
+
     public static MealSuggestionMaximumResponse of(MealSuggestion mealSuggestion) {
         List<MealSuggestionLikeResponse> mealSuggestionLikeResponses =
                 mealSuggestion.getMealSuggestionLikeList().stream()
@@ -47,6 +49,7 @@ public class MealSuggestionMaximumResponse {
                 .createAt(mealSuggestion.getCreateAt())
                 .updateAt(mealSuggestion.getUpdateAt())
                 .isUpdated(mealSuggestion.isUpdated())
+                .isChecked(mealSuggestion.isChecked())
                 .build();
     }
 }

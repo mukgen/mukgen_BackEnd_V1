@@ -47,6 +47,9 @@ public class MealSuggestion {
     @Column(name = "is_deleted")
     private boolean isDeleted = false;
 
+    @Column(name = "is_checked")
+    private boolean isChecked = false;
+
     @OneToMany(mappedBy = "mealSuggestion", cascade = CascadeType.REMOVE)
     private List<MealSuggestionLike> mealSuggestionLikeList = new ArrayList<>();
 
@@ -62,6 +65,10 @@ public class MealSuggestion {
         this.viewCount++;
     }
 
+    public void clickCheck() {
+        this.isChecked = !this.isChecked;
+    }
+
     public void updateMealSuggestion(
             String content
     ) {
@@ -72,7 +79,6 @@ public class MealSuggestion {
 
     @Builder
     public MealSuggestion(
-            Long id,
             String title,
             String content,
             User user,
@@ -81,9 +87,9 @@ public class MealSuggestion {
             int viewCount,
             LocalDateTime updateAt,
             boolean isUpdated,
-            boolean isDeleted
+            boolean isDeleted,
+            boolean isChecked
     ) {
-        this.id = id;
         this.content = content;
         this.user = user;
         this.mealSuggestionLikeList = mealSuggestionLikeList;
@@ -92,5 +98,6 @@ public class MealSuggestion {
         this.updateAt = updateAt;
         this.isUpdated = isUpdated;
         this.isDeleted = isDeleted;
+        this.isChecked = isChecked;
     }
 }
