@@ -6,6 +6,8 @@ import com.example.mukgen.domain.deliveryparty.service.DeliveryPartyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RequestMapping("/delivery-party")
 @RestController
 @RequiredArgsConstructor
@@ -15,7 +17,7 @@ public class DeliveryPartyController {
 
     @PostMapping
     public void deliveryPartyAdd(
-            @RequestBody DeliveryPartyRequest request
+            @RequestBody @Valid DeliveryPartyRequest request
             ){
 
         deliveryPartyService.addDeliveryParty(request);
