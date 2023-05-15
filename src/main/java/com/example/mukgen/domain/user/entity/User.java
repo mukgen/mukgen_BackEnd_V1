@@ -1,6 +1,7 @@
 package com.example.mukgen.domain.user.entity;
 
 import com.example.mukgen.domain.board.entity.Board;
+import com.example.mukgen.domain.deliveryparty.entity.DeliveryParty;
 import com.example.mukgen.domain.review.entity.Review;
 import com.example.mukgen.domain.user.entity.type.UserRole;
 import lombok.*;
@@ -40,5 +41,22 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Review> reviewList = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "delivery_party_id")
+    private DeliveryParty deliveryParty;
+
+    public void setDeliveryParty(DeliveryParty deliveryParty){
+
+        if(this.deliveryParty != null){
+
+            this.deliveryParty.getUserList().remove(this);
+        }
+        this.deliveryParty = deliveryParty;
+        if(deliveryParty != null){
+
+            deliveryParty.getUserList().add(this);
+        }
+    }
 
 }

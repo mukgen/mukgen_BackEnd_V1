@@ -27,13 +27,16 @@ public class DeliveryPartyService {
     public void addDeliveryParty(
         DeliveryPartyRequest request
     ){
+
         DeliveryParty deliveryParty = DeliveryParty.builder()
-                .user(userFacade.currentUser())
                 .place(request.getPlace())
                 .menu(request.getMenu())
                 .participantNumber(request.getParticipantNumber())
                 .meetTime(request.getMeetTime())
+                .user(userFacade.currentUser())
                 .build();
+
+        deliveryParty.joinDeliveryParty(userFacade.currentUser());
 
         deliveryPartyRepository.save(deliveryParty);
     }
@@ -60,6 +63,8 @@ public class DeliveryPartyService {
 
         DeliveryParty deliveryParty = deliveryPartyRepository.findById(deliveryPartyId)
                 .orElseThrow(()-> DeliveryPartyNotFoundException.EXCEPTION);
+
+        deliveryParty.joinDeliveryParty(user);
 
     }
 }

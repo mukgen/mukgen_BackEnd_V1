@@ -1,6 +1,5 @@
 package com.example.mukgen.domain.deliveryparty.entity;
 
-import com.example.mukgen.domain.user.controller.response.UserInfoResponse;
 import com.example.mukgen.domain.user.entity.User;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
@@ -23,8 +22,8 @@ public class DeliveryParty {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private User user;
+    @OneToMany(mappedBy = "deliveryParty", cascade = CascadeType.REMOVE)
+    private List<User> userList = new ArrayList<>();
 
     private String menu;
 
@@ -44,15 +43,18 @@ public class DeliveryParty {
 
     @Builder
     public DeliveryParty(User user, String menu, Integer participantNumber, String place, LocalDateTime meetTime) {
+
         this.isDeleted = false;
-        this.user = user;
         this.menu = menu;
         this.participantNumber = participantNumber;
         this.place = place;
         this.meetTime = meetTime;
+        this.userList.add(user);
     }
 
     public void joinDeliveryParty(User user){
 
+        this.userList.add(user);
+        user.setDeliveryParty(this);
     }
 }
