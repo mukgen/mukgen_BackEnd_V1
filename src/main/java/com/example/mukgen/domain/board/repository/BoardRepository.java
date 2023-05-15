@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface BoardRepository extends JpaRepository<Board,Long> {
 
-    List<Board> findAllByCreateAtGreaterThan(LocalDateTime dateTime);
+    List<Board> findAllByCreatedAtGreaterThan(LocalDateTime dateTime);
 
     List<Board> findAllByUser(User user);
 

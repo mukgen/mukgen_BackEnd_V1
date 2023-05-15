@@ -40,7 +40,6 @@ public class BoardCommentService {
                 .board(board)
                 .content(request.getContent())
                 .writer(userFacade.currentUser().getName())
-                .createAt(LocalDateTime.now())
                 .build();
 
          board.addCommentCount();

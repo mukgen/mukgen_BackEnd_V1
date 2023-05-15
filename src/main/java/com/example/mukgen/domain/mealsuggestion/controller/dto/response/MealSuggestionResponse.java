@@ -43,7 +43,7 @@ public class MealSuggestionResponse {
                 .userName(mealSuggestion.getUser().getName())
                 .mealSuggestionLikeResponseList(mealSuggestionLikeResponses)
                 .likeCount(mealSuggestion.getLikeCount())
-                .createAt(mealSuggestion.getCreateAt())
+                .createAt(mealSuggestion.getCreatedAt())
                 .isChecked(mealSuggestion.isChecked())
                 .build();
     }

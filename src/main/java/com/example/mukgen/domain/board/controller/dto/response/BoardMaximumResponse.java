@@ -51,7 +51,7 @@ public class BoardMaximumResponse {
                 .userName(board.getUser().getName())
                 .likeCount(board.getLikeCount())
                 .viewCount(board.getViewCount())
-                .createAt(board.getCreateAt())
-                .updateAt(board.getUpdateAt()).build();
+                .createAt(board.getCreatedAt())
+                .updateAt(board.getUpdatedAt()).build();
     }
 }

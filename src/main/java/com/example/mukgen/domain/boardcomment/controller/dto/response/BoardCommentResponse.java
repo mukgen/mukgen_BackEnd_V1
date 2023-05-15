@@ -20,7 +20,7 @@ public class BoardCommentResponse {
 
     public static BoardCommentResponse of(BoardComment comment){
         return BoardCommentResponse.builder()
-                .createAt(comment.getCreateAt())
+                .createAt(comment.getCreatedAt())
                 .writer(comment.getWriter())
                 .content(comment.getContent())
                 .boardCommentId(comment.getId())

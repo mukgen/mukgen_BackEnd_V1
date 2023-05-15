@@ -34,7 +34,7 @@ public class BoardMinimumResponse {
 
         return BoardMinimumResponse.builder()
                 .boardId(board.getId())
-                .createAt(board.getCreateAt())
+                .createAt(board.getCreatedAt())
                 .commentCount(board.getCommentCount())
                 .title(board.getTitle())
                 .content(board.getContent())
@@ -42,7 +42,7 @@ public class BoardMinimumResponse {
                 .likeCount(board.getLikeCount())
                 .viewCount(board.getViewCount())
                 .isUpdated(board.getIsUpdated())
-                .updateAt(board.getUpdateAt())
+                .updateAt(board.getUpdatedAt())
                 .build();
     }
 }
