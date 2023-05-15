@@ -12,7 +12,6 @@ import java.util.List;
 @Builder
 public class MealSuggestionResponse {
 
-
     private Long id;
 
     private String content;
@@ -23,7 +22,7 @@ public class MealSuggestionResponse {
 
     private int likeCount;
 
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
 
     private boolean isChecked;
 
@@ -43,7 +42,7 @@ public class MealSuggestionResponse {
                 .userName(mealSuggestion.getUser().getName())
                 .mealSuggestionLikeResponseList(mealSuggestionLikeResponses)
                 .likeCount(mealSuggestion.getLikeCount())
-                .createAt(mealSuggestion.getCreatedAt())
+                .createdAt(mealSuggestion.getCreatedAt())
                 .isChecked(mealSuggestion.isChecked())
                 .build();
     }

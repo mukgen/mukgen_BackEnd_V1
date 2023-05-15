@@ -29,9 +29,9 @@ public class BoardMaximumResponse {
 
     private int viewCount;
 
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
 
-    private LocalDateTime updateAt;
+    private LocalDateTime updatedAt;
 
     public static BoardMaximumResponse of(Board board){
 
@@ -51,7 +51,7 @@ public class BoardMaximumResponse {
                 .userName(board.getUser().getName())
                 .likeCount(board.getLikeCount())
                 .viewCount(board.getViewCount())
-                .createAt(board.getCreatedAt())
-                .updateAt(board.getUpdatedAt()).build();
+                .createdAt(board.getCreatedAt())
+                .updatedAt(board.getUpdatedAt()).build();
     }
 }
