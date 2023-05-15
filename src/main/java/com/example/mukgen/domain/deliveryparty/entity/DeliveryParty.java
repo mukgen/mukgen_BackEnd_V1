@@ -42,14 +42,13 @@ public class DeliveryParty {
     private Boolean isDeleted = false;
 
     @Builder
-    public DeliveryParty(User user, String menu, Integer participantNumber, String place, LocalDateTime meetTime) {
+    public DeliveryParty(String menu, Integer participantNumber, String place, LocalDateTime meetTime) {
 
         this.isDeleted = false;
         this.menu = menu;
         this.participantNumber = participantNumber;
         this.place = place;
         this.meetTime = meetTime;
-        this.userList.add(user);
     }
 
     public void joinDeliveryParty(User user){

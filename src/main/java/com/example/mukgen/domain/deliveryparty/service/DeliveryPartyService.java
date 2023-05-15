@@ -33,7 +33,6 @@ public class DeliveryPartyService {
                 .menu(request.getMenu())
                 .participantNumber(request.getParticipantNumber())
                 .meetTime(request.getMeetTime())
-                .user(userFacade.currentUser())
                 .build();
 
         deliveryParty.joinDeliveryParty(userFacade.currentUser());
