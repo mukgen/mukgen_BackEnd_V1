@@ -24,9 +24,9 @@ public class BoardMinimumResponse {
 
     private int viewCount;
 
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
 
-    private LocalDateTime updateAt;
+    private LocalDateTime updatedAt;
 
     private boolean isUpdated;
 
@@ -34,7 +34,7 @@ public class BoardMinimumResponse {
 
         return BoardMinimumResponse.builder()
                 .boardId(board.getId())
-                .createAt(board.getCreateAt())
+                .createdAt(board.getCreatedAt())
                 .commentCount(board.getCommentCount())
                 .title(board.getTitle())
                 .content(board.getContent())
@@ -42,7 +42,7 @@ public class BoardMinimumResponse {
                 .likeCount(board.getLikeCount())
                 .viewCount(board.getViewCount())
                 .isUpdated(board.getIsUpdated())
-                .updateAt(board.getUpdateAt())
+                .updatedAt(board.getUpdatedAt())
                 .build();
     }
 }

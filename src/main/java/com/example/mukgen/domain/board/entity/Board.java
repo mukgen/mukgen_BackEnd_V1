@@ -1,14 +1,17 @@
 package com.example.mukgen.domain.board.entity;
 
+import com.example.mukgen.domain.BaseTimeEntity;
 import com.example.mukgen.domain.boardcomment.entity.BoardComment;
 import com.example.mukgen.domain.like.entity.Likes;
 import com.example.mukgen.domain.user.entity.User;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +20,7 @@ import java.util.List;
 @SQLDelete(sql = "UPDATE `tbl_board` SET is_deleted = true where id = ?")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Board {
+public class Board extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,12 +47,6 @@ public class Board {
     @Column(name = "is_deleted")
     private Boolean isDeleted = false;
 
-    @Column(name = "update_at")
-    private LocalDateTime updateAt;
-
-    @Column(name = "create_at")
-    private LocalDateTime createAt;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -63,7 +60,6 @@ public class Board {
     public void updateBoard(String title, String content) {
         this.title = title;
         this.content = content;
-        this.updateAt = LocalDateTime.now();
         this.isUpdated = true;
     }
 
@@ -94,7 +90,6 @@ public class Board {
         this.user = user;
         this.likeCount = 0;
         this.viewCount = 0;
-        this.createAt = LocalDateTime.now();
     }
 
     @Builder
