@@ -1,5 +1,6 @@
 package com.example.mukgen.domain.boardcomment.entity;
 
+import com.example.mukgen.domain.BaseTimeEntity;
 import com.example.mukgen.domain.board.entity.Board;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 @Getter
 @SQLDelete(sql = "UPDATE `tbl_board_comment` SET is_deleted = true where id = ?")
 @Where(clause = "is_deleted = false")
-public class BoardComment {
+public class BoardComment extends BaseTimeEntity {
 
     @Id
     @GeneratedValue
@@ -30,9 +31,6 @@ public class BoardComment {
 
     @Column(name = "writer")
     private String writer;
-
-    @Column(name = "create_at")
-    private LocalDateTime createAt;
 
     @Column(name = "is_deleted")
     private Boolean isDeleted = false;

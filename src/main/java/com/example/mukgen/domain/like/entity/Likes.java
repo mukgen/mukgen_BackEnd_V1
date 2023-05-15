@@ -1,5 +1,6 @@
 package com.example.mukgen.domain.like.entity;
 
+import com.example.mukgen.domain.BaseTimeEntity;
 import com.example.mukgen.domain.board.entity.Board;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
@@ -13,7 +14,7 @@ import javax.persistence.*;
 @Getter
 @Where(clause = "is_deleted = false")
 @SQLDelete(sql = "UPDATE `tbl_likes` SET is_deleted = true where id = ?")
-public class Likes {
+public class Likes extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

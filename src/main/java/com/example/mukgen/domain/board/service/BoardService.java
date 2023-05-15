@@ -119,7 +119,7 @@ public class BoardService {
 
         LocalDateTime curDateTime = LocalDateTime.now().minusDays(1);
         List<BoardMinimumResponse> boardMinimumResponseList =
-                boardRepository.findAllByCreateAtGreaterThan(curDateTime)
+                boardRepository.findAllByCreatedAtGreaterThan(curDateTime)
                         .stream()
                         .map(BoardMinimumResponse::of)
                         .toList();

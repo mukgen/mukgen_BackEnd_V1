@@ -1,5 +1,6 @@
 package com.example.mukgen.domain.mealsuggestion.entity;
 
+import com.example.mukgen.domain.BaseTimeEntity;
 import com.example.mukgen.domain.mealsuggestionlike.entity.MealSuggestionLike;
 import com.example.mukgen.domain.user.entity.User;
 import lombok.*;
@@ -16,7 +17,7 @@ import java.util.List;
 @Getter
 @SQLDelete(sql = "UPDATE tbl_meal_suggestion SET is_deleted = true WHERE id = ?")
 @Where(clause = "is_deleted = false")
-public class MealSuggestion {
+public class MealSuggestion extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,9 +32,6 @@ public class MealSuggestion {
 
     @Column(name = "like_count", nullable = false)
     private int likeCount = 0;
-
-    @Column(name = "create_at", nullable = false)
-    private final LocalDateTime createAt = LocalDateTime.now();
 
     @Column(name = "is_deleted")
     private boolean isDeleted = false;
