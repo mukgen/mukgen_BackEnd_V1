@@ -3,10 +3,7 @@ package com.example.mukgen.domain.reviewcomment.entity;
 import com.example.mukgen.domain.BaseTimeEntity;
 import com.example.mukgen.domain.review.entity.Review;
 import com.example.mukgen.domain.user.entity.User;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -14,10 +11,12 @@ import org.hibernate.annotations.Where;
 import javax.persistence.*;
 
 @Entity(name = "tbl_review_comment")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Builder
 @SQLDelete(sql = "UPDATE tbl_review_comment SET is_deleted = true WHERE id = ?")
 @Where(clause = "is_deleted = false")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class ReviewComment extends BaseTimeEntity {
 
     @Id
@@ -28,7 +27,7 @@ public class ReviewComment extends BaseTimeEntity {
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "review_id", nullable = false)
+    @JoinColumn(name = "review_id")
     private Review review;
 
     @Column(name = "is_deleted",nullable = false)
@@ -40,15 +39,4 @@ public class ReviewComment extends BaseTimeEntity {
        this.content = content;
     }
 
-    @Builder
-    public ReviewComment(String content, boolean isDeleted, Review review) {
-        this.content = content;
-        this.isDeleted = isDeleted;
-        this.review = review;
-    }
-
-    public void addReview(Review review){
-
-        this.review = review;
-    }
 }

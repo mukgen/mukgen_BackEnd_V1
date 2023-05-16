@@ -1,16 +1,12 @@
 package com.example.mukgen.domain.reviewcomment.controller.dto.response;
 
 import com.example.mukgen.domain.reviewcomment.entity.ReviewComment;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@AllArgsConstructor
+@Data
 @Builder
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ReviewCommentResponse {
 
     private Long reviewCommentId;

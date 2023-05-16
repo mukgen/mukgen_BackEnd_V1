@@ -43,9 +43,4 @@ public class Review extends BaseTimeEntity {
     @OneToMany(mappedBy = "review", cascade = CascadeType.REMOVE)
     private List<ReviewComment> reviewCommentList = new ArrayList<>();
 
-    public void addReviewComment(ReviewComment reviewComment){
-
-        this.reviewCommentList.add(reviewComment);
-        reviewComment.addReview(this);
-    }
 }
