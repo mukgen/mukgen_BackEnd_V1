@@ -18,7 +18,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.WeekFields;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -66,7 +68,8 @@ public class BoardService {
     }
 
     public BoardTabListResponse findAllBoard(){
-        List<BoardMinimumResponse> boardMinimumResponseList = boardRepository.findAll().stream()
+        List<BoardMinimumResponse> boardMinimumResponseList = boardRepository
+                .findAll(Sort.by(Sort.Direction.DESC,"createdAt")).stream()
                 .map(BoardMinimumResponse::of)
                 .toList();
 
@@ -124,8 +127,9 @@ public class BoardService {
         BoardPopularListResponse popularBoard = findPopularBoard();
 
         LocalDateTime curDateTime = LocalDateTime.now().minusDays(1);
+
         List<BoardMinimumResponse> boardMinimumResponseList =
-                boardRepository.findAllByCreatedAtGreaterThan(curDateTime)
+                boardRepository.findAllByCreatedAtGreaterThan(curDateTime, Sort.by(Sort.Direction.DESC, "createdAt"))
                         .stream()
                         .map(BoardMinimumResponse::of)
                         .toList();
