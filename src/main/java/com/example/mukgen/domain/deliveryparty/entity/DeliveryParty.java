@@ -1,5 +1,6 @@
 package com.example.mukgen.domain.deliveryparty.entity;
 
+import com.example.mukgen.domain.BaseTimeEntity;
 import com.example.mukgen.domain.user.entity.User;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
@@ -16,13 +17,15 @@ import java.util.List;
 @Getter
 @Where(clause = "is_deleted = false")
 @SQLDelete(sql = "UPDATE `tbl_delivery_party` SET is_deleted = true WHERE id = ?")
-public class DeliveryParty {
+public class DeliveryParty extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "deliveryParty", cascade = CascadeType.REMOVE)
+    private String writerAccountId;
+
+    @OneToMany(mappedBy = "deliveryParty")
     private List<User> userList = new ArrayList<>();
 
     private String menu;
@@ -32,9 +35,6 @@ public class DeliveryParty {
 
     private String place;
 
-    @Column(name = "create_at")
-    private LocalDateTime createAt;
-
     @Column(name = "meet_time")
     private LocalDateTime meetTime;
 
@@ -42,13 +42,14 @@ public class DeliveryParty {
     private Boolean isDeleted = false;
 
     @Builder
-    public DeliveryParty(String menu, Integer participantNumber, String place, LocalDateTime meetTime) {
+    public DeliveryParty(String menu, Integer participantNumber, String place, LocalDateTime meetTime, User user) {
 
         this.isDeleted = false;
         this.menu = menu;
         this.participantNumber = participantNumber;
         this.place = place;
         this.meetTime = meetTime;
+        this.writerAccountId = user.getAccountId();
     }
 
     public void joinDeliveryParty(User user){
