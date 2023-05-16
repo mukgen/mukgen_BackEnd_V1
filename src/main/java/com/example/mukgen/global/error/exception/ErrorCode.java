@@ -24,7 +24,7 @@ public enum ErrorCode {
     COMMENT_WRITER_MISMATCH(403, "Comment writer mismatch"),
     NO_PERMISSION(403, "No permissions"),
     MEAL_SUGGESTION_WRITER_MISMATCH(403, "Meal suggestion writer mismatch"),
-    CODE_MISMATCH(403,"영양사 선생님 코드가 맞지 않습니다."),
+    DELIVERY_PARTY_WRITER_MISMATCH(403, "Delivery Party writer mismatch"),
 
     // Not Found
     USER_NOT_FOUND(404,"User not found"),
@@ -39,6 +39,8 @@ public enum ErrorCode {
     // Conflict
     USER_ALREADY_EXISTS(409, "User already exists"),
     REVIEW_ALREADY_EXISTS(409,"Review already exists"),
+    DELIVERY_PARTY_ALREADY_EXISTS(409,"Delivery Party already exists"),
+    DELIVERY_PARTY_IN_PROGRESS(409, "이미 모집중인 배달파티가 존재합니다."),
 
     // Internal Server Error
     INTERNAL_SERVER_ERROR(500, "Internal server error");
