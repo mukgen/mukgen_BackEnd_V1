@@ -40,5 +40,11 @@ public class ReviewController {
         return reviewService.findRankReview();
     }
 
+    @GetMapping("/total")
+    public ReviewMaximumListResponse reviewTotalList(){
+        return reviewService.findUserReview();
+    }
+
+
 
 }

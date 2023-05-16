@@ -138,5 +138,18 @@ public class ReviewService {
 
     }
 
+    public ReviewMaximumListResponse findUserReview(){
+
+        List<ReviewMaximumResponse> reviewMaximumResponseList =
+                reviewRepository.findAllByUser(userFacade.currentUser()).stream()
+                        .map(ReviewMaximumResponse::of)
+                        .toList();
+
+        return ReviewMaximumListResponse.builder()
+                .reviewMaximumResponseList(reviewMaximumResponseList)
+                .build();
+
+    }
+
 
 }
