@@ -25,6 +25,7 @@ public enum ErrorCode {
     NO_PERMISSION(403, "No permissions"),
     MEAL_SUGGESTION_WRITER_MISMATCH(403, "Meal suggestion writer mismatch"),
     DELIVERY_PARTY_WRITER_MISMATCH(403, "Delivery Party writer mismatch"),
+    CODE_MISMATCH(403,"Code Mismatch"),
 
     // Not Found
     USER_NOT_FOUND(404,"User not found"),
