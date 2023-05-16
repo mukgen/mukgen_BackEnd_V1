@@ -2,8 +2,10 @@ package com.example.mukgen.domain.auth.service;
 
 
 import com.example.mukgen.domain.auth.controller.reponse.TokenResponse;
+import com.example.mukgen.domain.auth.controller.request.ChefSignupRequest;
 import com.example.mukgen.domain.auth.controller.request.UserSignupRequest;
 import com.example.mukgen.domain.auth.controller.request.UserLoginRequest;
+import com.example.mukgen.domain.auth.service.exception.CodeMismatchException;
 import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.entity.type.UserRole;
 import com.example.mukgen.domain.user.repository.UserRepository;
@@ -26,6 +28,24 @@ public class AuthService {
     private final UserRepository userRepository;
 
     private final PasswordEncoder passwordEncoder;
+
+    @Transactional
+    public void chefSignup(
+            ChefSignupRequest request
+    ){
+
+        if (!request.getCode().equals("imChef")) {
+            throw CodeMismatchException.EXCEPTION;
+        }
+
+        User user = User.builder()
+                .role(UserRole.CHEF)
+                .accountId(request.getAccountId())
+                .password(request.getPassword())
+                .name("영양사 선생님")
+                .phoneNumber("영양사 선생님은 번호를 입력하지 않습니다.")
+                .build();
+    }
 
     @Transactional
     public void signup(UserSignupRequest request){
