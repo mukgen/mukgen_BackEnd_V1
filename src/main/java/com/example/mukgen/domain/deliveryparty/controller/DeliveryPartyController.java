@@ -35,4 +35,12 @@ public class DeliveryPartyController {
     ){
         deliveryPartyService.joinDeliveryParty(deliveryPartyId);
     }
+
+    @DeleteMapping("/{deliveryPartyId}")
+    public void deliveryPartyRemove(
+            @PathVariable Long deliveryPartyId
+    ){
+
+        deliveryPartyService.deleteDeliveryParty(deliveryPartyId);
+    }
 }

@@ -36,4 +36,13 @@ public class ErrorResponse {
                 .description(description)
                 .build();
     }
+
+    public static ErrorResponse of(Exception e) {
+        return ErrorResponse.builder()
+                .message("Internal Server Error")
+                .status(500)
+                .timestamp(LocalDateTime.now())
+                .description("서버내부 오류")
+                .build();
+    }
 }

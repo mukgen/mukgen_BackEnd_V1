@@ -8,13 +8,12 @@ import com.example.mukgen.domain.deliveryparty.repository.DeliveryPartyRepositor
 import com.example.mukgen.domain.deliveryparty.service.exception.DeliveryPartyAlreadyExists;
 import com.example.mukgen.domain.deliveryparty.service.exception.DeliveryPartyInProgress;
 import com.example.mukgen.domain.deliveryparty.service.exception.DeliveryPartyNotFoundException;
+import com.example.mukgen.domain.deliveryparty.service.exception.DeliveryPartyWriterMismatch;
 import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.service.UserFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -78,5 +77,23 @@ public class DeliveryPartyService {
 
         deliveryParty.joinDeliveryParty(user);
 
+    }
+
+    @Transactional
+    public void deleteDeliveryParty(
+            Long deliveryPartyId
+    ){
+
+        User user = userFacade.currentUser();
+
+        DeliveryParty deliveryParty = deliveryPartyRepository.findById(deliveryPartyId)
+                .orElseThrow(()-> DeliveryPartyNotFoundException.EXCEPTION);
+
+        if(!user.getAccountId().equals(deliveryParty.getWriterAccountId())){
+
+            throw DeliveryPartyWriterMismatch.EXCEPTION;
+        }
+
+        deliveryPartyRepository.deleteById(deliveryPartyId);
     }
 }

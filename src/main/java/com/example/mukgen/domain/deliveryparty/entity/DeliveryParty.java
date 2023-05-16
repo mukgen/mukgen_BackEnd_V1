@@ -24,7 +24,7 @@ public class DeliveryParty {
 
     private String writerAccountId;
 
-    @OneToMany(mappedBy = "deliveryParty", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "deliveryParty")
     private List<User> userList = new ArrayList<>();
 
     private String menu;
