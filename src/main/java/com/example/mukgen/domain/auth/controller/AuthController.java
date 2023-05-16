@@ -1,5 +1,6 @@
 package com.example.mukgen.domain.auth.controller;
 
+import com.example.mukgen.domain.auth.controller.reponse.LoginResponse;
 import com.example.mukgen.domain.auth.controller.reponse.TokenResponse;
 import com.example.mukgen.domain.auth.controller.request.ChefSignupRequest;
 import com.example.mukgen.domain.auth.controller.request.UserLoginRequest;
@@ -37,7 +38,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public TokenResponse login(
+    public LoginResponse login(
             @RequestBody
             UserLoginRequest request
             ){

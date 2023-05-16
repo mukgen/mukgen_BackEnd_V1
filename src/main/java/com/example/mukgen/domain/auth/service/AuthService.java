@@ -1,6 +1,7 @@
 package com.example.mukgen.domain.auth.service;
 
 
+import com.example.mukgen.domain.auth.controller.reponse.LoginResponse;
 import com.example.mukgen.domain.auth.controller.reponse.TokenResponse;
 import com.example.mukgen.domain.auth.controller.request.ChefSignupRequest;
 import com.example.mukgen.domain.auth.controller.request.UserSignupRequest;
@@ -67,16 +68,20 @@ public class AuthService {
     }
 
     @Transactional
-    public TokenResponse login(UserLoginRequest request){
+    public LoginResponse login(UserLoginRequest request){
        User user = userRepository.findByAccountId(request.getAccountId())
                .orElseThrow(()-> UserNotFoundException.EXCEPTION);
 
        if(!passwordEncoder.matches(request.getPassword(),user.getPassword())){
            throw PasswordMismatchException.EXCEPTION;
        }
-       return TokenResponse.builder()
-               .accessToken(jwtTokenProvider.createToken(user.getAccountId()))
+       return LoginResponse.builder()
+               .tokenResponse(TokenResponse.builder()
+                       .accessToken(jwtTokenProvider.createToken(user.getAccountId()))
+                       .build())
+               .message(user.getName() + "님 환영합니다!")
                .build();
+
     }
 
     private void validateDuplicateUser(UserSignupRequest request){
