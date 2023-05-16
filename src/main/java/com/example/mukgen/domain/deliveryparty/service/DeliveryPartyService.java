@@ -40,12 +40,16 @@ public class DeliveryPartyService {
         deliveryPartyRepository.save(deliveryParty);
     }
 
-    public List<DeliveryPartyResponse> findAllDeliveryParty(){
+    public DeliveryPartyListResponse findAllDeliveryParty(){
 
-        return deliveryPartyRepository.findAll()
-                .stream()
-                .map(DeliveryPartyResponse::of)
-                .toList();
+        return DeliveryPartyListResponse.builder()
+                .deliveryPartyResponseList(
+                        deliveryPartyRepository
+                                .findAll()
+                                .stream()
+                                .map(DeliveryPartyResponse::of)
+                                .toList())
+                .build();
     }
 
     @Transactional
