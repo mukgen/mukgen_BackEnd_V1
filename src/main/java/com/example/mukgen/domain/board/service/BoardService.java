@@ -6,6 +6,7 @@ import com.example.mukgen.domain.board.controller.dto.response.*;
 import com.example.mukgen.domain.board.entity.Board;
 import com.example.mukgen.domain.board.repository.BoardRepository;
 import com.example.mukgen.domain.board.service.exception.BoardNotFoundException;
+import com.example.mukgen.domain.board.service.exception.BoardWriterMissMatchException;
 import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.service.UserFacade;
 import lombok.RequiredArgsConstructor;
@@ -86,8 +87,13 @@ public class BoardService {
     public void deleteBoard(
             Long boardId
     ){
-        if(!boardRepository.existsById(boardId)){
-            throw BoardNotFoundException.EXCEPTION;
+
+        Board board = boardRepository.findById(boardId)
+                        .orElseThrow(()-> BoardNotFoundException.EXCEPTION);
+
+        if(!userFacade.currentUser().equals(board.getUser())){
+
+            throw BoardWriterMissMatchException.EXCEPTION;
         }
         boardRepository.deleteById(boardId);
     }
