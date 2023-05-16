@@ -1,5 +1,6 @@
 package com.example.mukgen.domain.deliveryparty.entity;
 
+import com.example.mukgen.domain.BaseTimeEntity;
 import com.example.mukgen.domain.user.entity.User;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
@@ -16,7 +17,7 @@ import java.util.List;
 @Getter
 @Where(clause = "is_deleted = false")
 @SQLDelete(sql = "UPDATE `tbl_delivery_party` SET is_deleted = true WHERE id = ?")
-public class DeliveryParty {
+public class DeliveryParty extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,9 +34,6 @@ public class DeliveryParty {
     private Integer participantNumber;
 
     private String place;
-
-    @Column(name = "create_at")
-    private LocalDateTime createAt;
 
     @Column(name = "meet_time")
     private LocalDateTime meetTime;
