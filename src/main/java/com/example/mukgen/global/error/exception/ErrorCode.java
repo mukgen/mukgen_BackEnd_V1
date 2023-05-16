@@ -38,6 +38,8 @@ public enum ErrorCode {
     // Conflict
     USER_ALREADY_EXISTS(409, "User already exists"),
     REVIEW_ALREADY_EXISTS(409,"Review already exists"),
+    DELIVERY_PARTY_ALREADY_EXISTS(409,"Delivery Party already exists"),
+    DELIVERY_PARTY_IN_PROGRESS(409, "이미 모집중인 배달파티가 존재합니다."),
 
     // Internal Server Error
     INTERNAL_SERVER_ERROR(500, "Internal server error");

@@ -22,6 +22,8 @@ public class DeliveryParty {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String writerAccountId;
+
     @OneToMany(mappedBy = "deliveryParty", cascade = CascadeType.REMOVE)
     private List<User> userList = new ArrayList<>();
 
@@ -42,13 +44,14 @@ public class DeliveryParty {
     private Boolean isDeleted = false;
 
     @Builder
-    public DeliveryParty(String menu, Integer participantNumber, String place, LocalDateTime meetTime) {
+    public DeliveryParty(String menu, Integer participantNumber, String place, LocalDateTime meetTime, User user) {
 
         this.isDeleted = false;
         this.menu = menu;
         this.participantNumber = participantNumber;
         this.place = place;
         this.meetTime = meetTime;
+        this.writerAccountId = user.getAccountId();
     }
 
     public void joinDeliveryParty(User user){

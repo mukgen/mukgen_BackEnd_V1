@@ -5,6 +5,8 @@ import com.example.mukgen.domain.deliveryparty.controller.dto.response.DeliveryP
 import com.example.mukgen.domain.deliveryparty.controller.dto.response.DeliveryPartyResponse;
 import com.example.mukgen.domain.deliveryparty.entity.DeliveryParty;
 import com.example.mukgen.domain.deliveryparty.repository.DeliveryPartyRepository;
+import com.example.mukgen.domain.deliveryparty.service.exception.DeliveryPartyAlreadyExists;
+import com.example.mukgen.domain.deliveryparty.service.exception.DeliveryPartyInProgress;
 import com.example.mukgen.domain.deliveryparty.service.exception.DeliveryPartyNotFoundException;
 import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.service.UserFacade;
@@ -28,7 +30,14 @@ public class DeliveryPartyService {
         DeliveryPartyRequest request
     ){
 
+        User user = userFacade.currentUser();
+
+        if(deliveryPartyRepository.existsByWriterAccountId(user.getAccountId())){
+            throw DeliveryPartyAlreadyExists.EXCEPTION;
+        }
+
         DeliveryParty deliveryParty = DeliveryParty.builder()
+                .user(user)
                 .place(request.getPlace())
                 .menu(request.getMenu())
                 .participantNumber(request.getParticipantNumber())
@@ -58,6 +67,11 @@ public class DeliveryPartyService {
     ){
 
         User user = userFacade.currentUser();
+
+        if(deliveryPartyRepository.existsByWriterAccountId(user.getAccountId())){
+
+            throw DeliveryPartyInProgress.EXCEPTION;
+        }
 
         DeliveryParty deliveryParty = deliveryPartyRepository.findById(deliveryPartyId)
                 .orElseThrow(()-> DeliveryPartyNotFoundException.EXCEPTION);

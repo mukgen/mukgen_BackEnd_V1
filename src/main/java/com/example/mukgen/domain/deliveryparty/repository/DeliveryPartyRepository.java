@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DeliveryPartyRepository extends JpaRepository<DeliveryParty, Long> {
+
+    boolean existsByWriterAccountId(String writerAccountId);
 }
