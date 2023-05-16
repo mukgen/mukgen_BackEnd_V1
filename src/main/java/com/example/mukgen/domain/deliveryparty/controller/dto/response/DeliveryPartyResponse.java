@@ -20,6 +20,8 @@ public class DeliveryPartyResponse {
 
     private LocalDateTime meetTime;
 
+    private Long deliveryPartyId;
+
     public static DeliveryPartyResponse of(DeliveryParty deliveryParty){
 
         List<UserInfoResponse> userInfoResponses =
@@ -29,6 +31,7 @@ public class DeliveryPartyResponse {
                         .toList();
 
         return DeliveryPartyResponse.builder()
+                .deliveryPartyId(deliveryParty.getId())
                 .userInfoResponseList(userInfoResponses)
                 .meetTime(deliveryParty.getMeetTime())
                 .menu(deliveryParty.getMenu())

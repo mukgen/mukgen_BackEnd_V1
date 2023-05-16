@@ -5,14 +5,15 @@ import com.example.mukgen.domain.deliveryparty.controller.dto.response.DeliveryP
 import com.example.mukgen.domain.deliveryparty.controller.dto.response.DeliveryPartyResponse;
 import com.example.mukgen.domain.deliveryparty.entity.DeliveryParty;
 import com.example.mukgen.domain.deliveryparty.repository.DeliveryPartyRepository;
+import com.example.mukgen.domain.deliveryparty.service.exception.DeliveryPartyAlreadyExists;
+import com.example.mukgen.domain.deliveryparty.service.exception.DeliveryPartyInProgress;
 import com.example.mukgen.domain.deliveryparty.service.exception.DeliveryPartyNotFoundException;
+import com.example.mukgen.domain.deliveryparty.service.exception.DeliveryPartyWriterMismatch;
 import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.service.UserFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +29,14 @@ public class DeliveryPartyService {
         DeliveryPartyRequest request
     ){
 
+        User user = userFacade.currentUser();
+
+        if(deliveryPartyRepository.existsByWriterAccountId(user.getAccountId())){
+            throw DeliveryPartyAlreadyExists.EXCEPTION;
+        }
+
         DeliveryParty deliveryParty = DeliveryParty.builder()
+                .user(user)
                 .place(request.getPlace())
                 .menu(request.getMenu())
                 .participantNumber(request.getParticipantNumber())
@@ -59,10 +67,33 @@ public class DeliveryPartyService {
 
         User user = userFacade.currentUser();
 
+        if(deliveryPartyRepository.existsByWriterAccountId(user.getAccountId())){
+
+            throw DeliveryPartyInProgress.EXCEPTION;
+        }
+
         DeliveryParty deliveryParty = deliveryPartyRepository.findById(deliveryPartyId)
                 .orElseThrow(()-> DeliveryPartyNotFoundException.EXCEPTION);
 
         deliveryParty.joinDeliveryParty(user);
 
+    }
+
+    @Transactional
+    public void deleteDeliveryParty(
+            Long deliveryPartyId
+    ){
+
+        User user = userFacade.currentUser();
+
+        DeliveryParty deliveryParty = deliveryPartyRepository.findById(deliveryPartyId)
+                .orElseThrow(()-> DeliveryPartyNotFoundException.EXCEPTION);
+
+        if(!user.getAccountId().equals(deliveryParty.getWriterAccountId())){
+
+            throw DeliveryPartyWriterMismatch.EXCEPTION;
+        }
+
+        deliveryPartyRepository.deleteById(deliveryPartyId);
     }
 }
