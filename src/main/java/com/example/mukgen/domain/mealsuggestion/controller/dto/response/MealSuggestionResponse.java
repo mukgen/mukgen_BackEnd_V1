@@ -1,7 +1,6 @@
 package com.example.mukgen.domain.mealsuggestion.controller.dto.response;
 
 import com.example.mukgen.domain.mealsuggestion.entity.MealSuggestion;
-import com.example.mukgen.domain.mealsuggestionlike.controller.dto.response.MealSuggestionLikeResponse;
 import lombok.Builder;
 import lombok.Data;
 
