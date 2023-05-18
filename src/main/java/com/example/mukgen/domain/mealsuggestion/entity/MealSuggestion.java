@@ -1,14 +1,12 @@
 package com.example.mukgen.domain.mealsuggestion.entity;
 
 import com.example.mukgen.domain.BaseTimeEntity;
-import com.example.mukgen.domain.mealsuggestionlike.entity.MealSuggestionLike;
 import com.example.mukgen.domain.user.entity.User;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

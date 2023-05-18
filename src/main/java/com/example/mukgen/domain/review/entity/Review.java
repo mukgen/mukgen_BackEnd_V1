@@ -1,7 +1,6 @@
 package com.example.mukgen.domain.review.entity;
 
 import com.example.mukgen.domain.BaseTimeEntity;
-import com.example.mukgen.domain.reviewcomment.entity.ReviewComment;
 import com.example.mukgen.domain.rice.entity.Rice;
 import com.example.mukgen.domain.user.entity.User;
 import lombok.*;

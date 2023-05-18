@@ -1,8 +1,6 @@
 package com.example.mukgen.domain.board.controller.dto.response;
 
 import com.example.mukgen.domain.board.entity.Board;
-import com.example.mukgen.domain.boardcomment.controller.dto.response.BoardCommentResponse;
-import com.example.mukgen.domain.like.controller.dto.response.LikeResponse;
 import lombok.Builder;
 import lombok.Data;
 

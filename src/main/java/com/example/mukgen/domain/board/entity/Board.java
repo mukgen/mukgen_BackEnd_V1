@@ -1,8 +1,6 @@
 package com.example.mukgen.domain.board.entity;
 
 import com.example.mukgen.domain.BaseTimeEntity;
-import com.example.mukgen.domain.boardcomment.entity.BoardComment;
-import com.example.mukgen.domain.like.entity.Likes;
 import com.example.mukgen.domain.user.entity.User;
 import lombok.AccessLevel;
 import lombok.Builder;
