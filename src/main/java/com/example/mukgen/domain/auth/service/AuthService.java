@@ -7,6 +7,7 @@ import com.example.mukgen.domain.auth.controller.request.ChefSignupRequest;
 import com.example.mukgen.domain.auth.controller.request.UserSignupRequest;
 import com.example.mukgen.domain.auth.controller.request.UserLoginRequest;
 import com.example.mukgen.domain.auth.service.exception.CodeMismatchException;
+import com.example.mukgen.domain.auth.service.exception.PassWordCheckMismatchException;
 import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.entity.type.UserRole;
 import com.example.mukgen.domain.user.repository.UserRepository;
@@ -52,6 +53,10 @@ public class AuthService {
 
     @Transactional
     public void signup(UserSignupRequest request){
+
+        if(!request.getPassword().equals(request.getPasswordCheck())){
+            throw PassWordCheckMismatchException.EXCEPTION;
+        }
 
         String password = passwordEncoder.encode(request.getPassword());
 

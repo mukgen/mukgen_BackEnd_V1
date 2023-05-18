@@ -22,6 +22,10 @@ public class UserSignupRequest {
             message = "비밀번호는 최대 20글자이고, 특수문자 한개가 포함되어야 합니다.")
     private String password;
 
+    @Pattern(regexp = "^(?=.*[!@#$%^&*])(?=.{1,20}$).*",
+            message = "비밀번호는 최대 20글자이고, 특수문자 한개가 포함되어야 합니다.")
+    private String passwordCheck;
+
     @Pattern(regexp = "^010\\d{4}\\d{4}$",message = "(-) 없이 입력해 주세요. ")
     private String phoneNumber;
 }
