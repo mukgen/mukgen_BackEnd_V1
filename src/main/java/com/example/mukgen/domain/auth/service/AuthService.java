@@ -46,6 +46,8 @@ public class AuthService {
                 .name("영양사 선생님")
                 .phoneNumber("영양사 선생님은 번호를 입력하지 않습니다.")
                 .build();
+
+        userRepository.save(user);
     }
 
     @Transactional
