@@ -116,14 +116,12 @@ public class RiceService {
         int day = 1;
         while(day<=30){
             try {
-                Rice rice = riceApi.getRice(RiceType.LUNCH, 2023, 5, day);
-                riceRepository.save(rice);
-                rice = riceApi.getRice(RiceType.BREAKFAST, 2023, 5, day);
-                riceRepository.save(rice);
-                rice = riceApi.getRice(RiceType.DINNER, 2023, 5, day);
-                riceRepository.save(rice);
-            } catch (Exception e) {
-                System.err.println("An error occurred while processing day " + day + ": " + e.getMessage());
+                RiceType[] riceTypes = {RiceType.LUNCH, RiceType.BREAKFAST, RiceType.DINNER};
+
+                for (RiceType riceType : riceTypes) {
+                    Rice rice = riceApi.getRice(riceType, 2023, 5, day);
+                    riceRepository.save(rice);
+                }
             } finally {
                 day++;
             }
