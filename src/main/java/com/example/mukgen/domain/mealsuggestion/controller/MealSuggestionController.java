@@ -44,10 +44,24 @@ public class MealSuggestionController {
         return mealSuggestionService.findAllSuggestion();
     }
 
-    @PostMapping("/{mealSuggestionId}")
+    @PostMapping("/check/{mealSuggestionId}")
     public void checkClick(
             @PathVariable Long mealSuggestionId
     ) {
         mealSuggestionService.clickCheck(mealSuggestionId);
+    }
+
+    @PostMapping("/like/{mealSuggestionId}")
+    public void likeAdd(
+            @PathVariable Long mealSuggestionId
+    ) {
+        mealSuggestionService.addLike(mealSuggestionId);
+    }
+
+    @PostMapping("/hate/{mealSuggestionId}")
+    public void hateAdd(
+            @PathVariable Long mealSuggestionId
+    ) {
+        mealSuggestionService.addHate(mealSuggestionId);
     }
 }

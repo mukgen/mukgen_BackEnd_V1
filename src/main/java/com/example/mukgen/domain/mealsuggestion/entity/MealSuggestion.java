@@ -31,21 +31,21 @@ public class MealSuggestion extends BaseTimeEntity {
     @Column(name = "like_count", nullable = false)
     private int likeCount = 0;
 
+    @Column(name = "hate_count", nullable = false)
+    private int hateCount = 0;
+
     @Column(name = "is_deleted")
     private boolean isDeleted = false;
 
     @Column(name = "is_checked")
     private boolean isChecked = false;
 
-    @OneToMany(mappedBy = "mealSuggestion", cascade = CascadeType.REMOVE)
-    private List<MealSuggestionLike> mealSuggestionLikeList = new ArrayList<>();
-
     public void addLike() {
         this.likeCount++;
     }
 
-    public void removeLike() {
-        this.likeCount--;
+    public void addHate() {
+        this.hateCount++;
     }
 
     public void clickCheck() {
@@ -62,15 +62,15 @@ public class MealSuggestion extends BaseTimeEntity {
     public MealSuggestion(
             String content,
             User user,
-            List<MealSuggestionLike> mealSuggestionLikeList,
             int likeCount,
+            int hateCount,
             boolean isDeleted,
             boolean isChecked
     ) {
         this.content = content;
         this.user = user;
-        this.mealSuggestionLikeList = mealSuggestionLikeList;
         this.likeCount = likeCount;
+        this.hateCount = hateCount;
         this.isDeleted = isDeleted;
         this.isChecked = isChecked;
     }

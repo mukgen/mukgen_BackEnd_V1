@@ -17,30 +17,22 @@ public class MealSuggestionResponse {
 
     private String userName;
 
-    private List<MealSuggestionLikeResponse> mealSuggestionLikeResponseList;
-
     private int likeCount;
+
+    private int hateCount;
 
     private LocalDateTime createdAt;
 
     private boolean isChecked;
 
     public static MealSuggestionResponse of(MealSuggestion mealSuggestion) {
-        List<MealSuggestionLikeResponse> mealSuggestionLikeResponses =
-                mealSuggestion.getMealSuggestionLikeList().stream()
-                        .map(it ->
-                                MealSuggestionLikeResponse.builder()
-                                        .mealSuggestionId(mealSuggestion.getId())
-                                        .userName(mealSuggestion.getUser().getName())
-                                        .build())
-                        .toList();
 
         return MealSuggestionResponse.builder()
                 .id(mealSuggestion.getId())
                 .content(mealSuggestion.getContent())
                 .userName(mealSuggestion.getUser().getName())
-                .mealSuggestionLikeResponseList(mealSuggestionLikeResponses)
                 .likeCount(mealSuggestion.getLikeCount())
+                .hateCount(mealSuggestion.getHateCount())
                 .createdAt(mealSuggestion.getCreatedAt())
                 .isChecked(mealSuggestion.isChecked())
                 .build();
