@@ -5,10 +5,7 @@ import com.example.mukgen.domain.deliveryparty.controller.dto.response.DeliveryP
 import com.example.mukgen.domain.deliveryparty.controller.dto.response.DeliveryPartyResponse;
 import com.example.mukgen.domain.deliveryparty.entity.DeliveryParty;
 import com.example.mukgen.domain.deliveryparty.repository.DeliveryPartyRepository;
-import com.example.mukgen.domain.deliveryparty.service.exception.DeliveryPartyAlreadyExists;
-import com.example.mukgen.domain.deliveryparty.service.exception.DeliveryPartyInProgress;
-import com.example.mukgen.domain.deliveryparty.service.exception.DeliveryPartyNotFoundException;
-import com.example.mukgen.domain.deliveryparty.service.exception.DeliveryPartyWriterMismatch;
+import com.example.mukgen.domain.deliveryparty.service.exception.*;
 import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.service.UserFacade;
 import lombok.RequiredArgsConstructor;
@@ -76,6 +73,23 @@ public class DeliveryPartyService {
                 .orElseThrow(()-> DeliveryPartyNotFoundException.EXCEPTION);
 
         deliveryParty.joinDeliveryParty(user);
+
+    }
+
+    @Transactional
+    public void leaveDeliveryParty(
+            Long deliveryPartyId
+    ){
+
+        User user = userFacade.currentUser();
+        if(!deliveryPartyRepository.existsByUserListContainsAndId(user,deliveryPartyId)){
+            throw DeliveryPartyNotJoinException.EXCEPTION;
+        }
+
+        DeliveryParty deliveryParty = deliveryPartyRepository.findById(deliveryPartyId)
+                .orElseThrow(()->DeliveryPartyNotFoundException.EXCEPTION);
+
+        deliveryParty.leaveDeliveryParty(user);
 
     }
 

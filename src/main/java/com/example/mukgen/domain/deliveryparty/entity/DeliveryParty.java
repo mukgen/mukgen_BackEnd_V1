@@ -57,4 +57,10 @@ public class DeliveryParty extends BaseTimeEntity {
         this.userList.add(user);
         user.setDeliveryParty(this);
     }
+
+    public void leaveDeliveryParty(User user){
+
+        this.userList.remove(user);
+        user.getDeliveryParty().userList.remove(user);
+    }
 }
