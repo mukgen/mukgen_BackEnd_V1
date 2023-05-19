@@ -33,7 +33,16 @@ public class DeliveryPartyController {
     public void deliveryPartyJoin(
             @PathVariable Long deliveryPartyId
     ){
+
         deliveryPartyService.joinDeliveryParty(deliveryPartyId);
+    }
+
+    @PostMapping("/leave/{deliveryPartyId}")
+    public void deliveryPartyLeave(
+            @PathVariable Long deliveryPartyId
+    ){
+
+        deliveryPartyService.leaveDeliveryParty(deliveryPartyId);
     }
 
     @DeleteMapping("/{deliveryPartyId}")

@@ -1,6 +1,7 @@
 package com.example.mukgen.domain.deliveryparty.repository;
 
 import com.example.mukgen.domain.deliveryparty.entity.DeliveryParty;
+import com.example.mukgen.domain.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,4 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface DeliveryPartyRepository extends JpaRepository<DeliveryParty, Long> {
 
     boolean existsByWriterAccountId(String writerAccountId);
+
+    boolean existsByUserListContainsAndId(User user,Long deliveryPartyId);
 }
