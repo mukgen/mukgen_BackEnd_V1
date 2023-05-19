@@ -90,4 +90,26 @@ public class MealSuggestionService {
 
         mealSuggestion.clickCheck();
     }
+
+    @Transactional
+    public void addLike(
+            Long mealSuggestionId
+    ) {
+        MealSuggestion mealSuggestion =
+                mealSuggestionRepository.findById(mealSuggestionId)
+                        .orElseThrow(() -> MealSuggestionNotFoundException.EXCEPTION);
+
+        mealSuggestion.addLike();
+    }
+
+    @Transactional
+    public void addDislike(
+            Long mealSuggestionId
+    ) {
+        MealSuggestion mealSuggestion =
+                mealSuggestionRepository.findById(mealSuggestionId)
+                        .orElseThrow(() -> MealSuggestionNotFoundException.EXCEPTION);
+
+        mealSuggestion.addDislike();
+    }
 }
