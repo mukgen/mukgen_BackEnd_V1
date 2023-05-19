@@ -13,7 +13,7 @@ public enum ErrorCode {
     // Bad Request
     PASSWORD_SAME(400,"Same Password"),
     BAD_REQUEST(400, "Bad request"),
-
+    DELIVERY_PARTY_NOT_JOIN(400,"Delivery Party Not Join"),
     PASSWORD_CHECK_MISMATCH(400,"Password Check Mismatch"),
 
     // UnAuthorized
