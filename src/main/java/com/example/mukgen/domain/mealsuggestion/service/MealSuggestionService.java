@@ -103,13 +103,13 @@ public class MealSuggestionService {
     }
 
     @Transactional
-    public void addHate(
+    public void addDislike(
             Long mealSuggestionId
     ) {
         MealSuggestion mealSuggestion =
                 mealSuggestionRepository.findById(mealSuggestionId)
                         .orElseThrow(() -> MealSuggestionNotFoundException.EXCEPTION);
 
-        mealSuggestion.addHate();
+        mealSuggestion.addDislike();
     }
 }

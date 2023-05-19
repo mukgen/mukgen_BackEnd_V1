@@ -7,8 +7,6 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity(name = "tbl_meal_suggestion")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -32,7 +30,7 @@ public class MealSuggestion extends BaseTimeEntity {
     private int likeCount = 0;
 
     @Column(name = "hate_count", nullable = false)
-    private int hateCount = 0;
+    private int dislikeCount = 0;
 
     @Column(name = "is_deleted")
     private boolean isDeleted = false;
@@ -44,8 +42,8 @@ public class MealSuggestion extends BaseTimeEntity {
         this.likeCount++;
     }
 
-    public void addHate() {
-        this.hateCount++;
+    public void addDislike() {
+        this.dislikeCount++;
     }
 
     public void clickCheck() {
@@ -63,14 +61,14 @@ public class MealSuggestion extends BaseTimeEntity {
             String content,
             User user,
             int likeCount,
-            int hateCount,
+            int dislikeCount,
             boolean isDeleted,
             boolean isChecked
     ) {
         this.content = content;
         this.user = user;
         this.likeCount = likeCount;
-        this.hateCount = hateCount;
+        this.dislikeCount = dislikeCount;
         this.isDeleted = isDeleted;
         this.isChecked = isChecked;
     }

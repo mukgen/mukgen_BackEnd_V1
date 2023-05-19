@@ -59,9 +59,9 @@ public class MealSuggestionController {
     }
 
     @PostMapping("/hate/{mealSuggestionId}")
-    public void hateAdd(
+    public void dislikeAdd(
             @PathVariable Long mealSuggestionId
     ) {
-        mealSuggestionService.addHate(mealSuggestionId);
+        mealSuggestionService.addDislike(mealSuggestionId);
     }
 }

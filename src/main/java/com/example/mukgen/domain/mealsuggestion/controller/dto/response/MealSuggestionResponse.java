@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @Builder
@@ -19,7 +18,7 @@ public class MealSuggestionResponse {
 
     private int likeCount;
 
-    private int hateCount;
+    private int dislikeCount;
 
     private LocalDateTime createdAt;
 
@@ -32,7 +31,7 @@ public class MealSuggestionResponse {
                 .content(mealSuggestion.getContent())
                 .userName(mealSuggestion.getUser().getName())
                 .likeCount(mealSuggestion.getLikeCount())
-                .hateCount(mealSuggestion.getHateCount())
+                .dislikeCount(mealSuggestion.getDislikeCount())
                 .createdAt(mealSuggestion.getCreatedAt())
                 .isChecked(mealSuggestion.isChecked())
                 .build();
