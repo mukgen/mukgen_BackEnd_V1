@@ -15,8 +15,6 @@ public enum ErrorCode {
     BAD_REQUEST(400, "Bad request"),
 
 
-    DELIVERY_PARTY_NOT_JOIN(400,"Delivery Party Not Join"),
-
     // UnAuthorized
     EXPIRED_TOKEN(401 , "Expired token"),
     INVALID_TOKEN(401, "Invalid token"),
