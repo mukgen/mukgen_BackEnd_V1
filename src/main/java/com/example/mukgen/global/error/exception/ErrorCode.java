@@ -17,6 +17,7 @@ public enum ErrorCode {
     PASSWORD_CHECK_MISMATCH(400,"Password Check Mismatch"),
 
 
+
     // UnAuthorized
     EXPIRED_TOKEN(401 , "Expired token"),
     INVALID_TOKEN(401, "Invalid token"),

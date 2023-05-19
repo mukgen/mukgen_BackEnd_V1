@@ -80,30 +80,19 @@ public class RiceService {
 
         List<RiceResponse> riceResponseList = new ArrayList<>();
 
-        riceResponseList.add(findRice(
-                RiceRequest.builder()
-                        .riceType(RiceType.BREAKFAST)
-                        .day(day)
-                        .month(month)
-                        .year(year)
-                        .build()
-        ));
-        riceResponseList.add(findRice(
-                RiceRequest.builder()
-                        .riceType(RiceType.LUNCH)
-                        .day(day)
-                        .month(month)
-                        .year(year)
-                        .build()
-        ));
-        riceResponseList.add(findRice(
-                RiceRequest.builder()
-                        .riceType(RiceType.DINNER)
-                        .day(day)
-                        .month(month)
-                        .year(year)
-                        .build()
-        ));
+        RiceType[] riceTypes = {RiceType.BREAKFAST, RiceType.LUNCH, RiceType.DINNER};
+
+        for (RiceType riceType : riceTypes) {
+            RiceRequest riceRequest = RiceRequest.builder()
+                    .riceType(riceType)
+                    .day(day)
+                    .month(month)
+                    .year(year)
+                    .build();
+
+            RiceResponse riceResponse = findRice(riceRequest);
+            riceResponseList.add(riceResponse);
+        }
 
         return RiceTodayResponse.builder()
                 .responseList(riceResponseList)
@@ -116,14 +105,12 @@ public class RiceService {
         int day = 1;
         while(day<=30){
             try {
-                Rice rice = riceApi.getRice(RiceType.LUNCH, 2023, 5, day);
-                riceRepository.save(rice);
-                rice = riceApi.getRice(RiceType.BREAKFAST, 2023, 5, day);
-                riceRepository.save(rice);
-                rice = riceApi.getRice(RiceType.DINNER, 2023, 5, day);
-                riceRepository.save(rice);
-            } catch (Exception e) {
-                System.err.println("An error occurred while processing day " + day + ": " + e.getMessage());
+                RiceType[] riceTypes = {RiceType.LUNCH, RiceType.BREAKFAST, RiceType.DINNER};
+
+                for (RiceType riceType : riceTypes) {
+                    Rice rice = riceApi.getRice(riceType, 2023, 5, day);
+                    riceRepository.save(rice);
+                }
             } finally {
                 day++;
             }
