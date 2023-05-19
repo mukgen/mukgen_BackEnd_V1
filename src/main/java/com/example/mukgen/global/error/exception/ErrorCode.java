@@ -16,6 +16,7 @@ public enum ErrorCode {
     DELIVERY_PARTY_NOT_JOIN(400,"Delivery Party Not Join"),
     PASSWORD_CHECK_MISMATCH(400,"Password Check Mismatch"),
 
+
     // UnAuthorized
     EXPIRED_TOKEN(401 , "Expired token"),
     INVALID_TOKEN(401, "Invalid token"),
