@@ -59,4 +59,8 @@ public class User {
         }
     }
 
+    public void leaveDeliveryParty(){
+        this.deliveryParty = null;
+    }
+
 }

@@ -98,6 +98,8 @@ public class DeliveryPartyService {
             throw DeliveryPartyWriterMismatch.EXCEPTION;
         }
 
+        user.leaveDeliveryParty();
+
         deliveryPartyRepository.deleteById(deliveryPartyId);
     }
 }
