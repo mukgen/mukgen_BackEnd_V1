@@ -8,6 +8,7 @@ import com.example.mukgen.domain.board.controller.dto.response.BoardPopularListR
 import com.example.mukgen.domain.board.controller.dto.response.BoardTabListResponse;
 import com.example.mukgen.domain.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -55,13 +56,13 @@ public class BoardController {
     }
 
     @GetMapping("/day")
-    public BoardTabListResponse boardDayList(){
-        return boardService.findDayBoard();
+    public BoardTabListResponse boardDayList(Pageable pageable){
+        return boardService.findDayBoard(pageable);
     }
 
     @GetMapping("/week")
-    public BoardTabListResponse boardWeekList(){
-        return boardService.findWeekBoard();
+    public BoardTabListResponse boardWeekList(Pageable pageable){
+        return boardService.findWeekBoard(pageable);
     }
 
     @GetMapping("/total")

@@ -10,6 +10,7 @@ import com.example.mukgen.domain.board.service.exception.BoardWriterMissMatchExc
 import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.service.UserFacade;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -122,14 +123,14 @@ public class BoardService {
                 .build();
     }
 
-    public BoardTabListResponse findDayBoard(){
+    public BoardTabListResponse findDayBoard(Pageable pageable){
 
         BoardPopularListResponse popularBoard = findPopularBoard();
 
         LocalDateTime curDateTime = LocalDateTime.now().minusDays(1);
 
         List<BoardMinimumResponse> boardMinimumResponseList =
-                boardRepository.findAllByCreatedAtGreaterThan(curDateTime, Sort.by(Sort.Direction.DESC, "createdAt"))
+                boardRepository.findAllByCreatedAtGreaterThan(curDateTime, Sort.by(Sort.Direction.DESC, "createdAt"),pageable)
                         .stream()
                         .map(BoardMinimumResponse::of)
                         .toList();
@@ -145,11 +146,11 @@ public class BoardService {
                 .build();
     }
 
-    public BoardTabListResponse findWeekBoard(){
+    public BoardTabListResponse findWeekBoard(Pageable pageable){
         int thisWeek = LocalDate.now().get(WeekFields.ISO.weekOfWeekBasedYear());
 
         List<BoardMinimumResponse> boardMinimumResponseList =
-                boardRepository.findByWeek(thisWeek).stream()
+                boardRepository.findByWeek(thisWeek, pageable).stream()
                         .map(BoardMinimumResponse::of).toList();
 
         BoardListResponse boardListResponse = BoardListResponse.builder()
@@ -164,11 +165,11 @@ public class BoardService {
                 .build();
     }
 
-    public BoardListResponse findMyBoard(){
+    public BoardListResponse findMyBoard(Pageable pageable){
 
         User user = userFacade.currentUser();
 
-        List<BoardMinimumResponse> boardMinimumResponseList = boardRepository.findAllByUser(user)
+        List<BoardMinimumResponse> boardMinimumResponseList = boardRepository.findAllByUser(user, pageable)
                 .stream().map(BoardMinimumResponse::of).toList();
 
         return BoardListResponse.builder()
