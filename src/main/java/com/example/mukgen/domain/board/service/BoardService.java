@@ -10,7 +10,6 @@ import com.example.mukgen.domain.board.service.exception.BoardWriterMissMatchExc
 import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.service.UserFacade;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -123,14 +122,14 @@ public class BoardService {
                 .build();
     }
 
-    public BoardTabListResponse findDayBoard(Pageable pageable){
+    public BoardTabListResponse findDayBoard(){
 
         BoardPopularListResponse popularBoard = findPopularBoard();
 
         LocalDateTime curDateTime = LocalDateTime.now().minusDays(1);
 
         List<BoardMinimumResponse> boardMinimumResponseList =
-                boardRepository.findAllByCreatedAtGreaterThan(curDateTime, Sort.by(Sort.Direction.DESC, "createdAt"),pageable)
+                boardRepository.findAllByCreatedAtGreaterThan(curDateTime, Sort.by(Sort.Direction.DESC, "createdAt"))
                         .stream()
                         .map(BoardMinimumResponse::of)
                         .toList();
@@ -146,11 +145,11 @@ public class BoardService {
                 .build();
     }
 
-    public BoardTabListResponse findWeekBoard(Pageable pageable){
+    public BoardTabListResponse findWeekBoard(){
         int thisWeek = LocalDate.now().get(WeekFields.ISO.weekOfWeekBasedYear());
 
         List<BoardMinimumResponse> boardMinimumResponseList =
-                boardRepository.findByWeek(thisWeek, pageable).stream()
+                boardRepository.findByWeek(thisWeek).stream()
                         .map(BoardMinimumResponse::of).toList();
 
         BoardListResponse boardListResponse = BoardListResponse.builder()
@@ -165,11 +164,11 @@ public class BoardService {
                 .build();
     }
 
-    public BoardListResponse findMyBoard(Pageable pageable){
+    public BoardListResponse findMyBoard(){
 
         User user = userFacade.currentUser();
 
-        List<BoardMinimumResponse> boardMinimumResponseList = boardRepository.findAllByUser(user, pageable)
+        List<BoardMinimumResponse> boardMinimumResponseList = boardRepository.findAllByUser(user)
                 .stream().map(BoardMinimumResponse::of).toList();
 
         return BoardListResponse.builder()
