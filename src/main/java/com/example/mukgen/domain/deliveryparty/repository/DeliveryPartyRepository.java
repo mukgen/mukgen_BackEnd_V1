@@ -18,4 +18,6 @@ public interface DeliveryPartyRepository extends JpaRepository<DeliveryParty, Lo
     List<DeliveryParty> findAllByMeetTimeAfter(LocalDateTime time);
 
     List<DeliveryParty> findAllByMeetTimeBefore(LocalDateTime time);
+
+    void removeAllByMeetTimeBefore(LocalDateTime time);
 }

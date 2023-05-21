@@ -20,11 +20,7 @@ public class DeliveryPartyScheduledService {
     @Transactional
     public void deleteDeliveryParties(){
 
-        LocalDateTime time = LocalDateTime.now();
-        List<DeliveryParty> deliveryParties = deliveryPartyRepository.findAllByMeetTimeBefore(time);
-        for(DeliveryParty deliveryParty : deliveryParties){
-            deliveryPartyRepository.delete(deliveryParty);
-        }
+        deliveryPartyRepository.removeAllByMeetTimeBefore(LocalDateTime.now());
     }
 
 }
