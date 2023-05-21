@@ -14,8 +14,8 @@ spring:
         show_sq l: true
         format_sql: true
   redis:
-    port: ${REDIS_PORT:6379}
-    host: ${REDIS_HOST:root}
+    port: ${REDIS_PORT}
+    host: ${REDIS_HOST}
 
 jwt:
   secret: ${JWT_SECRET}
