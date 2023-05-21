@@ -152,14 +152,10 @@ public class BoardService {
                 boardRepository.findByWeek(thisWeek).stream()
                         .map(BoardMinimumResponse::of).toList();
 
-        BoardListResponse boardListResponse = BoardListResponse.builder()
-                .boardMinimumResponseList(boardMinimumResponseList)
-                .build();
-
-        List<BoardPopularResponse> boardPopularResponseList = new ArrayList<>();
-
         return BoardTabListResponse.builder()
-                .boardListResponse(boardListResponse)
+                .boardListResponse(BoardListResponse.builder()
+                        .boardMinimumResponseList(boardMinimumResponseList)
+                        .build())
                 .boardPopularListResponse(findPopularBoard())
                 .build();
     }
