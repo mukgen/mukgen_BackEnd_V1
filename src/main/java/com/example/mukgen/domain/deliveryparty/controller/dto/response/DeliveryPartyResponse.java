@@ -22,6 +22,10 @@ public class DeliveryPartyResponse {
 
     private Long deliveryPartyId;
 
+    private Integer participantNumber;
+
+    private Integer curParticipantNumber;
+
     public static DeliveryPartyResponse of(DeliveryParty deliveryParty){
 
         List<UserInfoResponse> userInfoResponses =
@@ -31,6 +35,8 @@ public class DeliveryPartyResponse {
                         .toList();
 
         return DeliveryPartyResponse.builder()
+                .participantNumber(deliveryParty.getParticipantNumber())
+                .curParticipantNumber(deliveryParty.getUserList().size())
                 .deliveryPartyId(deliveryParty.getId())
                 .userInfoResponseList(userInfoResponses)
                 .meetTime(deliveryParty.getMeetTime())
