@@ -12,9 +12,11 @@ import com.example.mukgen.domain.user.entity.type.UserRole;
 import com.example.mukgen.domain.user.service.UserFacade;
 import com.example.mukgen.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -65,6 +67,14 @@ public class MealSuggestionService {
             throw MealSuggestionWriterMissMatchException.EXCEPTION;
 
         mealSuggestionRepository.delete(mealSuggestion);
+    }
+
+    @Scheduled(cron = "0 0 0 * *")
+    @Transactional
+    public void autoRemoveMealSuggestion() {
+        mealSuggestionRepository
+                .removeByCreatedAtEquals(
+                        LocalDateTime.now().minusWeeks(1));
     }
 
     public List<MealSuggestionResponse> findAllSuggestion(
