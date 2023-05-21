@@ -81,7 +81,7 @@ public class ReviewService {
         return ReviewMaximumResponse.of(review);
     }
 
-    public ReviewResponseList findReview(int riceId){
+    public ReviewListResponse findReview(int riceId){
 
         Rice rice = riceRepository.findById(riceId)
                 .orElseThrow(()->  RiceNotFoundException.EXCEPTION);
@@ -89,24 +89,24 @@ public class ReviewService {
         List<ReviewResponse> reviewResponseList = reviewRepository.findAllByRice(rice)
                 .stream().map(ReviewResponse::of).toList();
 
-        return ReviewResponseList.builder()
+        return ReviewListResponse.builder()
                     .reviewResponseList(reviewResponseList)
                     .build();
     }
 
 
-    public ReviewResponseList findMyReview(){
+    public ReviewListResponse findMyReview(){
         List<ReviewResponse> reviewResponseList =
             reviewRepository.findAllByUser(userFacade.currentUser())
                     .stream()
                     .map(ReviewResponse::of)
                     .toList();
-        return ReviewResponseList.builder()
+        return ReviewListResponse.builder()
                 .reviewResponseList(reviewResponseList)
                 .build();
     }
 
-    public ReviewRankResponseList findRankReview(){
+    public ReviewRankListResponse findRankReview(){
 
         String jpql = "SELECT e FROM tbl_user e ORDER BY SIZE(e.reviewList) DESC";
 
@@ -115,7 +115,7 @@ public class ReviewService {
         List<ReviewRankResponse> reviewRankResponseList = userSortList.stream()
                 .map(ReviewRankResponse::of).toList();
 
-        return ReviewRankResponseList.builder()
+        return ReviewRankListResponse.builder()
                 .reviewRankResponseList(reviewRankResponseList)
                 .build();
     }
@@ -133,7 +133,7 @@ public class ReviewService {
         );
 
         return ReviewTodayListResponse.builder()
-                .reviewResponseLists(reviewResponseLists)
+                .reviewListResponses(reviewResponseLists)
                 .build();
 
     }
