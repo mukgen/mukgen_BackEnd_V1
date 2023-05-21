@@ -36,7 +36,7 @@ public class ReviewController {
     }
 
     @GetMapping("/rank")
-    public ReviewRankResponseList reviewRankList(){
+    public ReviewRankListResponse reviewRankList(){
         return reviewService.findRankReview();
     }
 

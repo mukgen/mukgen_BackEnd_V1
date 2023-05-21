@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @Builder
-public class ReviewResponseList {
+public class ReviewListResponse {
 
     List<ReviewResponse> reviewResponseList;
 }

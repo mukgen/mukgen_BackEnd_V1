@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 @Builder
-public class ReviewRankResponseList {
+public class ReviewRankListResponse {
 
     private List<ReviewRankResponse> reviewRankResponseList;
 }

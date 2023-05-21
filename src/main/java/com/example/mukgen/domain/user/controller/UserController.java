@@ -1,9 +1,8 @@
 package com.example.mukgen.domain.user.controller;
 
 import com.example.mukgen.domain.board.controller.dto.response.BoardListResponse;
-import com.example.mukgen.domain.board.controller.dto.response.BoardMaximumResponse;
 import com.example.mukgen.domain.board.service.BoardService;
-import com.example.mukgen.domain.review.controller.dto.response.ReviewResponseList;
+import com.example.mukgen.domain.review.controller.dto.response.ReviewListResponse;
 import com.example.mukgen.domain.review.service.ReviewService;
 import com.example.mukgen.domain.user.controller.response.UserProfileResponse;
 import com.example.mukgen.domain.user.service.UserService;
@@ -37,7 +36,7 @@ public class UserController {
     }
 
     @GetMapping("/review")
-    public ReviewResponseList userReviewList(){
+    public ReviewListResponse userReviewList(){
         return reviewService.findMyReview();
     }
 

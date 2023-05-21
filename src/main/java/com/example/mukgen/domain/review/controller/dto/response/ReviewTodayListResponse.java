@@ -9,5 +9,5 @@ import java.util.List;
 @Builder
 public class ReviewTodayListResponse {
 
-    private List<ReviewResponseList> reviewResponseLists;
+    private List<ReviewListResponse> reviewListResponses;
 }
