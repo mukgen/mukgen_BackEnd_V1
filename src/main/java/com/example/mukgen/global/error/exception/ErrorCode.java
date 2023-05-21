@@ -16,6 +16,7 @@ public enum ErrorCode {
     DELIVERY_PARTY_NOT_JOIN(400,"Delivery Party Not Join"),
     PASSWORD_CHECK_MISMATCH(400,"Password Check Mismatch"),
     RICE_NOT_TODAY(400, "This meal is not today's meal"),
+    DELIVERY_PARTY_FULL(400, "This delivery party is full"),
 
     // UnAuthorized
     EXPIRED_TOKEN(401 , "Expired token"),

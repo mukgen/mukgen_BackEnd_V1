@@ -57,7 +57,7 @@ public class DeliveryPartyService {
         return DeliveryPartyListResponse.builder()
                 .deliveryPartyResponseList(
                         deliveryPartyRepository
-                                .findAll()
+                                .findAllByMeetTimeBefore(LocalDateTime.now())
                                 .stream()
                                 .map(DeliveryPartyResponse::of)
                                 .toList())
@@ -69,15 +69,19 @@ public class DeliveryPartyService {
             Long deliveryPartyId
     ){
 
+        DeliveryParty deliveryParty = deliveryPartyRepository.findById(deliveryPartyId)
+                .orElseThrow(()-> DeliveryPartyNotFoundException.EXCEPTION);
+
+        if(deliveryParty.getUserList().size()>=deliveryParty.getParticipantNumber()){
+            throw DeliveryPartyFull.EXCEPTION;
+        }
+
         User user = userFacade.currentUser();
 
         if(deliveryPartyRepository.existsByWriterAccountId(user.getAccountId())){
 
             throw DeliveryPartyInProgress.EXCEPTION;
         }
-
-        DeliveryParty deliveryParty = deliveryPartyRepository.findById(deliveryPartyId)
-                .orElseThrow(()-> DeliveryPartyNotFoundException.EXCEPTION);
 
         deliveryParty.joinDeliveryParty(user);
 
