@@ -15,5 +15,7 @@ public interface DeliveryPartyRepository extends JpaRepository<DeliveryParty, Lo
 
     boolean existsByUserListContainsAndId(User user,Long deliveryPartyId);
 
+    List<DeliveryParty> findAllByMeetTimeAfter(LocalDateTime time);
+
     List<DeliveryParty> findAllByMeetTimeBefore(LocalDateTime time);
 }

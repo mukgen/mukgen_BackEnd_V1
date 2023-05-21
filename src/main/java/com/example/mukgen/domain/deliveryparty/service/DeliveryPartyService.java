@@ -57,7 +57,7 @@ public class DeliveryPartyService {
         return DeliveryPartyListResponse.builder()
                 .deliveryPartyResponseList(
                         deliveryPartyRepository
-                                .findAllByMeetTimeBefore(LocalDateTime.now())
+                                .findAllByMeetTimeAfter(LocalDateTime.now())
                                 .stream()
                                 .map(DeliveryPartyResponse::of)
                                 .toList())
