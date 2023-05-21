@@ -10,6 +10,7 @@ import com.example.mukgen.domain.rice.entity.Rice;
 import com.example.mukgen.domain.rice.repository.RiceRepository;
 import com.example.mukgen.domain.rice.service.RiceService;
 import com.example.mukgen.domain.rice.service.exception.RiceNotFoundException;
+import com.example.mukgen.domain.rice.service.exception.RiceNotTodayException;
 import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.service.UserFacade;
 import lombok.RequiredArgsConstructor;
@@ -50,7 +51,7 @@ public class ReviewService {
         int curId = (curDate.getYear()*10000 + curDate.getMonthValue()*100 + curDate.getDayOfMonth())*10;
 
         if(day!=curDate.getDayOfMonth()){
-            throw new IllegalStateException("오류 시발!");
+            throw RiceNotTodayException.EXCEPTION;
         }
 
         Rice rice = riceRepository.findById(mealId)
