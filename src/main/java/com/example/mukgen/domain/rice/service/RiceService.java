@@ -64,6 +64,7 @@ public class RiceService {
         }
 
         return RiceResponse.builder()
+                .riceType(riceType)
                 .riceId(id)
                 .item(rice.getItem())
                 .build();
