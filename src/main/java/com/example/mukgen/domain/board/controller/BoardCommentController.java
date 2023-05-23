@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/boardComment")
+@RequestMapping("/board-comment")
 @RequiredArgsConstructor
 public class BoardCommentController {
 
