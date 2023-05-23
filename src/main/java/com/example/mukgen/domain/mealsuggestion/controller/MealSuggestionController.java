@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/mealSuggestion")
+@RequestMapping("/meal-suggestion")
 public class MealSuggestionController {
 
     private final MealSuggestionService mealSuggestionService;
