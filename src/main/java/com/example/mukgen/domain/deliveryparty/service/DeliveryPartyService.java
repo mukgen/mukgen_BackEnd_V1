@@ -101,8 +101,7 @@ public class DeliveryPartyService {
             throw DeliveryPartyNotJoinException.EXCEPTION;
         }
 
-        curUser.leaveDeliveryParty();
-        curUser.getDeliveryParty().leaveDeliveryParty(curUser);
+        deliveryParty.leaveDeliveryParty(curUser);
     }
 
     @Transactional
@@ -120,7 +119,7 @@ public class DeliveryPartyService {
             throw DeliveryPartyWriterMismatch.EXCEPTION;
         }
 
-        user.leaveDeliveryParty();
+        user.setDeliveryPartyLeave();
 
         deliveryPartyRepository.deleteById(deliveryPartyId);
     }

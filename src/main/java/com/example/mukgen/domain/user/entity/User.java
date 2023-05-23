@@ -49,7 +49,6 @@ public class User {
     public void setDeliveryParty(DeliveryParty deliveryParty){
 
         if(this.deliveryParty != null){
-
             this.deliveryParty.getUserList().remove(this);
         }
         this.deliveryParty = deliveryParty;
@@ -59,7 +58,8 @@ public class User {
         }
     }
 
-    public void leaveDeliveryParty(){
+    public void setDeliveryPartyLeave(){
+        this.deliveryParty.getUserList().remove(this);
         this.deliveryParty = null;
     }
 
