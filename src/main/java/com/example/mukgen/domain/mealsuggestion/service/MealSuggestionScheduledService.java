@@ -15,7 +15,7 @@ public class MealSuggestionScheduledService {
 
     private final MealSuggestionRepository mealSuggestionRepository;
 
-    @Scheduled(cron = "0 0 0 * *")
+    @Scheduled(cron = "0 0 0 * * *")
     @Transactional
     public void autoRemoveMealSuggestion() {
         mealSuggestionRepository
