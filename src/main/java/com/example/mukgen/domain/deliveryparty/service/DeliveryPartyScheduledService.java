@@ -14,13 +14,24 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DeliveryPartyScheduledService {
 
+    private final DeliveryPartyService deliveryPartyService;
+
     private final DeliveryPartyRepository deliveryPartyRepository;
 
     @Scheduled(fixedDelay = 600000) // 10분마다 만난 시간이 지난 배달파티 삭제
     @Transactional
     public void deleteDeliveryParties(){
 
-        deliveryPartyRepository.removeAllByMeetTimeBefore(LocalDateTime.now());
+        List<DeliveryParty> deliveryPartyList = deliveryPartyRepository
+                .findAllByMeetTimeBefore(LocalDateTime.now());
+
+        List<Long> idList = deliveryPartyList.stream()
+                .map(DeliveryParty::getId)
+                .toList();
+
+        for(Long id : idList){
+            deliveryPartyService.deleteDeliveryParty(id);
+        }
     }
 
 }
