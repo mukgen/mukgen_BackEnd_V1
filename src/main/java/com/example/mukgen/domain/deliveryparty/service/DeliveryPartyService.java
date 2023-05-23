@@ -88,6 +88,24 @@ public class DeliveryPartyService {
     }
 
     @Transactional
+    public void leaveDeliveryParty(
+            Long deliveryPartyId
+    ){
+
+        User curUser = userFacade.currentUser();
+
+        DeliveryParty deliveryParty = deliveryPartyRepository.findById(deliveryPartyId)
+                .orElseThrow(()-> DeliveryPartyNotFoundException.EXCEPTION);
+
+        if(!deliveryParty.getUserList().contains(curUser)){
+            throw DeliveryPartyNotJoinException.EXCEPTION;
+        }
+
+        curUser.leaveDeliveryParty();
+        curUser.getDeliveryParty().leaveDeliveryParty(curUser);
+    }
+
+    @Transactional
     public void deleteDeliveryParty(
             Long deliveryPartyId
     ){
