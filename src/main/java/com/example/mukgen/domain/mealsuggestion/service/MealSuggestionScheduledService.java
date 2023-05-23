@@ -19,7 +19,7 @@ public class MealSuggestionScheduledService {
     @Transactional
     public void autoRemoveMealSuggestion() {
         mealSuggestionRepository
-                .removeByCreatedAtEquals(
+                .removeAllByCreatedAtBefore(
                         LocalDateTime.now().minusWeeks(1));
     }
 }

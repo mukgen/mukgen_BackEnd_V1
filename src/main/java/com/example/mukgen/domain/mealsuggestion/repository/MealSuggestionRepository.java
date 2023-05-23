@@ -9,5 +9,5 @@ import java.time.LocalDateTime;
 @Repository
 public interface MealSuggestionRepository extends JpaRepository<MealSuggestion, Long> {
 
-    void removeByCreatedAtEquals(LocalDateTime time);
+    void removeAllByCreatedAtBefore(LocalDateTime time);
 }
