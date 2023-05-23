@@ -53,9 +53,9 @@ public class RiceApi {
     public Rice getRice(RiceType riceType, int year, int month, int day) {
         final JSONObject data = readJsonFromUrl(String.format("https://open.neis.go.kr/hub/mealServiceDietInfo?Type=json&ATPT_OFCDC_SC_CODE=%s&SD_SCHUL_CODE=%s&MLSV_YMD=%d%s%s", "G10", "7430310", year, zeroValue(month), zeroValue(day)));
         int addId = switch (riceType) {
-            case BREAKFAST -> 1;
-            case LUNCH -> 2;
-            case DINNER -> 3;
+            case 아침 -> 1;
+            case 점심 -> 2;
+            case 저녁 -> 3;
         };
         int id = ( year * 10000 + month * 100 + day)*10 + addId;
         if (data.has("mealServiceDietInfo")) {

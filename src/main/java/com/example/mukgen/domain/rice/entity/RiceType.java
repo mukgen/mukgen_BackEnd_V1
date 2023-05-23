@@ -4,9 +4,9 @@ import lombok.Getter;
 
 @Getter
 public enum RiceType {
-    BREAKFAST("조식"),
-    LUNCH("중식"),
-    DINNER("석식");
+    아침("조식"),
+    점심("중식"),
+    저녁("석식");
 
     private final String tag;
 
