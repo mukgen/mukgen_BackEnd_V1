@@ -17,6 +17,7 @@ public enum ErrorCode {
     PASSWORD_CHECK_MISMATCH(400,"Password Check Mismatch"),
     RICE_NOT_TODAY(400, "This meal is not today's meal"),
     DELIVERY_PARTY_FULL(400, "This delivery party is full"),
+    DELIVERY_PARTY_WRITER_CANT_LEAVE(400, "배달파티 작성자는 떠날 수 없습니다."),
 
     // UnAuthorized
     EXPIRED_TOKEN(401 , "Expired token"),
