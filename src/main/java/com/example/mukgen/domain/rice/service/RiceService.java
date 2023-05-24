@@ -40,9 +40,9 @@ public class RiceService {
         int day = request.getDay();
 
         int addId = switch (riceType) {
-            case 아침 -> 1;
-            case 점심 -> 2;
-            case 저녁 -> 3;
+            case BREAKFAST -> 1;
+            case LUNCH -> 2;
+            case DINNER -> 3;
         };
 
         int id = (year * 10000 + month * 100 + day) * 10 + addId;
@@ -64,7 +64,7 @@ public class RiceService {
         }
 
         return RiceResponse.builder()
-                .riceType(riceType)
+                .riceType(riceType.getTag())
                 .riceId(id)
                 .item(rice.getItem())
                 .build();
@@ -81,7 +81,7 @@ public class RiceService {
 
         List<RiceResponse> riceResponseList = new ArrayList<>();
 
-        RiceType[] riceTypes = {RiceType.아침, RiceType.점심, RiceType.저녁};
+        RiceType[] riceTypes = {RiceType.BREAKFAST, RiceType.LUNCH, RiceType.DINNER};
 
         for (RiceType riceType : riceTypes) {
             RiceRequest riceRequest = RiceRequest.builder()
@@ -106,7 +106,7 @@ public class RiceService {
         int day = 1;
         while(day<=30){
             try {
-                RiceType[] riceTypes = {RiceType.점심, RiceType.아침, RiceType.저녁};
+                RiceType[] riceTypes = {RiceType.LUNCH, RiceType.BREAKFAST, RiceType.DINNER};
 
                 for (RiceType riceType : riceTypes) {
                     Rice rice = riceApi.getRice(riceType, 2023, 5, day);
