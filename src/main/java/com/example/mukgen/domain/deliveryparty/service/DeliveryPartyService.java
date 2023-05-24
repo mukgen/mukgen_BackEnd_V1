@@ -100,6 +100,9 @@ public class DeliveryPartyService {
         if(!deliveryParty.getUserList().contains(curUser)){
             throw DeliveryPartyNotJoinException.EXCEPTION;
         }
+        if(deliveryParty.getWriterAccountId().equals(curUser.getAccountId())){
+            throw DeliveryPartyCantLeaveException.EXCEPTION;
+        }
 
         deliveryParty.leaveDeliveryParty(curUser);
     }
