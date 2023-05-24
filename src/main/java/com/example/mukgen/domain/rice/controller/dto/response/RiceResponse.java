@@ -1,6 +1,5 @@
 package com.example.mukgen.domain.rice.controller.dto.response;
 
-import com.example.mukgen.domain.rice.entity.RiceType;
 import lombok.Builder;
 import lombok.Data;
 
@@ -8,7 +7,7 @@ import lombok.Data;
 @Builder
 public class RiceResponse {
 
-    private RiceType riceType;
+    private String riceType;
 
     private String item;
 
