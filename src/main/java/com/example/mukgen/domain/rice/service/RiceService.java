@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -76,7 +78,7 @@ public class RiceService {
     @Transactional
     public RiceTodayResponse findTodayRice(){
 
-        LocalDateTime curDate = LocalDateTime.now();
+        ZonedDateTime curDate = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
 
         int day = curDate.getDayOfMonth();
         int month = curDate.getMonthValue();
