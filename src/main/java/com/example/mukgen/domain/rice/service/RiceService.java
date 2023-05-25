@@ -13,7 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -73,7 +76,7 @@ public class RiceService {
     @Transactional
     public RiceTodayResponse findTodayRice(){
 
-        LocalDate curDate = LocalDate.now();
+        LocalDateTime curDate = LocalDateTime.now();
 
         int day = curDate.getDayOfMonth();
         int month = curDate.getMonthValue();
