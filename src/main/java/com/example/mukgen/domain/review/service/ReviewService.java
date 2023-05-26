@@ -6,9 +6,9 @@ import com.example.mukgen.domain.review.entity.Review;
 import com.example.mukgen.domain.review.repository.ReviewRepository;
 import com.example.mukgen.domain.review.service.exception.ReviewAlreadyExistsException;
 import com.example.mukgen.domain.review.service.exception.ReviewNotFoundException;
+import com.example.mukgen.domain.review.service.exception.ReviewYetTimeException;
 import com.example.mukgen.domain.rice.entity.Rice;
 import com.example.mukgen.domain.rice.repository.RiceRepository;
-import com.example.mukgen.domain.rice.service.RiceService;
 import com.example.mukgen.domain.rice.service.exception.RiceNotFoundException;
 import com.example.mukgen.domain.rice.service.exception.RiceNotTodayException;
 import com.example.mukgen.domain.user.entity.User;
@@ -19,8 +19,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional(readOnly = true)
@@ -33,8 +37,6 @@ public class ReviewService {
 
     private final UserFacade userFacade;
 
-    private final RiceService riceService;
-
     private final EntityManager entityManager;
 
     @Transactional
@@ -42,20 +44,36 @@ public class ReviewService {
             ReviewCreateRequest request,
             int mealId
     ){
+        Rice rice = riceRepository.findById(mealId)
+                .orElseThrow(()-> RiceNotFoundException.EXCEPTION);
+
+        if(rice.getItem().equals("등록된 급식이 없습니다.")){
+            throw RiceNotTodayException.EXCEPTION;
+        }
+
+        ZonedDateTime curDate = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
+
+        Map<Integer, LocalTime> mealTimes = Map.of(
+                1, LocalTime.of(8, 0),
+                2, LocalTime.of(13, 10),
+                3, LocalTime.of(18, 10)
+        );
+
+        LocalTime mealTime = mealTimes.get(mealId % 10);
+
+        if (curDate.toLocalTime().isBefore(mealTime)) {
+            throw ReviewYetTimeException.EXCEPTION;
+        }
 
         int tempMealId = mealId;
 
-        int day = (tempMealId/=10) % 100; // 12
+        int day = (tempMealId/=10) % 100;
 
-        LocalDate curDate = LocalDate.now();
         int curId = (curDate.getYear()*10000 + curDate.getMonthValue()*100 + curDate.getDayOfMonth())*10;
 
         if(day!=curDate.getDayOfMonth()){
             throw RiceNotTodayException.EXCEPTION;
         }
-
-        Rice rice = riceRepository.findById(mealId)
-                .orElseThrow(()-> RiceNotFoundException.EXCEPTION);
 
         if(reviewRepository.existsByRiceAndUser(rice,userFacade.currentUser())){
             throw ReviewAlreadyExistsException.EXCEPTION;
