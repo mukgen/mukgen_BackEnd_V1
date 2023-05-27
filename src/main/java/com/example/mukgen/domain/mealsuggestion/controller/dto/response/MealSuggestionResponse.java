@@ -14,13 +14,9 @@ public class MealSuggestionResponse {
 
     private String content;
 
-    private String userName;
-
     private int likeCount;
 
     private int dislikeCount;
-
-    private LocalDateTime createdAt;
 
     private boolean isChecked;
 
@@ -29,10 +25,8 @@ public class MealSuggestionResponse {
         return MealSuggestionResponse.builder()
                 .id(mealSuggestion.getId())
                 .content(mealSuggestion.getContent())
-                .userName(mealSuggestion.getUser().getName())
                 .likeCount(mealSuggestion.getLikeCount())
                 .dislikeCount(mealSuggestion.getDislikeCount())
-                .createdAt(mealSuggestion.getCreatedAt())
                 .isChecked(mealSuggestion.isChecked())
                 .build();
     }
