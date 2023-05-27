@@ -2,6 +2,7 @@ package com.example.mukgen.domain.mealsuggestion.service;
 
 import com.example.mukgen.domain.mealsuggestion.controller.dto.request.MealSuggestionCreateRequest;
 import com.example.mukgen.domain.mealsuggestion.controller.dto.request.MealSuggestionUpdateRequest;
+import com.example.mukgen.domain.mealsuggestion.controller.dto.response.MealSuggestionListResponse;
 import com.example.mukgen.domain.mealsuggestion.controller.dto.response.MealSuggestionResponse;
 import com.example.mukgen.domain.mealsuggestion.entity.MealSuggestion;
 import com.example.mukgen.domain.mealsuggestion.repository.MealSuggestionRepository;
@@ -67,12 +68,15 @@ public class MealSuggestionService {
         mealSuggestionRepository.delete(mealSuggestion);
     }
 
-    public List<MealSuggestionResponse> findAllSuggestion(
+    public MealSuggestionListResponse findAllSuggestion(
     ) {
-        return mealSuggestionRepository.findAll()
-                .stream()
-                .map(MealSuggestionResponse::of)
-                .toList();
+        return MealSuggestionListResponse.builder()
+                .mealSuggestionResponseList(
+                        mealSuggestionRepository.findAll()
+                        .stream()
+                        .map(MealSuggestionResponse::of)
+                        .toList())
+                .build();
     }
 
     @Transactional
