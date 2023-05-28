@@ -52,6 +52,12 @@ jobs:
         script: |
           docker pull ${{ secrets.DOCKER_USERNAME }}/sejongmate:latest
           docker stop $(docker ps -a --filter "name!=mysql" --format "{{.ID}}")
-          docker run -d --network host ${{ secrets.DOCKER_USERNAME }}/mukgen:latest
+          docker docker run -d --network host \
+          -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
+          -e DB_URL=${{ secrets.DB_URL }} \
+          -e DB_USERNAME=${{ secrets.DB_USERNAME }} \
+          -e REDIS_HOST=${{ secrets.REDIS_HOST }} \
+          -e REDIS_PORT=${{ secrets.REDIS_PORT }} \
+          hyunsu1768/mukgen:latest
           docker rm $(docker ps --filter 'status=exited' -a -q)
           docker image prune -a -f
