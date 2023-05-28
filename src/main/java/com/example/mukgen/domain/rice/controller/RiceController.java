@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
 @RestController
 @RequiredArgsConstructor
 public class RiceController {
@@ -30,7 +34,8 @@ public class RiceController {
 
     @PostMapping("/meal/download")
     public void mealDownload(){
-        riceService.downLoadAllRice();
+        ZonedDateTime curDate = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
+        riceService.downLoadAllRice(curDate.getMonthValue());
     }
 
 }
