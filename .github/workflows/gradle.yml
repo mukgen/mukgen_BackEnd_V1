@@ -51,8 +51,8 @@ jobs:
         # 도커 작업
         script: |
           docker pull ${{ secrets.DOCKER_USERNAME }}/mukgen:latest
-          docker stop $(docker ps -a --filter "name!=mysql" --format "{{.ID}}")
-          docker docker run -d --network host \
+          docker stop $(docker ps -a --format '{{.ID}} {{.Image}}' | grep -v mysql | awk '{print $1}')
+          docker run -d --network host \
           -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
           -e DB_URL=${{ secrets.DB_URL }} \
           -e DB_USERNAME=${{ secrets.DB_USERNAME }} \
