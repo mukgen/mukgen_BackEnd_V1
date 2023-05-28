@@ -1,5 +1,9 @@
 package com.example.mukgen.domain.user.controller;
 
+import com.example.mukgen.domain.board.controller.dto.response.BoardListResponse;
+import com.example.mukgen.domain.board.service.BoardService;
+import com.example.mukgen.domain.review.controller.dto.response.ReviewListResponse;
+import com.example.mukgen.domain.review.service.ReviewService;
 import com.example.mukgen.domain.user.controller.response.UserProfileResponse;
 import com.example.mukgen.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -9,17 +13,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("user")
+@RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
 
+    private final ReviewService reviewService;
+
+    private final BoardService boardService;
+
     @GetMapping("/profile/{userId}")
-    public UserProfileResponse getProfile(
+    public UserProfileResponse userDetails(
             @PathVariable Long userId
     ){
-        return userService.findProfile(userId);
+        return userService.findUser(userId);
+    }
+
+    @GetMapping("/board")
+    public BoardListResponse userBoardList(){
+        return boardService.findMyBoard();
+    }
+
+    @GetMapping("/review")
+    public ReviewListResponse userReviewList(){
+        return reviewService.findMyReview();
     }
 
 }

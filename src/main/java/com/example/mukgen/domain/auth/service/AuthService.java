@@ -1,18 +1,24 @@
 package com.example.mukgen.domain.auth.service;
 
 
+import com.example.mukgen.domain.auth.controller.reponse.LoginResponse;
 import com.example.mukgen.domain.auth.controller.reponse.TokenResponse;
+import com.example.mukgen.domain.auth.controller.request.ChefSignupRequest;
 import com.example.mukgen.domain.auth.controller.request.UserSignupRequest;
 import com.example.mukgen.domain.auth.controller.request.UserLoginRequest;
+import com.example.mukgen.domain.auth.service.exception.CodeMismatchException;
+import com.example.mukgen.domain.auth.service.exception.PassWordCheckMismatchException;
 import com.example.mukgen.domain.user.entity.User;
+import com.example.mukgen.domain.user.entity.type.UserRole;
 import com.example.mukgen.domain.user.repository.UserRepository;
+import com.example.mukgen.domain.user.service.exception.PasswordMismatchException;
+import com.example.mukgen.domain.user.service.exception.UserAlreadyExistException;
+import com.example.mukgen.domain.user.service.exception.UserNotFoundException;
 import com.example.mukgen.global.config.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.EntityNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -26,14 +32,39 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public void join(UserSignupRequest request){
+    public void chefSignup(
+            ChefSignupRequest request
+    ){
+
+        if (!request.getCode().equals("imChef")) {
+            throw CodeMismatchException.EXCEPTION;
+        }
+
+        User user = User.builder()
+                .role(UserRole.CHEF)
+                .accountId(request.getAccountId())
+                .password(request.getPassword())
+                .name("영양사 선생님")
+                .phoneNumber("영양사 선생님은 번호를 입력하지 않습니다.")
+                .build();
+
+        userRepository.save(user);
+    }
+
+    @Transactional
+    public void signup(UserSignupRequest request){
+
+        if(!request.getPassword().equals(request.getPasswordCheck())){
+            throw PassWordCheckMismatchException.EXCEPTION;
+        }
 
         String password = passwordEncoder.encode(request.getPassword());
 
-        validateDuplicateMember(request);
+        validateDuplicateUser(request);
 
         User user = User.builder()
-                .userId(request.getUserId())
+                .role(UserRole.GENERAL)
+                .accountId(request.getAccountId())
                 .password(password)
                 .name(request.getName())
                 .phoneNumber(request.getPhoneNumber())
@@ -44,22 +75,26 @@ public class AuthService {
     }
 
     @Transactional
-    public TokenResponse login(UserLoginRequest request){
-       User user = userRepository.findByUserId(request.getUserId())
-               .orElseThrow(()-> new EntityNotFoundException("찾을 수 없는 유저입니다."));
+    public LoginResponse login(UserLoginRequest request){
+       User user = userRepository.findByAccountId(request.getAccountId())
+               .orElseThrow(()-> UserNotFoundException.EXCEPTION);
 
        if(!passwordEncoder.matches(request.getPassword(),user.getPassword())){
-           throw new IllegalStateException("잘못된 비밀번호 입니다.");
+           throw PasswordMismatchException.EXCEPTION;
        }
-       return TokenResponse.builder()
-               .accessToken(jwtTokenProvider.createToken(user.getUserId()))
+       return LoginResponse.builder()
+               .tokenResponse(TokenResponse.builder()
+                       .accessToken(jwtTokenProvider.createToken(user.getAccountId()))
+                       .build())
+               .message(user.getName() + "님 환영합니다!")
                .build();
+
     }
 
-    private void validateDuplicateMember(UserSignupRequest request){
+    private void validateDuplicateUser(UserSignupRequest request){
 
-        if(userRepository.existsByUserId(request.getUserId())){
-            throw new IllegalStateException("이미 존재하는 유저입니다.");
+        if(userRepository.existsByAccountId(request.getAccountId())){
+            throw UserAlreadyExistException.EXCEPTION;
         }
     }
 }

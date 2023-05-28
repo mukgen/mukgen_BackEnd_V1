@@ -2,7 +2,6 @@ package com.example.mukgen.global.config.security;
 
 import com.example.mukgen.global.config.security.jwt.JwtAuthenticationFilter;
 import com.example.mukgen.global.config.security.jwt.JwtTokenProvider;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,7 +18,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtTokenProvider jwtTokenProvider;
-
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -42,6 +40,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests() // 요청에 대한 사용권한 체크
                 .antMatchers("/auth/signup/**","/auth/login").permitAll()
+                .antMatchers("/board/**").authenticated()
+                .antMatchers("/like/**").authenticated()
+                .antMatchers("/meal/**").authenticated()
+                .antMatchers("/review/**").authenticated()
+                .antMatchers("/boardComment/**").authenticated()
+                .antMatchers("/meal/download").hasRole("ADMIN")
                 .anyRequest().permitAll()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
