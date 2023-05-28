@@ -50,7 +50,7 @@ jobs:
         key: ${{ secrets.PRIVATE_KEY }} # pem 키
         # 도커 작업
         script: |
-          docker pull ${{ secrets.DOCKER_USERNAME }}/sejongmate:latest
+          docker pull ${{ secrets.DOCKER_USERNAME }}/mukgen:latest
           docker stop $(docker ps -a --filter "name!=mysql" --format "{{.ID}}")
           docker docker run -d --network host \
           -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
@@ -58,6 +58,6 @@ jobs:
           -e DB_USERNAME=${{ secrets.DB_USERNAME }} \
           -e REDIS_HOST=${{ secrets.REDIS_HOST }} \
           -e REDIS_PORT=${{ secrets.REDIS_PORT }} \
-          hyunsu1768/mukgen:latest
+          ${{ secrets.DOCKER_USERNAME }}/mukgen:latest
           docker rm $(docker ps --filter 'status=exited' -a -q)
           docker image prune -a -f
