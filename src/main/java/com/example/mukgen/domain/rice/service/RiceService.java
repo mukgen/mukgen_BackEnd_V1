@@ -108,13 +108,15 @@ public class RiceService {
     @Transactional
     public void downLoadAllRice(int month){
 
+        ZonedDateTime curDate = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
+
         int day = 1;
         while(day<=31){
             try {
                 RiceType[] riceTypes = {RiceType.LUNCH, RiceType.BREAKFAST, RiceType.DINNER};
 
                 for (RiceType riceType : riceTypes) {
-                    Rice rice = riceApi.getRice(riceType, 2023, month, day);
+                    Rice rice = riceApi.getRice(riceType, curDate.getYear(), month, day);
                     riceRepository.save(rice);
                 }
             } finally {
