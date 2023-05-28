@@ -1,0 +1,35 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        show_sq l: true
+        format_sql: true
+  redis:
+    port: ${REDIS_PORT}
+    host: ${REDIS_HOST}
+
+jwt:
+  secret: ${JWT_SECRET}
+  accessExp: ${ACCESS_EXP}
+  refreshExp: ${REFRESH_EXP}
+
+logging:
+  level:
+    com.example : DEBUG
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: trace
+
+server:
+  port: 80
