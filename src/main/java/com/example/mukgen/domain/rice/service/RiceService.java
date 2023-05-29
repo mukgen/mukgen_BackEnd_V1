@@ -115,7 +115,7 @@ public class RiceService {
                 RiceType[] riceTypes = {RiceType.LUNCH, RiceType.BREAKFAST, RiceType.DINNER};
 
                 for (RiceType riceType : riceTypes) {
-                    Rice rice = riceApi.getRice(riceType, curDate.getYear(), month, day);
+                    Rice rice = riceApi.getRice(riceType, curDate.getYear(), month, count);
                     riceRepository.save(rice);
                 }
             } finally {
