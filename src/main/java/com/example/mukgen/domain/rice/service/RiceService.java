@@ -12,10 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -110,8 +107,10 @@ public class RiceService {
 
         ZonedDateTime curDate = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
 
-        int day = 1;
-        while(day<=31){
+        int day = YearMonth.now().atEndOfMonth().getDayOfMonth();
+
+        int count=1;
+        while(count<=day){
             try {
                 RiceType[] riceTypes = {RiceType.LUNCH, RiceType.BREAKFAST, RiceType.DINNER};
 
@@ -120,7 +119,7 @@ public class RiceService {
                     riceRepository.save(rice);
                 }
             } finally {
-                day++;
+                count++;
             }
         }
 
