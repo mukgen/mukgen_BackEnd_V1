@@ -20,7 +20,7 @@ spring:
 jwt:
   header: "Authorization"
   secret: ${JWT_SECRET}
-  prefix: "Bearer"
+  prefix: "Bearer "
   accessExpiration: ${ACCESS_EXP}
   refreshExpiration: ${REFRESH_EXP}
 
