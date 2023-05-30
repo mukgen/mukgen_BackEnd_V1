@@ -1,5 +1,6 @@
 package com.example.mukgen.global.config.security.jwt;
 
+import com.example.mukgen.global.error.exception.ExpiredTokenException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,10 +24,12 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 
         String token = jwtTokenProvider.resolveToken((HttpServletRequest) request);
 
-        if (token != null && jwtTokenProvider.validateToken(token)) {
+        if (jwtTokenProvider.validateTokenExp(token)) {
             Authentication authentication = jwtTokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
-
+        }
+        else {
+            throw ExpiredTokenException.EXCEPTION;
         }
         chain.doFilter(request, response);
     }
