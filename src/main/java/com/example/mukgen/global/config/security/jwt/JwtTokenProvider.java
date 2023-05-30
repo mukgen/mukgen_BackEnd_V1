@@ -1,6 +1,11 @@
 package com.example.mukgen.global.config.security.jwt;
 
 
+import com.example.mukgen.domain.auth.controller.reponse.TokenResponse;
+import com.example.mukgen.domain.auth.entity.RefreshToken;
+import com.example.mukgen.domain.auth.repository.RefreshTokenRepository;
+import com.example.mukgen.domain.user.repository.UserRepository;
+import com.example.mukgen.global.config.security.auth.CustomUserDetailService;
 import com.example.mukgen.global.exception.ExpiredTokenException;
 import com.example.mukgen.global.exception.InvalidTokenException;
 import io.jsonwebtoken.*;
@@ -8,39 +13,81 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Base64;
 import java.util.Date;
 
 @RequiredArgsConstructor
 @Component
 public class JwtTokenProvider {
-    private String secretKey = "mukgenprojectmukgenproject";
+    private static final String secretKey = "mukgenprojectmukgenproject";
 
-    private Long tokenValidTime = 30 * 60 * 1000L;
+    private static final Long tokenValidTime = 30 * 60 * 1000L;
 
-    private final UserDetailsService userDetailsService;
+    private final RefreshTokenRepository refreshTokenRepository;
 
-    @PostConstruct
-    protected void init(){
-        secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
+    private final CustomUserDetailService userDetailsService;
+
+    private final UserRepository userRepository;
+
+    public TokenResponse createToken(String accountId) {
+
+        String accessToken = createAccessToken(accountId);
+        String refreshToken = createRefreshToken();
+
+        refreshTokenRepository.save(
+            RefreshToken.builder()
+                .accountId(accountId)
+                .token(refreshToken)
+                .build()
+        );
+
+        return TokenResponse.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
     }
 
+    public TokenResponse reIssue(String rfToken) {
+
+        RefreshToken token = refreshTokenRepository.findByToken(rfToken)
+                .orElseThrow(()-> InvalidTokenException.EXCEPTION);
+
+        String accountId = userRepository.findByAccountId(token.getAccountId())
+                .orElseThrow(() -> InvalidTokenException.EXCEPTION).getAccountId();
+
+        refreshTokenRepository.delete(token);
+
+        return createToken(accountId);
+    }
+
+
     //JWT 토큰 생성
-    public String createToken(String userId) {
+    private String createAccessToken(String accountId) {
         Date now = new Date();
         return Jwts.builder()
-                .setSubject(userId)
-                .claim("type","access")
+                .setSubject(accountId)
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + tokenValidTime))
                 .signWith(SignatureAlgorithm.HS256,secretKey)
                 .compact();
     }
+
+    private String createRefreshToken(){
+
+
+        Date now = new Date();
+
+        String rfToken = Jwts.builder()
+                .setIssuedAt(now)
+                .setExpiration(new Date(now.getTime() + tokenValidTime))
+                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .compact();
+
+        return rfToken;
+    }
+
 
     // JWT 토큰에서 인증 정보 조회
     public Authentication getAuthentication(String token){
@@ -66,15 +113,18 @@ public class JwtTokenProvider {
     }
 
     public String resolveToken(HttpServletRequest request){
+        if(request.getHeader("Authorization") != null){
+            throw InvalidTokenException.EXCEPTION;
+        }
         return request.getHeader("Authorization");
     }
 
-    public boolean validateToken(String jwtToken){
+    public boolean validateTokenExp(String jwtToken){
         try{
             Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);
             return !claims.getBody().getExpiration().before(new Date());
         } catch (Exception e){
-            return false;
+            throw InvalidTokenException.EXCEPTION;
         }
     }
 }

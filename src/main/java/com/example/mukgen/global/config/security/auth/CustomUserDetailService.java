@@ -1,6 +1,5 @@
 package com.example.mukgen.global.config.security.auth;
 
-import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

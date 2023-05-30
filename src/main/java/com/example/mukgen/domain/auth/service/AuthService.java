@@ -1,6 +1,7 @@
 package com.example.mukgen.domain.auth.service;
 
 
+import antlr.Token;
 import com.example.mukgen.domain.auth.controller.reponse.LoginResponse;
 import com.example.mukgen.domain.auth.controller.reponse.TokenResponse;
 import com.example.mukgen.domain.auth.controller.request.ChefSignupRequest;
@@ -83,13 +84,18 @@ public class AuthService {
            throw PasswordMismatchException.EXCEPTION;
        }
        return LoginResponse.builder()
-               .tokenResponse(TokenResponse.builder()
-                       .accessToken(jwtTokenProvider.createToken(user.getAccountId()))
-                       .build())
+               .tokenResponse(jwtTokenProvider.createToken(user.getAccountId()))
                .message(user.getName() + "님 환영합니다!")
                .build();
 
     }
+
+    @Transactional
+    public TokenResponse reIssue(String token){
+
+        return jwtTokenProvider.reIssue(token);
+    }
+
 
     private void validateDuplicateUser(UserSignupRequest request){
 
