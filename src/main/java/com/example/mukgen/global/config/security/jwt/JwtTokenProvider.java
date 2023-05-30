@@ -113,9 +113,6 @@ public class JwtTokenProvider {
     }
 
     public String resolveToken(HttpServletRequest request){
-        if(request.getHeader("Authorization") != null){
-            throw InvalidTokenException.EXCEPTION;
-        }
         return request.getHeader("Authorization");
     }
 
@@ -124,7 +121,7 @@ public class JwtTokenProvider {
             Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);
             return !claims.getBody().getExpiration().before(new Date());
         } catch (Exception e){
-            throw InvalidTokenException.EXCEPTION;
+            return false;
         }
     }
 }
