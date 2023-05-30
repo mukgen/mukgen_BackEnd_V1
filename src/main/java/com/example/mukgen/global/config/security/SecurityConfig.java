@@ -38,14 +38,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable() // csrf 보안 토큰 disable처리.
 
                 .authorizeRequests() // 요청에 대한 사용권한 체크
-                .antMatchers("/auth/signup/**", "/auth/login").permitAll()
-                .antMatchers("/board/**").authenticated()
-                .antMatchers("/like/**").authenticated()
-                .antMatchers("/meal/**").authenticated()
-                .antMatchers("/review/**").authenticated()
-                .antMatchers("/boardComment/**").authenticated()
-                .antMatchers("/meal/download").hasRole("ADMIN")
-                .anyRequest().permitAll()
+                .antMatchers("/auth/**").permitAll()
+                .anyRequest().authenticated()
 
                 .and()
                 .logout().disable()
