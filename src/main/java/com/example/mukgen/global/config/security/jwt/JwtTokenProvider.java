@@ -25,6 +25,8 @@ public class JwtTokenProvider {
 
     private static final Long tokenValidTime = 30 * 60 * 1000L;
 
+    private static final Long refreshTokenValidTime = 60 * 60 * 120 * 1000L;
+
     private final RefreshTokenRepository refreshTokenRepository;
 
     private final CustomUserDetailService userDetailsService;
@@ -81,7 +83,7 @@ public class JwtTokenProvider {
 
         String rfToken = Jwts.builder()
                 .setIssuedAt(now)
-                .setExpiration(new Date(now.getTime() + tokenValidTime))
+                .setExpiration(new Date(now.getTime() + refreshTokenValidTime))
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
 
