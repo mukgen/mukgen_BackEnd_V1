@@ -1,6 +1,7 @@
 package com.practice.board.global.security.jwt;
 
 import com.example.mukgen.global.config.security.jwt.JwtTokenProvider;
+import com.example.mukgen.global.exception.InvalidTokenException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

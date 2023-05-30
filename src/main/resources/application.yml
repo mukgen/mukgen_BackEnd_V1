@@ -11,16 +11,18 @@ spring:
     open-in-view: false
     properties:
       hibernate:
-        show_sq l: true
+        show_sql: true
         format_sql: true
   redis:
     port: ${REDIS_PORT}
     host: ${REDIS_HOST}
 
 jwt:
+  header: "Authorization"
   secret: ${JWT_SECRET}
-  accessExp: ${ACCESS_EXP}
-  refreshExp: ${REFRESH_EXP}
+  prefix: "Bearer"
+  accessExpiration: ${ACCESS_EXP}
+  refreshExpiration: ${REFRESH_EXP}
 
 logging:
   level:
