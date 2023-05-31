@@ -18,11 +18,7 @@ spring:
     host: ${REDIS_HOST}
 
 jwt:
-  header: "Authorization"
   secret: ${JWT_SECRET}
-  prefix: "Bearer "
-  accessExpiration: ${ACCESS_EXP}
-  refreshExpiration: ${REFRESH_EXP}
 
 logging:
   level:

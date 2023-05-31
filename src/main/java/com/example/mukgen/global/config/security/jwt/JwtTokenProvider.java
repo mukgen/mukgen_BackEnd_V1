@@ -10,10 +10,12 @@ import com.example.mukgen.global.exception.ExpiredTokenException;
 import com.example.mukgen.global.exception.InvalidTokenException;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -22,9 +24,10 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-//    private final JwtProperties jwtProperties;
+    @Value("${spring.jwt.secret}")
+    private final String secretKey;
 
-    private final String secretKey = "mukgenprojectmukgenprojectmukgenprojectmukgenproject!$!@#$!";
+    private final String prefix = "Bearer ";
 
     private final Long accessExpiredExp = 60 * 30 * 1000L;
 
@@ -118,8 +121,13 @@ public class JwtTokenProvider {
 
     public String resolveToken(HttpServletRequest request){
 
-        return request.getHeader("Authorization");
+        String bearerToken = request.getHeader("Authorization");
 
+        if(StringUtils.hasText(bearerToken) && bearerToken.startsWith(prefix)
+                && bearerToken.length() > prefix.length()+1){
+            return bearerToken.substring(7);
+        }
+        return null;
     }
 
     public boolean validateTokenExp(String jwtToken){
