@@ -37,9 +37,10 @@ public class UserService {
 
         User user = userFacade.currentUser();
 
-        String profileUrl = user.getProfileUrl();
+        String profileUrl = "";
 
-        if(!profileUrl.isEmpty()){
+        if(!user.getProfileUrl().isEmpty()){
+            profileUrl = user.getProfileUrl();
             s3Util.deleteFile(profileUrl.split("/")[3]);
         }
 
