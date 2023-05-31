@@ -25,7 +25,7 @@ public class User {
     private String accountId;
 
     @Column(name = "profile_url",length = 550)
-    private String profileUrl = null;
+    private String profileUrl = "";
 
     @Column(name = "name", nullable = false, length = 4)
     private String name;

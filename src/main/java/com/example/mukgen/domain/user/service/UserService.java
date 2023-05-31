@@ -33,13 +33,14 @@ public class UserService {
 
     }
 
+    @Transactional
     public String profileUpload(MultipartFile multipartFile) throws IOException {
 
         User user = userFacade.currentUser();
 
         String profileUrl = "";
 
-        if(!user.getProfileUrl().isEmpty()){
+        if(user.getProfileUrl() != null && !user.getProfileUrl().isEmpty()){
             profileUrl = user.getProfileUrl();
             s3Util.deleteFile(profileUrl.split("/")[3]);
         }
