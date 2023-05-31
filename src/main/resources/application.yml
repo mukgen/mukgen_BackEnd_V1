@@ -29,5 +29,17 @@ logging:
           descriptor:
             sql: trace
 
+cloud:
+  aws:
+    credentials:
+      accessKey: ${AWS_ACCESS_KEY_ID}
+      secretKey: ${AWS_SECRET_ACCESS_KEY}
+    s3:
+      bucket: mukgen
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+
 server:
   port: 80

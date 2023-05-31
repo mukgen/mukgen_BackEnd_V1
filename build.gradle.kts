@@ -43,6 +43,7 @@ dependencies {
 
     implementation("org.json:json:20230227")
 
-
+    //S3
+    implementation("com.amazonaws:aws-java-sdk-s3:1.12.281")
 
 }
