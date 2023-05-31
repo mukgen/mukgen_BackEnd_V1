@@ -14,9 +14,12 @@ public class UserInfoResponse {
 
     private String phoneNumber;
 
+    private String profileUrl;
+
     public static UserInfoResponse of(User user){
 
         return UserInfoResponse.builder()
+                .profileUrl(user.getProfileUrl())
                 .accountId(user.getAccountId())
                 .name(user.getName())
                 .phoneNumber(user.getPhoneNumber())

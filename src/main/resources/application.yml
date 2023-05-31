@@ -16,6 +16,10 @@ spring:
   redis:
     port: ${REDIS_PORT}
     host: ${REDIS_HOST}
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
 
 jwt:
   secret: ${JWT_SECRET}
