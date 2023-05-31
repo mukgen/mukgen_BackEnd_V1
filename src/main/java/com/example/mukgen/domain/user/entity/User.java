@@ -24,6 +24,9 @@ public class User {
     @Column(name = "account_id", nullable = false, length = 15)
     private String accountId;
 
+    @Column(name = "profile_url",length = 550)
+    private String profileUrl = null;
+
     @Column(name = "name", nullable = false, length = 4)
     private String name;
 
@@ -61,6 +64,10 @@ public class User {
     public void setDeliveryPartyLeave(){
         this.deliveryParty.getUserList().remove(this);
         this.deliveryParty = null;
+    }
+
+    public void modifyProfileUrl(String profileUrl){
+        this.profileUrl = profileUrl;
     }
 
 }

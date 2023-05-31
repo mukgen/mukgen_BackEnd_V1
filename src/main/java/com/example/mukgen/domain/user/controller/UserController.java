@@ -4,9 +4,10 @@ import com.example.mukgen.domain.board.controller.dto.response.BoardListResponse
 import com.example.mukgen.domain.board.service.BoardService;
 import com.example.mukgen.domain.review.controller.dto.response.ReviewListResponse;
 import com.example.mukgen.domain.review.service.ReviewService;
+import com.example.mukgen.domain.user.controller.response.UserInfoResponse;
 import com.example.mukgen.domain.user.controller.response.UserProfileResponse;
 import com.example.mukgen.domain.user.service.UserService;
-import com.example.mukgen.infra.s3.service.S3Service;
+import com.example.mukgen.infra.s3.service.S3Util;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,7 +19,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class UserController {
 
-    public final S3Service s3Service;
+    public final S3Util s3Util;
 
     private final UserService userService;
 
@@ -26,11 +27,10 @@ public class UserController {
 
     private final BoardService boardService;
 
-    @GetMapping("/profile/{userId}")
-    public UserProfileResponse userDetails(
-            @PathVariable Long userId
-    ){
-        return userService.findUser(userId);
+    @GetMapping("/profile")
+    public UserInfoResponse userDetails(){
+
+        return userService.findUser();
     }
 
     @PostMapping("/profile/upload")
@@ -38,7 +38,7 @@ public class UserController {
             @RequestParam("images")MultipartFile multipartFile
             ) throws IOException {
 
-        return s3Service.upload(multipartFile);
+        return userService.profileUpload(multipartFile);
 
     }
 
