@@ -113,12 +113,8 @@ public class JwtTokenProvider {
 
     public String resolveToken(HttpServletRequest request){
 
-        String bearerToken = request.getHeader(jwtProperties.getHeader());
+        return request.getHeader(jwtProperties.getHeader());
 
-        if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")){
-            return bearerToken.substring(7);
-        }
-        return null;
     }
 
     public boolean validateTokenExp(String jwtToken){
