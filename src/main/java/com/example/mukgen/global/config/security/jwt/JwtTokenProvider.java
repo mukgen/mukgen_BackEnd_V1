@@ -24,8 +24,7 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-    @Value("${spring.jwt.secret}")
-    private final String secretKey;
+    private final String secretKey = "mukgenproject123!@#mukgenproject123!@#mukgenproject123!@#";
 
     private final String prefix = "Bearer ";
 
