@@ -76,7 +76,6 @@ public class JwtTokenProvider {
 
     private String createRefreshToken(){
 
-
         Date now = new Date();
 
         String rfToken = Jwts.builder()
@@ -115,8 +114,7 @@ public class JwtTokenProvider {
     public String resolveToken(HttpServletRequest request){
         String bearerToken = request.getHeader(jwtProperties.getHeader());
 
-        if(StringUtils.hasText(bearerToken) && bearerToken.startsWith(jwtProperties.getPrefix())
-                && bearerToken.length() > jwtProperties.getPrefix().length()+1){
+        if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")){
             return bearerToken.substring(7);
         }
         return null;
