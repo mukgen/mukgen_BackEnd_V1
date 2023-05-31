@@ -14,7 +14,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -23,7 +22,13 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-    private final JwtProperties jwtProperties;
+//    private final JwtProperties jwtProperties;
+
+    private final String secretKey = "mukgenprojectmukgenprojectmukgenprojectmukgenproject!$!@#$!";
+
+    private final Long accessExpiredExp = 60 * 30 * 1000L;
+
+    private final Long refreshExpiredExp = 60 * 60 * 120 * 1000L;
 
     private final RefreshTokenRepository refreshTokenRepository;
 
@@ -69,8 +74,8 @@ public class JwtTokenProvider {
         return Jwts.builder()
                 .setSubject(accountId)
                 .setIssuedAt(now)
-                .setExpiration(new Date(now.getTime() + jwtProperties.getAccessExpiration()))
-                .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecret())
+                .setExpiration(new Date(now.getTime() + accessExpiredExp))
+                .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
 
@@ -80,8 +85,8 @@ public class JwtTokenProvider {
 
         String rfToken = Jwts.builder()
                 .setIssuedAt(now)
-                .setExpiration(new Date(now.getTime() + jwtProperties.getRefreshExpiration()))
-                .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecret())
+                .setExpiration(new Date(now.getTime() + refreshExpiredExp))
+                .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
 
         return rfToken;
@@ -99,7 +104,7 @@ public class JwtTokenProvider {
         try{
             return Jwts
                     .parser()
-                    .setSigningKey(jwtProperties.getSecret())
+                    .setSigningKey(secretKey)
                     .parseClaimsJws(token)
                     .getBody()
                     .getSubject();
@@ -113,13 +118,13 @@ public class JwtTokenProvider {
 
     public String resolveToken(HttpServletRequest request){
 
-        return request.getHeader(jwtProperties.getHeader());
+        return request.getHeader("Authorization");
 
     }
 
     public boolean validateTokenExp(String jwtToken){
         try{
-            Jws<Claims> claims = Jwts.parser().setSigningKey(jwtProperties.getSecret()).parseClaimsJws(jwtToken);
+            Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);
             return !claims.getBody().getExpiration().before(new Date());
         } catch (Exception e){
             return false;
