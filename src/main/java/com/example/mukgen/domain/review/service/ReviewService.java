@@ -6,6 +6,7 @@ import com.example.mukgen.domain.review.entity.Review;
 import com.example.mukgen.domain.review.repository.ReviewRepository;
 import com.example.mukgen.domain.review.service.exception.ReviewAlreadyExistsException;
 import com.example.mukgen.domain.review.service.exception.ReviewNotFoundException;
+import com.example.mukgen.domain.review.service.exception.ReviewWriterMismatchException;
 import com.example.mukgen.domain.review.service.exception.ReviewYetTimeException;
 import com.example.mukgen.domain.rice.entity.Rice;
 import com.example.mukgen.domain.rice.repository.RiceRepository;
@@ -13,11 +14,14 @@ import com.example.mukgen.domain.rice.service.exception.RiceNotFoundException;
 import com.example.mukgen.domain.rice.service.exception.RiceNotTodayException;
 import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.service.UserFacade;
+import com.example.mukgen.infra.s3.service.S3Util;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityManager;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -30,6 +34,8 @@ import java.util.Map;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class ReviewService {
+
+    private final S3Util s3Util;
 
     private final RiceRepository riceRepository;
 
@@ -168,6 +174,31 @@ public class ReviewService {
                 .reviewMaximumResponseList(reviewMaximumResponseList)
                 .build();
 
+    }
+
+    public String imageUpload(Long reviewId,MultipartFile multipartFile) throws IOException {
+
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(()-> ReviewNotFoundException.EXCEPTION);
+
+        User user = userFacade.currentUser();
+
+        if(!review.getUser().equals(user)){
+            throw ReviewWriterMismatchException.EXCEPTION;
+        }
+
+        String profileUrl = "";
+
+        if(!review.getImageUrl().isEmpty()){
+            profileUrl = review.getImageUrl();
+            s3Util.deleteFile(profileUrl.split("/")[3]);
+        }
+
+        profileUrl = s3Util.upload(multipartFile);
+
+        review.modifyImageUrl(profileUrl);
+
+        return profileUrl;
     }
 
 
