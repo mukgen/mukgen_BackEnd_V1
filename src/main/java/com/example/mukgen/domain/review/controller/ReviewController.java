@@ -5,8 +5,10 @@ import com.example.mukgen.domain.review.controller.dto.response.*;
 import com.example.mukgen.domain.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
@@ -45,6 +47,12 @@ public class ReviewController {
         return reviewService.findUserReview();
     }
 
-
+    @PostMapping("/image/upload/{reviewId}")
+    public String reviewImageUpload(
+            @RequestParam("images") MultipartFile multipartFile,
+            @PathVariable Long reviewId
+    ) throws IOException {
+        return reviewService.imageUpload(reviewId, multipartFile);
+    }
 
 }

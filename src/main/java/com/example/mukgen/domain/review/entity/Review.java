@@ -28,6 +28,8 @@ public class Review extends BaseTimeEntity {
 
     private String review;
 
+    private String imageUrl;
+
     @Column(name = "is_deleted")
     private Boolean isDeleted = false;
 
@@ -41,5 +43,9 @@ public class Review extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "review", cascade = CascadeType.REMOVE)
     private List<ReviewComment> reviewCommentList = new ArrayList<>();
+
+    public void modifyImageUrl(String url){
+        this.imageUrl = url;
+    }
 
 }
