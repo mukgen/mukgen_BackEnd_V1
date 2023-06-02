@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-
 @RequiredArgsConstructor
 @RequestMapping("/meal-suggestion")
 @RestController
