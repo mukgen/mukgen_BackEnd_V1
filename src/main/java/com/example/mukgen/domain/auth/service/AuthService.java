@@ -43,8 +43,8 @@ public class AuthService {
                 .role(UserRole.CHEF)
                 .accountId(request.getAccountId())
                 .password(request.getPassword())
-                .name("영양사 선생님")
-                .phoneNumber("영양사 선생님은 번호를 입력하지 않습니다.")
+                .name("선생님")
+                .phoneNumber("01012341234")
                 .build();
 
         userRepository.save(user);
