@@ -2,7 +2,6 @@ package com.example.mukgen.domain.board.controller;
 
 import com.example.mukgen.domain.board.controller.dto.request.BoardCreateRequest;
 import com.example.mukgen.domain.board.controller.dto.request.BoardUpdateRequest;
-import com.example.mukgen.domain.board.controller.dto.response.BoardListResponse;
 import com.example.mukgen.domain.board.controller.dto.response.BoardMaximumResponse;
 import com.example.mukgen.domain.board.controller.dto.response.BoardPopularListResponse;
 import com.example.mukgen.domain.board.controller.dto.response.BoardTabListResponse;
@@ -11,10 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
-@RestController
 @RequiredArgsConstructor
 @RequestMapping("/board")
+@RestController
 public class BoardController {
 
     private final BoardService boardService;
@@ -33,7 +31,6 @@ public class BoardController {
     ){
         return boardService.modifyBoard(request,boardId);
     }
-
 
     @DeleteMapping("/{boardId}")
     public void boardRemove(
@@ -68,6 +65,5 @@ public class BoardController {
     public BoardTabListResponse boardTotalList(){
         return boardService.findAllBoard();
     }
-
 
 }

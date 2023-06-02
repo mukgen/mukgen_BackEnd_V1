@@ -1,15 +1,12 @@
 package com.example.mukgen.domain.rice.controller.dto.request;
 
 import com.example.mukgen.domain.rice.entity.RiceType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class RiceRequest {
 
     private RiceType riceType;

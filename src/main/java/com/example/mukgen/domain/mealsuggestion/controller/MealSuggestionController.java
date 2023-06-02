@@ -3,17 +3,16 @@ package com.example.mukgen.domain.mealsuggestion.controller;
 import com.example.mukgen.domain.mealsuggestion.controller.dto.request.MealSuggestionCreateRequest;
 import com.example.mukgen.domain.mealsuggestion.controller.dto.request.MealSuggestionUpdateRequest;
 import com.example.mukgen.domain.mealsuggestion.controller.dto.response.MealSuggestionListResponse;
-import com.example.mukgen.domain.mealsuggestion.controller.dto.response.MealSuggestionResponse;
 import com.example.mukgen.domain.mealsuggestion.service.MealSuggestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
-@RestController
+
 @RequiredArgsConstructor
 @RequestMapping("/meal-suggestion")
+@RestController
 public class MealSuggestionController {
 
     private final MealSuggestionService mealSuggestionService;

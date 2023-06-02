@@ -18,10 +18,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
-@Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Transactional
+@Service
 public class ReviewCommentService {
 
     private final ReviewRepository reviewRepository;
@@ -30,7 +29,6 @@ public class ReviewCommentService {
 
     private final UserFacade userFacade;
 
-    @Transactional
     public void addReviewComment(
             ReviewCommentCreateRequest request,
             Long reviewId
@@ -52,7 +50,6 @@ public class ReviewCommentService {
         reviewCommentRepository.save(reviewComment);
     }
 
-    @Transactional
     public void modifyReviewComment(
             ReviewCommentUpdateRequest request,
             Long reviewId,
@@ -69,7 +66,6 @@ public class ReviewCommentService {
                 .updateReviewComment(request.getContent());
     }
 
-    @Transactional
     public void removeReviewComment(
             Long reviewId,
             Long reviewCommentId
@@ -87,6 +83,7 @@ public class ReviewCommentService {
         );
     }
 
+    @Transactional(readOnly = true)
     public ReviewCommentListResponse findReviewComment(
             Long reviewId
     ) {

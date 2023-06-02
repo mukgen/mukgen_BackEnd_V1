@@ -15,19 +15,15 @@ import com.example.mukgen.domain.user.service.exception.NoPermissionException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-
-@Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Transactional()
+@Service
 public class MealSuggestionService {
 
     private final MealSuggestionRepository mealSuggestionRepository;
 
     private final UserFacade userFacade;
 
-    @Transactional
     public void addMealSuggestion(
             MealSuggestionCreateRequest request
     ) {
@@ -41,7 +37,6 @@ public class MealSuggestionService {
         );
     }
 
-    @Transactional
     public void modifyMealSuggestion(
             MealSuggestionUpdateRequest request,
             Long suggestionId
@@ -55,7 +50,6 @@ public class MealSuggestionService {
         mealSuggestion.updateMealSuggestion(request.getContent());
     }
 
-    @Transactional
     public void removeMealSuggestion(
             Long suggestionId
     ) {
@@ -68,6 +62,7 @@ public class MealSuggestionService {
         mealSuggestionRepository.delete(mealSuggestion);
     }
 
+    @Transactional(readOnly = true)
     public MealSuggestionListResponse findAllSuggestion(
     ) {
         return MealSuggestionListResponse.builder()
@@ -79,7 +74,6 @@ public class MealSuggestionService {
                 .build();
     }
 
-    @Transactional
     public void clickCheck(
             Long mealSuggestionId
     ) {
@@ -95,7 +89,6 @@ public class MealSuggestionService {
         mealSuggestion.clickCheck();
     }
 
-    @Transactional
     public void addLike(
             Long mealSuggestionId
     ) {
@@ -106,7 +99,6 @@ public class MealSuggestionService {
         mealSuggestion.addLike();
     }
 
-    @Transactional
     public void addDislike(
             Long mealSuggestionId
     ) {

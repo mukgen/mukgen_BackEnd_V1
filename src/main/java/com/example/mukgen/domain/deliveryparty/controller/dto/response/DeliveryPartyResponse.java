@@ -3,12 +3,11 @@ package com.example.mukgen.domain.deliveryparty.controller.dto.response;
 import com.example.mukgen.domain.deliveryparty.entity.DeliveryParty;
 import com.example.mukgen.domain.user.controller.response.UserInfoResponse;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
-@Data
+@Getter
 @Builder
 public class DeliveryPartyResponse {
 

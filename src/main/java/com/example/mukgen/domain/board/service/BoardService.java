@@ -21,10 +21,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-
-@Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
+@Service
 public class BoardService {
 
     private final BoardRepository boardRepository;
@@ -146,6 +145,7 @@ public class BoardService {
     }
 
     public BoardTabListResponse findWeekBoard(){
+
         int thisWeek = LocalDate.now().get(WeekFields.ISO.weekOfWeekBasedYear());
 
         List<BoardMinimumResponse> boardMinimumResponseList =
@@ -158,6 +158,7 @@ public class BoardService {
                         .build())
                 .boardPopularListResponse(findPopularBoard())
                 .build();
+
     }
 
     public BoardListResponse findMyBoard(){

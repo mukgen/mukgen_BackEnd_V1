@@ -1,7 +1,6 @@
 package com.example.mukgen.global.config.security.auth;
 
 import com.example.mukgen.domain.user.entity.User;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

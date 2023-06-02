@@ -12,12 +12,11 @@ import org.hibernate.annotations.Where;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
-@Entity(name = "tbl_board")
+@Getter
 @Where(clause = "is_deleted = false")
 @SQLDelete(sql = "UPDATE `tbl_board` SET is_deleted = true where id = ?")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter
+@Entity(name = "tbl_board")
 public class Board extends BaseTimeEntity {
 
     @Id

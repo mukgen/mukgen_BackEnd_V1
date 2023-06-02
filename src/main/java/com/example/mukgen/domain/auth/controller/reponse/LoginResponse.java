@@ -1,9 +1,8 @@
 package com.example.mukgen.domain.auth.controller.reponse;
 
 import lombok.Builder;
-import lombok.Data;
-
-@Data
+import lombok.Getter;
+@Getter
 @Builder
 public class LoginResponse {
 

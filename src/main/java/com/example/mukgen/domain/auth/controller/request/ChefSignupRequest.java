@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ChefSignupRequest {
