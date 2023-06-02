@@ -43,6 +43,7 @@ public enum ErrorCode {
     DELIVERY_PARTY_NOT_FOUND(404,"찾을 수 없는 배달파티 입니다."),
     MEAL_SUGGESTION_NOT_FOUND(404, "찾을 수 없는 급식건의 입니다."),
     TOKEN_NOT_FOUND(404, "찾을 수 없는 토큰 입니다."),
+    MUKGEN_PICK_NOT_FOUND(404, "찾을 수 없는 먹젠픽 입니다."),
 
     // Conflict
     USER_ALREADY_EXISTS(409, "이미 유저가 존재합니다."),
