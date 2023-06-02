@@ -7,11 +7,11 @@ import com.example.mukgen.domain.rice.controller.dto.response.RiceTodayResponse;
 import com.example.mukgen.domain.rice.entity.Rice;
 import com.example.mukgen.domain.rice.entity.RiceType;
 import com.example.mukgen.domain.rice.repository.RiceRepository;
+import com.example.mukgen.domain.rice.service.exception.RiceNotTodayException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.time.YearMonth;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -59,7 +59,7 @@ public class RiceService {
 
             else {
                 rice = riceRepository.findById(id)
-                        .orElseThrow(()-> new EntityNotFoundException("찾을 수 없습니다."));
+                        .orElseThrow(()-> RiceNotTodayException.EXCEPTION);
             }
             mealCache.put(id, rice);
         }
