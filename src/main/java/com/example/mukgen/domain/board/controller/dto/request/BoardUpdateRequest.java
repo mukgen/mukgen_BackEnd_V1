@@ -1,12 +1,12 @@
 package com.example.mukgen.domain.board.controller.dto.request;
 
 import lombok.AccessLevel;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Size;
 
-@Data
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BoardUpdateRequest {
 

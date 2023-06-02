@@ -19,9 +19,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-@Service
+
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Transactional
+@Service
 public class RiceService {
 
     private final RiceApi riceApi;
@@ -30,7 +31,6 @@ public class RiceService {
 
     private final ConcurrentHashMap<Integer, Rice> mealCache = new ConcurrentHashMap<>();
 
-    @Transactional
     public RiceResponse findRice(RiceRequest request){
 
         RiceType riceType = request.getRiceType();
@@ -72,7 +72,6 @@ public class RiceService {
                 .build();
     }
 
-    @Transactional
     public RiceTodayResponse findTodayRice(){
 
         ZonedDateTime curDate = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
@@ -102,7 +101,6 @@ public class RiceService {
                 .build();
     }
 
-    @Transactional
     public void downLoadAllRice(int month){
 
         ZonedDateTime curDate = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));

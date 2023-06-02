@@ -1,9 +1,9 @@
 package com.example.mukgen.domain.rice.controller.dto.response;
 
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 @Builder
 public class RiceResponse {
 

@@ -7,12 +7,11 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-
-@Entity(name = "tbl_meal_suggestion")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @SQLDelete(sql = "UPDATE tbl_meal_suggestion SET is_deleted = true WHERE id = ?")
 @Where(clause = "is_deleted = false")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity(name = "tbl_meal_suggestion")
 public class MealSuggestion extends BaseTimeEntity {
 
     @Id

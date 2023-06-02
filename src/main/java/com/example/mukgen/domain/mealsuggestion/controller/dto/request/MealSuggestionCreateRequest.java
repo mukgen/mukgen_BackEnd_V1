@@ -1,13 +1,10 @@
 package com.example.mukgen.domain.mealsuggestion.controller.dto.request;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.Size;
 
-@Data
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MealSuggestionCreateRequest {
 

@@ -1,8 +1,11 @@
 package com.example.mukgen.domain.board.controller.dto.request;
 
-import lombok.Data;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Data
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class LikeCreateRequest {
     private Long boardId;
 }

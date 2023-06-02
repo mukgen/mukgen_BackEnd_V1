@@ -1,10 +1,13 @@
 package com.example.mukgen.domain.board.controller.dto.request;
 
-import lombok.Data;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Size;
 
-@Data
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BoardCommentCreateRequest {
 
     private Long boardId;

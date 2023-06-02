@@ -8,23 +8,20 @@ import com.example.mukgen.domain.deliveryparty.repository.DeliveryPartyRepositor
 import com.example.mukgen.domain.deliveryparty.service.exception.*;
 import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.service.UserFacade;
-import com.example.mukgen.global.error.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-
-@Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Transactional
+@Service
 public class DeliveryPartyService {
 
     private final DeliveryPartyRepository deliveryPartyRepository;
 
     private final UserFacade userFacade;
 
-    @Transactional
     public void addDeliveryParty(
         DeliveryPartyRequest request
     ){
@@ -52,6 +49,7 @@ public class DeliveryPartyService {
         deliveryPartyRepository.save(deliveryParty);
     }
 
+    @Transactional(readOnly = true)
     public DeliveryPartyListResponse findAllDeliveryParty(){
 
         return DeliveryPartyListResponse.builder()
@@ -64,7 +62,6 @@ public class DeliveryPartyService {
                 .build();
     }
 
-    @Transactional
     public void joinDeliveryParty(
             Long deliveryPartyId
     ){
@@ -87,7 +84,6 @@ public class DeliveryPartyService {
 
     }
 
-    @Transactional
     public void leaveDeliveryParty(
             Long deliveryPartyId
     ){
@@ -107,7 +103,6 @@ public class DeliveryPartyService {
         deliveryParty.leaveDeliveryParty(curUser);
     }
 
-    @Transactional
     public void deleteDeliveryParty(
             Long deliveryPartyId
     ){

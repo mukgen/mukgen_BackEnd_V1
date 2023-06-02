@@ -2,9 +2,9 @@ package com.example.mukgen.domain.review.controller.dto.response;
 
 import com.example.mukgen.domain.rice.entity.RiceType;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 @Builder
 public class ReviewMiniMumResponse {
 
