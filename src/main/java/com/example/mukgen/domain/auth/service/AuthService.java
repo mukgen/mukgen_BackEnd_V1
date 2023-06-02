@@ -1,12 +1,11 @@
 package com.example.mukgen.domain.auth.service;
 
 
-import antlr.Token;
 import com.example.mukgen.domain.auth.controller.reponse.LoginResponse;
 import com.example.mukgen.domain.auth.controller.reponse.TokenResponse;
 import com.example.mukgen.domain.auth.controller.request.ChefSignupRequest;
-import com.example.mukgen.domain.auth.controller.request.UserSignupRequest;
 import com.example.mukgen.domain.auth.controller.request.UserLoginRequest;
+import com.example.mukgen.domain.auth.controller.request.UserSignupRequest;
 import com.example.mukgen.domain.auth.service.exception.CodeMismatchException;
 import com.example.mukgen.domain.auth.service.exception.PassWordCheckMismatchException;
 import com.example.mukgen.domain.user.entity.User;
@@ -45,8 +44,8 @@ public class AuthService {
                 .role(UserRole.CHEF)
                 .accountId(request.getAccountId())
                 .password(request.getPassword())
-                .name("영양사 선생님")
-                .phoneNumber("영양사 선생님은 번호를 입력하지 않습니다.")
+                .name("선생님")
+                .phoneNumber("01012341234")
                 .build();
 
         userRepository.save(user);
