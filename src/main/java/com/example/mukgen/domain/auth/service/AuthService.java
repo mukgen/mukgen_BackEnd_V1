@@ -21,9 +21,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
+
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Transactional
+@Service
 public class AuthService {
 
     private final JwtTokenProvider jwtTokenProvider;
@@ -32,7 +33,6 @@ public class AuthService {
 
     private final PasswordEncoder passwordEncoder;
 
-    @Transactional
     public void chefSignup(
             ChefSignupRequest request
     ){
@@ -52,7 +52,6 @@ public class AuthService {
         userRepository.save(user);
     }
 
-    @Transactional
     public void signup(UserSignupRequest request){
 
         if(!request.getPassword().equals(request.getPasswordCheck())){
@@ -75,7 +74,6 @@ public class AuthService {
 
     }
 
-    @Transactional
     public LoginResponse login(UserLoginRequest request){
        User user = userRepository.findByAccountId(request.getAccountId())
                .orElseThrow(()-> UserNotFoundException.EXCEPTION);
@@ -90,7 +88,6 @@ public class AuthService {
 
     }
 
-    @Transactional
     public TokenResponse reIssue(String token){
 
         return jwtTokenProvider.reIssue(token);

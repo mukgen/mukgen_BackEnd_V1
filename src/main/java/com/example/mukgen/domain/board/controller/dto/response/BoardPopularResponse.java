@@ -3,8 +3,9 @@ package com.example.mukgen.domain.board.controller.dto.response;
 import com.example.mukgen.domain.board.entity.Board;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 @Builder
 public class BoardPopularResponse {
 

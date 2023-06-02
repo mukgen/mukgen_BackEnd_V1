@@ -2,8 +2,9 @@ package com.example.mukgen.domain.board.controller.dto.response;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 @Builder
 public class LikeResponse {
 

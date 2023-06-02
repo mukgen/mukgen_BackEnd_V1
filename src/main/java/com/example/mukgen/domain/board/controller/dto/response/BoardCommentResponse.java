@@ -3,10 +3,11 @@ package com.example.mukgen.domain.board.controller.dto.response;
 import com.example.mukgen.domain.board.entity.BoardComment;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
 @Builder
 public class BoardCommentResponse {
 

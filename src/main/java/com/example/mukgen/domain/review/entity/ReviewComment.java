@@ -1,22 +1,20 @@
 package com.example.mukgen.domain.review.entity;
 
 import com.example.mukgen.domain.BaseTimeEntity;
-import com.example.mukgen.domain.review.entity.Review;
-import com.example.mukgen.domain.user.entity.User;
 import lombok.*;
-import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
-@Entity(name = "tbl_review_comment")
+
 @Getter
 @Builder
 @SQLDelete(sql = "UPDATE tbl_review_comment SET is_deleted = true WHERE id = ?")
 @Where(clause = "is_deleted = false")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@Entity(name = "tbl_review_comment")
 public class ReviewComment extends BaseTimeEntity {
 
     @Id

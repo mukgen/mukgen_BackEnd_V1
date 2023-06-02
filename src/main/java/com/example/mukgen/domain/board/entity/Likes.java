@@ -1,19 +1,17 @@
 package com.example.mukgen.domain.board.entity;
 
 import com.example.mukgen.domain.BaseTimeEntity;
-import com.example.mukgen.domain.board.entity.Board;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-
-@Entity(name = "tbl_likes")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 @Getter
 @Where(clause = "is_deleted = false")
 @SQLDelete(sql = "UPDATE `tbl_likes` SET is_deleted = true where id = ?")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Entity(name = "tbl_likes")
 public class Likes extends BaseTimeEntity {
 
     @Id

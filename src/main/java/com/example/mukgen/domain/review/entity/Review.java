@@ -11,13 +11,14 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "tbl_review")
+
 @Getter
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SQLDelete(sql = "UPDATE `tbl_review` SET is_deleted = true WHERE id = ?")
 @Where(clause = "is_deleted = false")
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity(name = "tbl_review")
 public class Review extends BaseTimeEntity {
 
     @Id

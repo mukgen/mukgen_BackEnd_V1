@@ -2,10 +2,10 @@ package com.example.mukgen.domain.user.controller.response;
 
 import com.example.mukgen.domain.user.entity.User;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 
+@Getter
 @Builder
-@Data
 public class UserProfileResponse {
 
     private String name;

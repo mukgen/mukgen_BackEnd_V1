@@ -2,15 +2,14 @@ package com.example.mukgen.domain.deliveryparty.controller.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AccessLevel;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-
-@Data
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class DeliveryPartyRequest {
 

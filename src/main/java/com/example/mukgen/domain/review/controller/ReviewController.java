@@ -9,10 +9,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
-
-@RestController
 @RequiredArgsConstructor
 @RequestMapping("/review")
+@RestController
 public class ReviewController {
 
     private final ReviewService reviewService;

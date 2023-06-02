@@ -7,16 +7,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-
-@Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Transactional
+@Service
 public class MealSuggestionScheduledService {
 
     private final MealSuggestionRepository mealSuggestionRepository;
 
     @Scheduled(cron = "0 0 0 * * *")
-    @Transactional
     public void autoRemoveMealSuggestion() {
         mealSuggestionRepository
                 .removeAllByCreatedAtBefore(

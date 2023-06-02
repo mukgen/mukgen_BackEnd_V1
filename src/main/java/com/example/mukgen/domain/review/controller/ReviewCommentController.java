@@ -8,9 +8,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@RestController
+
 @RequiredArgsConstructor
 @RequestMapping("/review-comment")
+@RestController
 public class ReviewCommentController {
 
     private final ReviewCommentService reviewCommentService;

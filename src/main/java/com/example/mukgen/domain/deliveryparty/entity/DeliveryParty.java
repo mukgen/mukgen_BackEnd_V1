@@ -10,13 +10,12 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-@Entity(name = "tbl_delivery_party")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 @Getter
 @Where(clause = "is_deleted = false")
 @SQLDelete(sql = "UPDATE `tbl_delivery_party` SET is_deleted = true WHERE id = ?")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Entity(name = "tbl_delivery_party")
 public class DeliveryParty extends BaseTimeEntity {
 
     @Id
@@ -52,13 +51,13 @@ public class DeliveryParty extends BaseTimeEntity {
         this.writerAccountId = user.getAccountId();
     }
 
-    public void joinDeliveryParty(User user){
+    public void joinDeliveryParty(User user) {
 
         this.userList.add(user);
         user.setDeliveryParty(this);
     }
 
-    public void leaveDeliveryParty(User user){
+    public void leaveDeliveryParty(User user) {
         this.userList.remove(user);
         user.setDeliveryPartyLeave();
     }

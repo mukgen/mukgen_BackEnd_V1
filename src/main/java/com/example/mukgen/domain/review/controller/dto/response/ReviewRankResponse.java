@@ -3,9 +3,9 @@ package com.example.mukgen.domain.review.controller.dto.response;
 import com.example.mukgen.domain.review.entity.Review;
 import com.example.mukgen.domain.user.entity.User;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 @Builder
 public class ReviewRankResponse {
 

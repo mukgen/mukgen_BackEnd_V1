@@ -6,9 +6,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-
-@Service
 @RequiredArgsConstructor
+@Service
 public class RiceScheduledService {
 
     private final RiceService riceService;

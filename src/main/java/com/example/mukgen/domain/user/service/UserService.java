@@ -1,22 +1,19 @@
 package com.example.mukgen.domain.user.service;
 
 import com.example.mukgen.domain.user.controller.response.UserInfoResponse;
-import com.example.mukgen.domain.user.controller.response.UserProfileResponse;
 import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.repository.UserRepository;
-import com.example.mukgen.domain.user.service.exception.UserNotFoundException;
 import com.example.mukgen.infra.s3.service.S3Util;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
 
-@Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
+@Service
 public class UserService {
 
     private final UserFacade userFacade;
