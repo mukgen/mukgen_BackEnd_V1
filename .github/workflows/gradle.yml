@@ -51,6 +51,7 @@ jobs:
         # 도커 작업
         script: |
           docker stop $(docker ps -a --format '{{.ID}} {{.Image}}' | grep -v mysql | grep -v redis | awk '{print $1}')
+          docker pull hyunsu1768/mukgen:latest
           docker-compose up -d
           docker rm $(docker ps --filter 'status=exited' -a -q)
           docker image prune -a -f
