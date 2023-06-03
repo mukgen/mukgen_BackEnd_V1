@@ -162,6 +162,7 @@ public class RiceService {
                 .build();
 
         mukgenPickRepository.save(mukgenPick);
+
     }
 
     public MukgenPickResponse findMukgenPick(){
