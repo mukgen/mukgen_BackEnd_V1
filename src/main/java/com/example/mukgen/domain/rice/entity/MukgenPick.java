@@ -21,4 +21,8 @@ public class MukgenPick extends BaseTimeEntity {
     private int month;
 
     private int day;
+
+    private RiceType riceType;
+
+    private int riceId;
 }
