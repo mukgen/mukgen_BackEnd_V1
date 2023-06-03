@@ -1,6 +1,7 @@
 package com.example.mukgen.domain.rice.service;
 
 
+import com.example.mukgen.domain.rice.controller.dto.request.MukgenPickRequest;
 import com.example.mukgen.domain.rice.controller.dto.request.RiceRequest;
 import com.example.mukgen.domain.rice.controller.dto.response.MukgenPickResponse;
 import com.example.mukgen.domain.rice.controller.dto.response.RiceResponse;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -135,19 +137,28 @@ public class RiceService {
     }
 
     public void setMukgenPick(
-            int month, int day
+            MukgenPickRequest request
     ){
 
         User user = userFacade.currentUser();
+
+        int addId = switch (request.getRiceType()) {
+            case BREAKFAST -> 1;
+            case LUNCH -> 2;
+            case DINNER -> 3;
+        };
+
+        int id = (LocalDateTime.now().getYear() * 10000 + request.getMonth() * 100 + request.getDay()) * 10 + addId;
 
         if(!user.getRole().equals(UserRole.ADMIN)){
             throw NoPermissionException.EXCEPTION;
         }
 
-
         MukgenPick mukgenPick = MukgenPick.builder()
-                .day(day)
-                .month(month)
+                .riceId(id)
+                .riceType(request.getRiceType())
+                .day(request.getDay())
+                .month(request.getMonth())
                 .build();
 
         mukgenPickRepository.save(mukgenPick);
