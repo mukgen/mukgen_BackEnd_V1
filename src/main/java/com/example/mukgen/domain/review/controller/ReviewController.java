@@ -9,7 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
-
 @RequiredArgsConstructor
 @RequestMapping("/review")
 @RestController
@@ -20,18 +19,14 @@ public class ReviewController {
     @PostMapping("/{mealId}")
     public void reviewAdd(
             @PathVariable int mealId,
-            @RequestBody @Valid ReviewCreateRequest request
-    ){
-        reviewService.addReview(request,mealId);
-    }
-
-    @PostMapping("/{mealId}")
-    public void reviewAdd(
-            @PathVariable int mealId,
             @RequestBody @Valid ReviewCreateRequest request,
-            @RequestParam("images") MultipartFile multipartFile
+            @RequestParam(value = "images", required = false) MultipartFile multipartFile
     ) throws IOException {
-        reviewService.addReview(request, mealId, multipartFile);
+        if(multipartFile != null) {
+            reviewService.addReview(request, mealId, multipartFile);
+        } else{
+            reviewService.addReview(request, mealId);
+        }
     }
 
     @GetMapping("/{reviewId}")
