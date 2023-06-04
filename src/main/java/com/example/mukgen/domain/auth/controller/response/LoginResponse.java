@@ -1,4 +1,4 @@
-package com.example.mukgen.domain.auth.controller.reponse;
+package com.example.mukgen.domain.auth.controller.response;
 
 import lombok.Builder;
 import lombok.Getter;

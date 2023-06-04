@@ -1,8 +1,8 @@
 package com.example.mukgen.domain.auth.service;
 
 
-import com.example.mukgen.domain.auth.controller.reponse.LoginResponse;
-import com.example.mukgen.domain.auth.controller.reponse.TokenResponse;
+import com.example.mukgen.domain.auth.controller.response.LoginResponse;
+import com.example.mukgen.domain.auth.controller.response.TokenResponse;
 import com.example.mukgen.domain.auth.controller.request.ChefSignupRequest;
 import com.example.mukgen.domain.auth.controller.request.UserLoginRequest;
 import com.example.mukgen.domain.auth.controller.request.UserSignupRequest;
