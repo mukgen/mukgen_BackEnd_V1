@@ -24,6 +24,15 @@ public class ReviewController {
         reviewService.addReview(request,mealId);
     }
 
+    @PostMapping("/{mealId}")
+    public void reviewAdd(
+            @PathVariable int mealId,
+            @RequestBody @Valid ReviewCreateRequest request,
+            @RequestParam("images") MultipartFile multipartFile
+    ) throws IOException {
+        reviewService.addReview(request, mealId, multipartFile);
+    }
+
     @GetMapping("/{reviewId}")
     public ReviewMaximumResponse reviewDetails(
             @PathVariable Long reviewId
@@ -44,14 +53,6 @@ public class ReviewController {
     @GetMapping("/total")
     public ReviewMaximumListResponse reviewTotalList(){
         return reviewService.findUserReview();
-    }
-
-    @PostMapping("/image/upload/{reviewId}")
-    public String reviewImageUpload(
-            @RequestParam("images") MultipartFile multipartFile,
-            @PathVariable Long reviewId
-    ) throws IOException {
-        return reviewService.imageUpload(reviewId, multipartFile);
     }
 
 }
