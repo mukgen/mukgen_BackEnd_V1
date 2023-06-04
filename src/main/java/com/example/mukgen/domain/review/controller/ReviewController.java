@@ -19,8 +19,8 @@ public class ReviewController {
     @PostMapping("/{mealId}")
     public void reviewAdd(
             @PathVariable int mealId,
-            @RequestBody @Valid ReviewCreateRequest request,
-            @RequestParam(value = "images", required = false) MultipartFile multipartFile
+            @RequestPart("request") @Valid ReviewCreateRequest request,
+            @RequestPart(value = "images", required = false) MultipartFile multipartFile
     ) throws IOException {
         if(multipartFile != null) {
             reviewService.addReview(request, mealId, multipartFile);
