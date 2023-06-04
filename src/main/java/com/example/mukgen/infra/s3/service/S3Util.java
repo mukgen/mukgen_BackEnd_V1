@@ -28,6 +28,7 @@ public class S3Util {
         ObjectMetadata objectMetadata = new ObjectMetadata();
 
         try {
+            objectMetadata.setContentType("image/jpeg");
             objectMetadata.setContentLength(multipartFile.getInputStream().available());
         } catch (IOException e) {
             throw new IllegalStateException();
