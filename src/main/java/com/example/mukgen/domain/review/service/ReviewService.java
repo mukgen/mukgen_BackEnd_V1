@@ -45,7 +45,7 @@ public class ReviewService {
     private final EntityManager entityManager;
 
     @Transactional
-    public void addReview(
+    public Long addReview(
             ReviewCreateRequest request,
             int mealId
     ){
@@ -93,6 +93,18 @@ public class ReviewService {
                 .build();
 
         reviewRepository.save(review);
+
+        return review.getId();
+    }
+
+    @Transactional
+    public void addReview(
+            ReviewCreateRequest request,
+            int mealId,
+            MultipartFile multipartFile
+    ) throws IOException {
+        Long reviewId = addReview(request, mealId);
+        imageUpload(reviewId, multipartFile);
     }
 
     public ReviewMaximumResponse findReview(
