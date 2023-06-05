@@ -1,6 +1,7 @@
 package com.example.mukgen.domain.auth.service;
 
 
+import com.example.mukgen.domain.auth.controller.request.UserModifyPasswordRequest;
 import com.example.mukgen.domain.auth.controller.response.LoginResponse;
 import com.example.mukgen.domain.auth.controller.response.TokenResponse;
 import com.example.mukgen.domain.auth.controller.request.ChefSignupRequest;
@@ -97,5 +98,19 @@ public class AuthService {
         if(userRepository.existsByAccountId(request.getAccountId())){
             throw UserAlreadyExistException.EXCEPTION;
         }
+    }
+
+    public void modifyPassword(
+            Long userId,
+            UserModifyPasswordRequest request
+    ) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> UserNotFoundException.EXCEPTION);
+
+        if(!user.getPassword().equals(request.getOldPassword())) {
+            throw PassWordCheckMismatchException.EXCEPTION;
+        }
+
+        user.modifyPassword(request.getNewPassword());
     }
 }
