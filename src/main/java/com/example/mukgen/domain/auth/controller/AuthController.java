@@ -47,11 +47,10 @@ public class AuthController {
         return authService.reIssue(request.getRefreshToken());
     }
 
-    @PutMapping("/modify-password/{userId}")
+    @PutMapping("/modify-password")
     public void passwordModify(
-            @PathVariable Long userId,
             @RequestBody UserModifyPasswordRequest request
     ) {
-        authService.modifyPassword(userId, request);
+        authService.modifyPassword(request);
     }
 }
