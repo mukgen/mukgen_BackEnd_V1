@@ -1,6 +1,7 @@
 package com.example.mukgen.domain.auth.service;
 
 
+import com.example.mukgen.domain.auth.controller.request.UserModifyPasswordRequest;
 import com.example.mukgen.domain.auth.controller.response.LoginResponse;
 import com.example.mukgen.domain.auth.controller.response.TokenResponse;
 import com.example.mukgen.domain.auth.controller.request.ChefSignupRequest;
@@ -11,6 +12,7 @@ import com.example.mukgen.domain.auth.service.exception.PassWordCheckMismatchExc
 import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.entity.type.UserRole;
 import com.example.mukgen.domain.user.repository.UserRepository;
+import com.example.mukgen.domain.user.service.UserFacade;
 import com.example.mukgen.domain.user.service.exception.PasswordMismatchException;
 import com.example.mukgen.domain.user.service.exception.UserAlreadyExistException;
 import com.example.mukgen.domain.user.service.exception.UserNotFoundException;
@@ -30,6 +32,8 @@ public class AuthService {
     private final UserRepository userRepository;
 
     private final PasswordEncoder passwordEncoder;
+
+    private final UserFacade userFacade;
 
     public void chefSignup(
             ChefSignupRequest request
@@ -97,5 +101,18 @@ public class AuthService {
         if(userRepository.existsByAccountId(request.getAccountId())){
             throw UserAlreadyExistException.EXCEPTION;
         }
+    }
+
+    public void modifyPassword(
+            UserModifyPasswordRequest request
+    ) {
+
+        User user = userFacade.currentUser();
+
+        if(!passwordEncoder.matches(request.getOldPassword(),user.getPassword())) {
+            throw PassWordCheckMismatchException.EXCEPTION;
+        }
+
+        user.modifyPassword(passwordEncoder.encode(request.getNewPassword()));
     }
 }

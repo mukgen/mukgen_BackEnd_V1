@@ -70,4 +70,7 @@ public class User {
         this.profileUrl = profileUrl;
     }
 
+    public void modifyPassword(String password) {
+        this.password = password;
+    }
 }
