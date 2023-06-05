@@ -11,7 +11,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Getter
 @Builder
 @SQLDelete(sql = "UPDATE `tbl_review` SET is_deleted = true WHERE id = ?")

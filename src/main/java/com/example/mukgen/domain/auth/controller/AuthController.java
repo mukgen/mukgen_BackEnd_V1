@@ -1,16 +1,14 @@
 package com.example.mukgen.domain.auth.controller;
 
-import com.example.mukgen.domain.auth.controller.reponse.LoginResponse;
-import com.example.mukgen.domain.auth.controller.reponse.TokenResponse;
-import com.example.mukgen.domain.auth.controller.request.ChefSignupRequest;
-import com.example.mukgen.domain.auth.controller.request.ReIssueRequest;
-import com.example.mukgen.domain.auth.controller.request.UserLoginRequest;
-import com.example.mukgen.domain.auth.controller.request.UserSignupRequest;
+import com.example.mukgen.domain.auth.controller.request.*;
+import com.example.mukgen.domain.auth.controller.response.LoginResponse;
+import com.example.mukgen.domain.auth.controller.response.TokenResponse;
 import com.example.mukgen.domain.auth.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth")
@@ -49,5 +47,11 @@ public class AuthController {
         return authService.reIssue(request.getRefreshToken());
     }
 
-
+    @PutMapping("/modify-password/{userId}")
+    public void passwordModify(
+            @PathVariable Long userId,
+            @RequestBody UserModifyPasswordRequest request
+    ) {
+        authService.modifyPassword(userId, request);
+    }
 }

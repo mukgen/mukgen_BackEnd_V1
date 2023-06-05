@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
-
 @Getter
 @RequiredArgsConstructor
 public class CustomUserDetails implements UserDetails {

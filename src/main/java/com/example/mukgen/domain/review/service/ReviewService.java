@@ -29,6 +29,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
+
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Service
@@ -200,7 +201,7 @@ public class ReviewService {
 
         String profileUrl = "";
 
-        if(!review.getImageUrl().isEmpty()){
+        if(review.getImageUrl() != null && !review.getImageUrl().isEmpty()){
             profileUrl = review.getImageUrl();
             s3Util.deleteFile(profileUrl.split("/")[3]);
         }

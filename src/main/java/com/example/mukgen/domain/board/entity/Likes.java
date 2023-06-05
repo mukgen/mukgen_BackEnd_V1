@@ -6,6 +6,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+
 @Getter
 @Where(clause = "is_deleted = false")
 @SQLDelete(sql = "UPDATE `tbl_likes` SET is_deleted = true where id = ?")

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
-
 @RequiredArgsConstructor
 @RestController
 public class RiceController {

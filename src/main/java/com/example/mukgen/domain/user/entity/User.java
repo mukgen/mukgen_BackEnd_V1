@@ -9,6 +9,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+
 @Getter
 @Builder
 @AllArgsConstructor
@@ -24,7 +25,7 @@ public class User {
     private String accountId;
 
     @Column(name = "profile_url",length = 550)
-    private String profileUrl = null;
+    private String profileUrl = "";
 
     @Column(name = "name", nullable = false, length = 4)
     private String name;
@@ -69,4 +70,7 @@ public class User {
         this.profileUrl = profileUrl;
     }
 
+    public void modifyPassword(String password) {
+        this.password = password;
+    }
 }

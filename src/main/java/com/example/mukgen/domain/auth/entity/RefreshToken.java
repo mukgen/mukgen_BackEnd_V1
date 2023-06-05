@@ -5,6 +5,7 @@ import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.index.Indexed;
+
 @Getter
 @Builder
 @RedisHash(timeToLive = 60 * 60 * 120)

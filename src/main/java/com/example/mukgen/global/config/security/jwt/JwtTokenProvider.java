@@ -1,7 +1,7 @@
 package com.example.mukgen.global.config.security.jwt;
 
 
-import com.example.mukgen.domain.auth.controller.reponse.TokenResponse;
+import com.example.mukgen.domain.auth.controller.response.TokenResponse;
 import com.example.mukgen.domain.auth.entity.RefreshToken;
 import com.example.mukgen.domain.auth.repository.RefreshTokenRepository;
 import com.example.mukgen.domain.user.repository.UserRepository;
@@ -10,7 +10,6 @@ import com.example.mukgen.global.exception.ExpiredTokenException;
 import com.example.mukgen.global.exception.InvalidTokenException;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
