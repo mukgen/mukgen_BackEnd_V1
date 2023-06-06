@@ -11,7 +11,7 @@ public class LikesController {
 
     private final LikeService likeService;
 
-    @PostMapping
+    @PostMapping("/{boardId}")
     public Integer likeAdd(
             @PathVariable Long boardId
     ){
