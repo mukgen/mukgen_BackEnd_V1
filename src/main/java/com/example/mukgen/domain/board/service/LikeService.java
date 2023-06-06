@@ -1,6 +1,6 @@
 package com.example.mukgen.domain.board.service;
 
-import com.example.mukgen.domain.board.controller.dto.response.LikeCountResponse;
+import com.example.mukgen.domain.board.controller.dto.response.LikeClickResponse;
 import com.example.mukgen.domain.board.entity.Board;
 import com.example.mukgen.domain.board.repository.BoardRepository;
 import com.example.mukgen.domain.board.service.exception.BoardNotFoundException;
@@ -24,7 +24,7 @@ public class LikeService {
     private final BoardRepository boardRepository;
 
     @Transactional
-    public LikeCountResponse addLike(Long boardId){
+    public LikeClickResponse addLike(Long boardId){
 
         User curUser = userFacade.currentUser();
 
@@ -41,7 +41,8 @@ public class LikeService {
             board.addLike();
         }
 
-        return  LikeCountResponse.builder()
+        return  LikeClickResponse.builder()
+                    .isLiked(likeRepository.existsByBoardAndUserName(board,curUser.getName()))
                     .boardLike(board.getLikeCount())
                     .build();
     }

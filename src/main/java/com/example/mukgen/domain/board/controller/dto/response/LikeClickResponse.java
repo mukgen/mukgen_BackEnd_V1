@@ -5,7 +5,9 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class LikeCountResponse {
+public class LikeClickResponse {
 
     private Integer boardLike;
+
+    private boolean isLiked;
 }
