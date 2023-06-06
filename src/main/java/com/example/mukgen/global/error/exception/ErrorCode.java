@@ -15,6 +15,7 @@ public enum ErrorCode {
     BAD_REQUEST(400, "잘못된 요청입니다."),
     DELIVERY_PARTY_NOT_JOIN(400,"배달파티를 참여하지 않았습니다."),
     PASSWORD_CHECK_MISMATCH(400,"비밀번호가 같지 않습니다."),
+    OLD_PASSWORD_AND_NEW_PASSWORD_SAME(400, "이전 비밀번호와 새 비밀번호가 같습니다."),
     RICE_NOT_TODAY(400, "이 급식은 오늘 급식이 아닙니다."),
     DELIVERY_PARTY_FULL(400, "이 배달파티는 모집이 끝났습니다."),
     DELIVERY_PARTY_WRITER_CANT_LEAVE(400, "배달파티 작성자는 떠날 수 없습니다."),

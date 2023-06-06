@@ -8,6 +8,7 @@ import com.example.mukgen.domain.auth.controller.request.ChefSignupRequest;
 import com.example.mukgen.domain.auth.controller.request.UserLoginRequest;
 import com.example.mukgen.domain.auth.controller.request.UserSignupRequest;
 import com.example.mukgen.domain.auth.service.exception.CodeMismatchException;
+import com.example.mukgen.domain.auth.service.exception.OldPasswordAndNewPasswordSameException;
 import com.example.mukgen.domain.auth.service.exception.PassWordCheckMismatchException;
 import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.entity.type.UserRole;
@@ -21,6 +22,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @Transactional
@@ -104,13 +107,17 @@ public class AuthService {
     }
 
     public void modifyPassword(
-            UserModifyPasswordRequest request
+            @Valid UserModifyPasswordRequest request
     ) {
 
         User user = userFacade.currentUser();
 
-        if(!passwordEncoder.matches(request.getOldPassword(),user.getPassword())) {
+        if(!passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
             throw PassWordCheckMismatchException.EXCEPTION;
+        }
+
+        if(passwordEncoder.matches(request.getNewPassword(), user.getPassword())) {
+            throw OldPasswordAndNewPasswordSameException.EXCEPTION;
         }
 
         user.modifyPassword(passwordEncoder.encode(request.getNewPassword()));
