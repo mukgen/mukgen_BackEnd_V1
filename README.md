@@ -13,20 +13,16 @@
 * MEMBER : 이태영 - BACKEND
 #
 ### ⚙️ 개발 환경 - BACKEND
-* 현재 JDK19 를 사용중이지만 추후 JDK17 로 낮출 예정입니다
-* Framework : Spring boot (2.7.10)
-* Database : 미정
+* JDK 17
+* Framework : Spring boot (2.7.11-SNAPSHOT)
+* Database : Mysql, Redis
 * ORM : JPA
 #
 ### 📌 주요 기능
-* 로그인
-  * JWT 
-  <br>
-* 회원가입
-  * 아이디 중복 체크
+* 로그인, 회원가입
+  * JWT ( AccessToken, RefreshToken )
   <br>
 * 급식 관련 게시판 
-  * CRUD 
   <br>
 * 댓글
   * 급식, 리뷰 댓글 
@@ -35,7 +31,6 @@
   * NEIS 급식 OPEN API 사용 
   <br>
 * 급식 건의
-  * CRUD 
   <br>
 * 배달 파티 
 <br>

@@ -107,8 +107,11 @@ public class BoardService {
     }
 
     public BoardPopularListResponse findPopularBoard(){
+
+        int thisWeek = LocalDate.now().get(WeekFields.ISO.weekOfWeekBasedYear());
+
         List<BoardPopularResponse> boardPopularResponseList =
-                boardRepository.findAll(Sort.by(Sort.Direction.DESC, "viewCount"))
+                boardRepository.findByWeek(thisWeek, Sort.by(Sort.Direction.DESC, "viewCount"))
                         .stream()
                         .map(BoardPopularResponse::of)
                         .limit(3)
@@ -120,8 +123,6 @@ public class BoardService {
     }
 
     public BoardTabListResponse findDayBoard(){
-
-        BoardPopularListResponse popularBoard = findPopularBoard();
 
         LocalDateTime curDateTime = LocalDateTime.now().minusDays(1);
 
