@@ -5,6 +5,7 @@ import com.example.mukgen.domain.board.controller.dto.request.BoardUpdateRequest
 import com.example.mukgen.domain.board.controller.dto.response.*;
 import com.example.mukgen.domain.board.entity.Board;
 import com.example.mukgen.domain.board.repository.BoardRepository;
+import com.example.mukgen.domain.board.repository.LikeRepository;
 import com.example.mukgen.domain.board.service.exception.BoardNotFoundException;
 import com.example.mukgen.domain.board.service.exception.BoardWriterMissMatchException;
 import com.example.mukgen.domain.user.entity.User;
@@ -23,6 +24,8 @@ import java.util.List;
 @Transactional(readOnly = true)
 @Service
 public class BoardService {
+
+    private final LikeRepository likeRepository;
 
     private final BoardRepository boardRepository;
 
@@ -59,9 +62,13 @@ public class BoardService {
     }
     @Transactional
     public BoardMaximumResponse onlyFindBoard(Long boardId){
+
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> BoardNotFoundException.EXCEPTION);
-        return BoardMaximumResponse.of(board);
+
+        boolean isLiked = isLiked(board);
+
+        return BoardMaximumResponse.of(board, isLiked);
     }
 
     public BoardTabListResponse findAllBoard(){
@@ -103,7 +110,7 @@ public class BoardService {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> BoardNotFoundException.EXCEPTION);
         board.addViewCount();
-        return BoardMaximumResponse.of(board);
+        return BoardMaximumResponse.of(board, isLiked(board));
     }
 
     public BoardPopularListResponse findPopularBoard(){
@@ -171,6 +178,13 @@ public class BoardService {
                 .boardMinimumResponseList(boardMinimumResponseList)
                 .build();
 
+    }
+
+    private boolean isLiked(Board board) {
+        User user = userFacade.currentUser();
+
+        boolean isLiked = likeRepository.existsByBoardAndUserName(board, user.getName());
+        return isLiked;
     }
 
 }
