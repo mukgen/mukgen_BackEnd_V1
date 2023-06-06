@@ -111,7 +111,7 @@ public class BoardService {
         int thisWeek = LocalDate.now().get(WeekFields.ISO.weekOfWeekBasedYear());
 
         List<BoardPopularResponse> boardPopularResponseList =
-                boardRepository.findByWeek(thisWeek, Sort.by(Sort.Direction.DESC, "viewCount"))
+                boardRepository.findAll(Sort.by(Sort.Direction.DESC, "viewCount"))
                         .stream()
                         .map(BoardPopularResponse::of)
                         .limit(3)
