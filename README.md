@@ -13,7 +13,7 @@
 * MEMBER : 이태영 - BACKEND
 #
 ### ⚙️ 개발 환경 - BACKEND
-* JDK 17
+* JDK 17
 * Framework : Spring boot (2.7.11-SNAPSHOT)
 * Database : Mysql, Redis
 * ORM : JPA
