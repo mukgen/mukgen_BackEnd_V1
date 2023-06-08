@@ -8,7 +8,7 @@ import com.example.mukgen.domain.auth.controller.request.ChefSignupRequest;
 import com.example.mukgen.domain.auth.controller.request.UserLoginRequest;
 import com.example.mukgen.domain.auth.controller.request.UserSignupRequest;
 import com.example.mukgen.domain.auth.service.exception.CodeMismatchException;
-import com.example.mukgen.domain.auth.service.exception.OldPasswordAndNewPasswordSameException;
+import com.example.mukgen.domain.auth.service.exception.PasswordSameException;
 import com.example.mukgen.domain.auth.service.exception.PassWordCheckMismatchException;
 import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.entity.type.UserRole;
@@ -117,7 +117,7 @@ public class AuthService {
         }
 
         if(passwordEncoder.matches(request.getNewPassword(), user.getPassword())) {
-            throw OldPasswordAndNewPasswordSameException.EXCEPTION;
+            throw PasswordSameException.EXCEPTION;
         }
 
         user.modifyPassword(passwordEncoder.encode(request.getNewPassword()));
