@@ -20,6 +20,4 @@ public interface BoardRepository extends JpaRepository<Board,Long> {
     @Query(value = "SELECT * FROM tbl_board WHERE WEEK(created_at) = ?1 and is_deleted = false ORDER BY created_at DESC", nativeQuery = true)
     List<Board> findByWeek(int week);
 
-//    @Query(value = "SELECT * FROM tbl_board WHERE WEEK(created_at) = ?1 and is_deleted = false ORDER BY created_at DESC", nativeQuery = true)
-//    List<Board> findByWeek(int week, Sort sort);
 }
