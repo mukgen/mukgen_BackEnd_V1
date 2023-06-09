@@ -30,7 +30,7 @@ public class DeliveryPartyScheduledService {
                 .toList();
 
         for(Long id : idList){
-            deliveryPartyService.deleteDeliveryParty(id);
+            deliveryPartyService.autoDeleteDeliveryParty(id);
         }
     }
 
