@@ -2,7 +2,6 @@ package com.example.mukgen.domain.board.controller.dto.response;
 
 import com.example.mukgen.domain.board.entity.Board;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -32,7 +31,9 @@ public class BoardMaximumResponse {
 
     private LocalDateTime updatedAt;
 
-    public static BoardMaximumResponse of(Board board){
+    private boolean isLiked;
+
+    public static BoardMaximumResponse of(Board board, boolean isLiked){
 
         List<LikeResponse> likeResponses = board.getLikesList().stream()
                 .map(it -> LikeResponse.builder()
@@ -42,6 +43,7 @@ public class BoardMaximumResponse {
                 .map(BoardCommentResponse::of).toList();
 
         return  BoardMaximumResponse.builder()
+                .isLiked(isLiked)
                 .commentCount(boardCommentResponseList.size())
                 .boardCommentList(boardCommentResponseList)
                 .title(board.getTitle())

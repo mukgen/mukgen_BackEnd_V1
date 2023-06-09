@@ -118,7 +118,23 @@ public class DeliveryPartyService {
             throw DeliveryPartyWriterMismatch.EXCEPTION;
         }
 
-        user.setDeliveryPartyLeave();
+        for (User user1 : deliveryParty.getUserList()) {
+            user1.setDeliveryParty(null);
+        }
+
+        deliveryPartyRepository.deleteById(deliveryPartyId);
+    }
+
+    public void autoDeleteDeliveryParty(
+            Long deliveryPartyId
+    ){
+
+        DeliveryParty deliveryParty = deliveryPartyRepository.findById(deliveryPartyId)
+                .orElseThrow(()-> DeliveryPartyNotFoundException.EXCEPTION);
+
+        for (User user1 : deliveryParty.getUserList()) {
+            user1.setDeliveryParty(null);
+        }
 
         deliveryPartyRepository.deleteById(deliveryPartyId);
     }

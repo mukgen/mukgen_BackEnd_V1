@@ -1,12 +1,9 @@
 package com.example.mukgen.domain.board.controller;
 
-import com.example.mukgen.domain.board.controller.dto.request.LikeCreateRequest;
+import com.example.mukgen.domain.board.controller.dto.response.LikeClickResponse;
 import com.example.mukgen.domain.board.service.LikeService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RequestMapping("/like")
@@ -15,12 +12,11 @@ public class LikesController {
 
     private final LikeService likeService;
 
-    @PostMapping
-    public Integer likeAdd(
-            @RequestBody
-            LikeCreateRequest request
+    @PostMapping("/{boardId}")
+    public LikeClickResponse likeAdd(
+            @PathVariable Long boardId
     ){
-       return likeService.addLike(request);
+       return likeService.addLike(boardId);
     }
 
 }

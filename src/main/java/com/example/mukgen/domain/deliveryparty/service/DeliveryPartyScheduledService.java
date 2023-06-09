@@ -36,16 +36,7 @@ public class DeliveryPartyScheduledService {
                 .toList();
 
         for(Long id : idList){
-
-            DeliveryParty deliveryParty = deliveryPartyRepository.findById(id)
-                            .orElseThrow(()-> DeliveryPartyNotFoundException.EXCEPTION);
-
-            User user = userRepository.findByDeliveryParty(deliveryParty)
-                            .orElseThrow(()-> UserNotFoundException.EXCEPTION);
-
-            user.setDeliveryPartyLeave();
-
-            deliveryPartyService.deleteDeliveryParty(id);
+            deliveryPartyService.autoDeleteDeliveryParty(id);
         }
     }
 
