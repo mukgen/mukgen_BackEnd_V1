@@ -7,11 +7,11 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     open-in-view: false
     properties:
       hibernate:
-        show_sql: true
+        show_sql: false
         format_sql: true
   redis:
     port: ${REDIS_PORT}
