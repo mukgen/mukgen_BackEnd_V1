@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Transactional
@@ -130,10 +132,12 @@ public class DeliveryPartyService {
     ){
 
         DeliveryParty deliveryParty = deliveryPartyRepository.findById(deliveryPartyId)
-                .orElseThrow(()-> DeliveryPartyNotFoundException.EXCEPTION);
+                .orElseThrow(() -> DeliveryPartyNotFoundException.EXCEPTION);
 
-        for (User user1 : deliveryParty.getUserList()) {
-            user1.setDeliveryParty(null);
+        List<User> users = new ArrayList<>(deliveryParty.getUserList());
+
+        for (User user : users) {
+            user.setDeliveryParty(null);
         }
 
         deliveryPartyRepository.deleteById(deliveryPartyId);
