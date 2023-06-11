@@ -2,6 +2,10 @@ package com.example.mukgen.domain.deliveryparty.service;
 
 import com.example.mukgen.domain.deliveryparty.entity.DeliveryParty;
 import com.example.mukgen.domain.deliveryparty.repository.DeliveryPartyRepository;
+import com.example.mukgen.domain.deliveryparty.service.exception.DeliveryPartyNotFoundException;
+import com.example.mukgen.domain.user.entity.User;
+import com.example.mukgen.domain.user.repository.UserRepository;
+import com.example.mukgen.domain.user.service.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -13,6 +17,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class DeliveryPartyScheduledService {
+
+    private final UserRepository userRepository;
 
     private final DeliveryPartyService deliveryPartyService;
 

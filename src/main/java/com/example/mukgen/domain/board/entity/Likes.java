@@ -34,4 +34,5 @@ public class Likes extends BaseTimeEntity {
         this.board = board;
         this.userName = userName;
     }
+
 }
