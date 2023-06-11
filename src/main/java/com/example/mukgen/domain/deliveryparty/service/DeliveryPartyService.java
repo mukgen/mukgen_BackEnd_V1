@@ -110,18 +110,20 @@ public class DeliveryPartyService {
             Long deliveryPartyId
     ){
 
-        User user = userFacade.currentUser();
+        User curUser = userFacade.currentUser();
 
         DeliveryParty deliveryParty = deliveryPartyRepository.findById(deliveryPartyId)
                 .orElseThrow(()-> DeliveryPartyNotFoundException.EXCEPTION);
 
-        if(!user.getAccountId().equals(deliveryParty.getWriterAccountId())){
+        if(!curUser.getAccountId().equals(deliveryParty.getWriterAccountId())){
 
             throw DeliveryPartyWriterMismatch.EXCEPTION;
         }
 
-        for (User user1 : deliveryParty.getUserList()) {
-            user1.setDeliveryParty(null);
+        List<User> users = new ArrayList<>(deliveryParty.getUserList());
+
+        for (User user : users) {
+            user.setDeliveryParty(null);
         }
 
         deliveryPartyRepository.deleteById(deliveryPartyId);
