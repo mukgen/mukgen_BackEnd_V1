@@ -40,7 +40,10 @@ public class User {
     @Column(name = "studentNum")
     private Integer studentNum;
 
-    @Column(name = "email")
+    @Column(name = "phoneNumber")
+    private String phoneNumber;
+
+    @Column(name = "email", nullable = false)
     private String accountId;
 
 //    @Column(name = "password", nullable = false, length = 1000)
@@ -51,6 +54,9 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
+
+    @Column(name = "password")
+    private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Board> boardList = new ArrayList<>();

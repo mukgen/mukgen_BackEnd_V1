@@ -5,7 +5,9 @@ import com.example.mukgen.domain.auth.controller.request.UserLoginRequest;
 import com.example.mukgen.domain.auth.controller.request.UserSignupRequest;
 import com.example.mukgen.domain.auth.controller.response.LoginResponse;
 import com.example.mukgen.domain.auth.controller.response.TokenResponse;
+import com.example.mukgen.domain.auth.service.exception.PassWordCheckMismatchException;
 import com.example.mukgen.domain.user.entity.User;
+import com.example.mukgen.domain.user.entity.type.UserRole;
 import com.example.mukgen.domain.user.repository.UserRepository;
 import com.example.mukgen.domain.user.service.exception.UserAlreadyExistException;
 import com.example.mukgen.domain.user.service.exception.UserNotFoundException;
@@ -16,6 +18,7 @@ import oauth2.InfoOAuth2;
 import oauth2.dto.request.ExchangeTokenRequest;
 import oauth2.dto.response.ResourceResponse;
 import org.json.JSONObject;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +32,30 @@ public class AuthService {
     private final JwtTokenProvider jwtTokenProvider;
 
     private final UserRepository userRepository;
+
+    private final PasswordEncoder passwordEncoder;
+
+    public void signup(UserSignupRequest request){
+
+        if(!request.getPassword().matches(request.getPasswordCheck())){
+            throw PassWordCheckMismatchException.EXCEPTION;
+        }
+
+        validateDuplicateUser(request);
+
+        String password = passwordEncoder.encode(request.getPassword());
+
+        User user = User.builder()
+                .role(UserRole.STUDENT)
+                .accountId(request.getAccountId())
+                .name(request.getName())
+                .password(request.getPassword())
+                .phoneNumber(request.getPhoneNumber())
+                .build();
+
+        userRepository.save(user);
+
+    }
 
     public LoginResponse infoAuth(String code){
 
