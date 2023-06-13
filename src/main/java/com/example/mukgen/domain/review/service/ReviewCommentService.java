@@ -39,7 +39,7 @@ public class ReviewCommentService {
 
         User user = userFacade.currentUser();
 
-        if (user.getRole() != UserRole.CHEF)
+        if (user.getRole() != UserRole.TEACHER)
             throw NoPermissionException.EXCEPTION;
 
         ReviewComment reviewComment = ReviewComment.builder()
@@ -59,7 +59,7 @@ public class ReviewCommentService {
         reviewRepository.findById(reviewId)
                 .orElseThrow(() -> ReviewNotFoundException.EXCEPTION);
 
-        if (userFacade.currentUser().getRole() != UserRole.GENERAL)
+        if (userFacade.currentUser().getRole() != UserRole.TEACHER)
             throw NoPermissionException.EXCEPTION;
 
         reviewCommentRepository.findById(reviewCommentId)
@@ -74,7 +74,7 @@ public class ReviewCommentService {
         reviewRepository.findById(reviewId)
                 .orElseThrow(() -> ReviewNotFoundException.EXCEPTION);
 
-        if (userFacade.currentUser().getRole() != UserRole.CHEF)
+        if (userFacade.currentUser().getRole() != UserRole.TEACHER)
             throw NoPermissionException.EXCEPTION;
 
         reviewCommentRepository.deleteById(
