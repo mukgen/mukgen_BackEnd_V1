@@ -39,7 +39,7 @@ public class AuthController {
     public void signup(
             @RequestBody UserSignupRequest request
             ){
-
+        authService.signup(request);
     }
 
     @PostMapping("/re-issue")
