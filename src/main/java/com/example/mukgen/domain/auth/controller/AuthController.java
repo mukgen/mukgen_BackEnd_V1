@@ -3,6 +3,7 @@ package com.example.mukgen.domain.auth.controller;
 import com.example.mukgen.domain.auth.controller.request.CodeRequest;
 import com.example.mukgen.domain.auth.controller.request.ReIssueRequest;
 import com.example.mukgen.domain.auth.controller.request.UserLoginRequest;
+import com.example.mukgen.domain.auth.controller.request.UserSignupRequest;
 import com.example.mukgen.domain.auth.controller.response.LoginResponse;
 import com.example.mukgen.domain.auth.controller.response.TokenResponse;
 import com.example.mukgen.domain.auth.service.AuthService;
@@ -32,6 +33,13 @@ public class AuthController {
             UserLoginRequest request
             ){
         return authService.login(request);
+    }
+
+    @PostMapping("/signup/general")
+    public void signup(
+            @RequestBody UserSignupRequest request
+            ){
+
     }
 
     @PostMapping("/re-issue")
