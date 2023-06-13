@@ -37,7 +37,7 @@ public class AuthService {
 
     public void signup(UserSignupRequest request){
 
-        if(!request.getPassword().matches(request.getPasswordCheck())){
+        if(!request.getPassword().equals(request.getPasswordCheck())){
             throw PassWordCheckMismatchException.EXCEPTION;
         }
 
@@ -49,7 +49,7 @@ public class AuthService {
                 .role(UserRole.STUDENT)
                 .accountId(request.getAccountId())
                 .name(request.getName())
-                .password(request.getPassword())
+                .password(password)
                 .phoneNumber(request.getPhoneNumber())
                 .build();
 
