@@ -22,8 +22,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @Column(name = "account_id", nullable = false, length = 15)
-//    private String accountId;
+    @Column(name = "account_id", nullable = false, length = 15)
+    private String accountId;
 
     @Column(name = "profile_url",length = 550)
     private String profileUrl = "";
@@ -40,23 +40,15 @@ public class User {
     @Column(name = "studentNum")
     private Integer studentNum;
 
-    @Column(name = "phoneNumber")
+    @Column(name = "password", nullable = false, length = 1000)
+    private String password;
+
+    @Column(name = "phone_number", length = 12, nullable = false, columnDefinition = "char(12)")
     private String phoneNumber;
 
-    @Column(name = "email", nullable = false)
-    private String accountId;
-
-//    @Column(name = "password", nullable = false, length = 1000)
-//    private String password;
-
-//    @Column(name = "phone_number", length = 12, nullable = false, columnDefinition = "char(12)")
-//    private String phoneNumber;
-
     @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
     private UserRole role;
-
-    @Column(name = "password")
-    private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Board> boardList = new ArrayList<>();

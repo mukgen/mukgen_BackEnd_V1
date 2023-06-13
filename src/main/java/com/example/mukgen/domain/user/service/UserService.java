@@ -2,7 +2,6 @@ package com.example.mukgen.domain.user.service;
 
 import com.example.mukgen.domain.user.controller.response.UserInfoResponse;
 import com.example.mukgen.domain.user.entity.User;
-import com.example.mukgen.domain.user.repository.UserRepository;
 import com.example.mukgen.infra.s3.service.S3Util;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,14 +19,10 @@ public class UserService {
 
     private final S3Util s3Util;
 
-    private final UserRepository userRepository;
+    private static final String REGEX = "/";
 
-    public UserInfoResponse findUser(){
-
-        User user = userFacade.currentUser();
-
-        return UserInfoResponse.of(user);
-
+    public UserInfoResponse getProfile(){
+        return UserInfoResponse.of(userFacade.currentUser());
     }
 
     @Transactional
@@ -39,7 +34,7 @@ public class UserService {
 
         if(user.getProfileUrl() != null && !user.getProfileUrl().isEmpty()){
             profileUrl = user.getProfileUrl();
-            s3Util.deleteFile(profileUrl.split("/")[3]);
+            s3Util.deleteFile(profileUrl.split(REGEX)[3]);
         }
 
         profileUrl = s3Util.upload(multipartFile);
