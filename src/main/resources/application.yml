@@ -7,7 +7,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     open-in-view: false
     properties:
       hibernate:
@@ -20,6 +20,12 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
+
+info:
+  oauth:
+    clientId: ${CLIENT_ID}
+    clientSecret: ${CLIENT_SECRET}
+    redirectUri: ${REDIRECT_URI}
 
 jwt:
   secret: ${JWT_SECRET}

@@ -16,6 +16,7 @@ configurations {
 
 repositories {
     mavenCentral()
+    maven { url = uri("https://jitpack.io")}
     maven { url = uri("https://repo.spring.io/milestone") }
     maven { url = uri("https://repo.spring.io/snapshot") }
 }
@@ -45,5 +46,19 @@ dependencies {
 
     //S3
     implementation("com.amazonaws:aws-java-sdk-s3:1.12.281")
+
+    // Info OAuth
+//    implementation("com.github.qj0r9j0vc2:info-oauth2-sdk-java:75d61a1e")
+    // OAuth
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
+
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.0")
+    implementation("io.github.openfeign:feign-core:12.3")
+    implementation("io.github.openfeign:feign-jackson:12.3")
+
 
 }
