@@ -1,91 +1,76 @@
 package com.example.mukgen.domain.auth.service;
 
 
-import com.example.mukgen.domain.auth.controller.request.UserModifyPasswordRequest;
-import com.example.mukgen.domain.auth.controller.response.LoginResponse;
-import com.example.mukgen.domain.auth.controller.response.TokenResponse;
-import com.example.mukgen.domain.auth.controller.request.ChefSignupRequest;
 import com.example.mukgen.domain.auth.controller.request.UserLoginRequest;
 import com.example.mukgen.domain.auth.controller.request.UserSignupRequest;
-import com.example.mukgen.domain.auth.service.exception.CodeMismatchException;
-import com.example.mukgen.domain.auth.service.exception.PasswordSameException;
-import com.example.mukgen.domain.auth.service.exception.PassWordCheckMismatchException;
+import com.example.mukgen.domain.auth.controller.response.LoginResponse;
+import com.example.mukgen.domain.auth.controller.response.TokenResponse;
 import com.example.mukgen.domain.user.entity.User;
-import com.example.mukgen.domain.user.entity.type.UserRole;
 import com.example.mukgen.domain.user.repository.UserRepository;
-import com.example.mukgen.domain.user.service.UserFacade;
-import com.example.mukgen.domain.user.service.exception.PasswordMismatchException;
 import com.example.mukgen.domain.user.service.exception.UserAlreadyExistException;
 import com.example.mukgen.domain.user.service.exception.UserNotFoundException;
+import com.example.mukgen.global.config.properties.InfoOAuthProperties;
 import com.example.mukgen.global.config.security.jwt.JwtTokenProvider;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import oauth2.InfoOAuth2;
+import oauth2.dto.request.ExchangeTokenRequest;
+import oauth2.dto.response.ResourceResponse;
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @Transactional
 @Service
 public class AuthService {
 
+    private final ObjectMapper objectMapper;
+
     private final JwtTokenProvider jwtTokenProvider;
 
     private final UserRepository userRepository;
 
-    private final PasswordEncoder passwordEncoder;
+    private final InfoOAuthProperties infoOAuthProperties;
 
-    private final UserFacade userFacade;
+    public LoginResponse infoAuth(String code){
 
-    public void chefSignup(
-            ChefSignupRequest request
-    ){
+        InfoOAuth2 oauth2 = new InfoOAuth2(infoOAuthProperties.getClientId(), infoOAuthProperties.getSecretId());
 
-        if (!request.getCode().equals("imChef")) {
-            throw CodeMismatchException.EXCEPTION;
+        oauth2.exchangeTokenWithoutPKCE(new ExchangeTokenRequest(
+                code,
+                infoOAuthProperties.getRedirectUri()));
+
+        try{
+            ResourceResponse userResponse = oauth2.getUserResponse();
+            String json = objectMapper.writeValueAsString(userResponse);
+            JSONObject jsonObject = new JSONObject(json);
+            JSONObject dataObject = jsonObject.getJSONObject("data");
+            User user = saveOrUpdate(dataObject);
+
+            return LoginResponse.builder()
+                    .tokenResponse(jwtTokenProvider.createToken(user.getAccountId()))
+                    .message(user.getName() + "님 환영합니다!")
+                    .build();
+        }
+        catch (Exception e) {
+            throw new IllegalStateException(e.getMessage());
         }
 
-        User user = User.builder()
-                .role(UserRole.CHEF)
-                .accountId(request.getAccountId())
-                .password(request.getPassword())
-                .name("선생님")
-                .phoneNumber("01012341234")
-                .build();
-
-        userRepository.save(user);
     }
 
-    public void signup(UserSignupRequest request){
+    private User saveOrUpdate(JSONObject object){
 
-        if(!request.getPassword().equals(request.getPasswordCheck())){
-            throw PassWordCheckMismatchException.EXCEPTION;
-        }
-
-        String password = passwordEncoder.encode(request.getPassword());
-
-        validateDuplicateUser(request);
-
-        User user = User.builder()
-                .role(UserRole.GENERAL)
-                .accountId(request.getAccountId())
-                .password(password)
-                .name(request.getName())
-                .phoneNumber(request.getPhoneNumber())
-                .build();
-
-        userRepository.save(user);
-
+        User user = userRepository.findByAccountId(object.getString("email"))
+                .map(it -> it.update(object))
+                .orElse(new User(object));
+        return userRepository.save(user);
     }
 
     public LoginResponse login(UserLoginRequest request){
        User user = userRepository.findByAccountId(request.getAccountId())
                .orElseThrow(()-> UserNotFoundException.EXCEPTION);
 
-       if(!passwordEncoder.matches(request.getPassword(),user.getPassword())){
-           throw PasswordMismatchException.EXCEPTION;
-       }
        return LoginResponse.builder()
                .tokenResponse(jwtTokenProvider.createToken(user.getAccountId()))
                .message(user.getName() + "님 환영합니다!")
@@ -106,20 +91,4 @@ public class AuthService {
         }
     }
 
-    public void modifyPassword(
-            @Valid UserModifyPasswordRequest request
-    ) {
-
-        User user = userFacade.currentUser();
-
-        if(!passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
-            throw PassWordCheckMismatchException.EXCEPTION;
-        }
-
-        if(passwordEncoder.matches(request.getNewPassword(), user.getPassword())) {
-            throw PasswordSameException.EXCEPTION;
-        }
-
-        user.modifyPassword(passwordEncoder.encode(request.getNewPassword()));
-    }
 }

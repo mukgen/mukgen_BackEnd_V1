@@ -1,13 +1,16 @@
 package com.example.mukgen.domain.auth.controller;
 
-import com.example.mukgen.domain.auth.controller.request.*;
+import com.example.mukgen.domain.auth.controller.request.CodeRequest;
+import com.example.mukgen.domain.auth.controller.request.ReIssueRequest;
+import com.example.mukgen.domain.auth.controller.request.UserLoginRequest;
 import com.example.mukgen.domain.auth.controller.response.LoginResponse;
 import com.example.mukgen.domain.auth.controller.response.TokenResponse;
 import com.example.mukgen.domain.auth.service.AuthService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
@@ -16,20 +19,11 @@ public class AuthController {
 
     private final AuthService authService;
 
-    @PostMapping("/signup/general")
-    public void signup(
-            @RequestBody @Valid
-            UserSignupRequest request
-            ){
-        authService.signup(request);
-    }
-
-    @PostMapping("/signup/chef")
-    public void signup(
-            @RequestBody @Valid
-            ChefSignupRequest request
+    @PostMapping("/signup/info")
+    public LoginResponse infoSignUp(
+            @RequestBody CodeRequest request
     ){
-        authService.chefSignup(request);
+        return authService.infoAuth(request.getCode());
     }
 
     @PostMapping("/login")
@@ -47,10 +41,4 @@ public class AuthController {
         return authService.reIssue(request.getRefreshToken());
     }
 
-    @PutMapping("/modify-password")
-    public void passwordModify(
-            @RequestBody UserModifyPasswordRequest request
-    ) {
-        authService.modifyPassword(request);
-    }
 }
