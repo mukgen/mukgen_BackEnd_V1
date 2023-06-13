@@ -9,7 +9,6 @@ import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.repository.UserRepository;
 import com.example.mukgen.domain.user.service.exception.UserAlreadyExistException;
 import com.example.mukgen.domain.user.service.exception.UserNotFoundException;
-import com.example.mukgen.global.config.properties.InfoOAuthProperties;
 import com.example.mukgen.global.config.security.jwt.JwtTokenProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -31,15 +30,13 @@ public class AuthService {
 
     private final UserRepository userRepository;
 
-    private final InfoOAuthProperties infoOAuthProperties;
-
     public LoginResponse infoAuth(String code){
 
-        InfoOAuth2 oauth2 = new InfoOAuth2(infoOAuthProperties.getClientId(), infoOAuthProperties.getSecretId());
+        InfoOAuth2 oauth2 = new InfoOAuth2("mukgen", "92cb3fd4-798c-4242-aba2-4e55eade7714");
 
         oauth2.exchangeTokenWithoutPKCE(new ExchangeTokenRequest(
                 code,
-                infoOAuthProperties.getRedirectUri()));
+                "http://mukgen.info/info/oauth2"));
 
         try{
             ResourceResponse userResponse = oauth2.getUserResponse();
