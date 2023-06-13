@@ -5,7 +5,6 @@ import com.example.mukgen.domain.deliveryparty.entity.DeliveryParty;
 import com.example.mukgen.domain.review.entity.Review;
 import com.example.mukgen.domain.user.entity.type.UserRole;
 import lombok.*;
-import org.json.JSONObject;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -22,8 +21,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @Column(name = "account_id", nullable = false, length = 15)
-//    private String accountId;
+    @Column(name = "account_id", nullable = false, length = 15)
+    private String accountId;
 
     @Column(name = "profile_url",length = 550)
     private String profileUrl = "";
@@ -40,23 +39,14 @@ public class User {
     @Column(name = "studentNum")
     private Integer studentNum;
 
-    @Column(name = "phoneNumber")
+    @Column(name = "password", nullable = false, length = 1000)
+    private String password;
+
+    @Column(name = "phone_number", length = 12, nullable = false, columnDefinition = "char(12)")
     private String phoneNumber;
-
-    @Column(name = "email", nullable = false)
-    private String accountId;
-
-//    @Column(name = "password", nullable = false, length = 1000)
-//    private String password;
-
-//    @Column(name = "phone_number", length = 12, nullable = false, columnDefinition = "char(12)")
-//    private String phoneNumber;
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
-
-    @Column(name = "password")
-    private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Board> boardList = new ArrayList<>();
@@ -89,26 +79,5 @@ public class User {
         this.profileUrl = profileUrl;
     }
 
-    public User(JSONObject jsonObject) {
-
-        this.role = UserRole.valueOf(jsonObject.getString("role"));
-        this.profileUrl = jsonObject.getString("profileUrl");
-        this.name = jsonObject.getString("name");
-        this.grade = jsonObject.getInt("grade");
-        this.classNum = jsonObject.getInt("classNum");
-        this.studentNum = jsonObject.getInt("studentNum");
-        this.accountId = jsonObject.getString("email");
-
-    }
-
-    public User update(JSONObject jsonObject) {
-        this.profileUrl = jsonObject.getString("profileUrl");
-        this.name = jsonObject.getString("name");
-        this.grade = jsonObject.getInt("grade");
-        this.classNum = jsonObject.getInt("classNum");
-        this.studentNum = jsonObject.getInt("studentNum");
-
-        return this;
-    }
 
 }
