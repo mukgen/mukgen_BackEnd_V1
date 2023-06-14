@@ -188,6 +188,7 @@ public class ReviewService {
 
     }
 
+    @Transactional
     public String imageUpload(Long reviewId,MultipartFile multipartFile) throws IOException {
 
         Review review = reviewRepository.findById(reviewId)
