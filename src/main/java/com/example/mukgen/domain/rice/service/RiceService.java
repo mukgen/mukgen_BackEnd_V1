@@ -20,7 +20,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.time.ZoneId;
@@ -67,15 +66,13 @@ public class RiceService {
 
         if (rice == null) {
 
-            if(!riceRepository.existsById(id)){
-                rice = riceApi.getRice(riceType, year, month, day);
-                riceRepository.save(rice);
-            }
+            rice = riceRepository.findById(id)
+                    .orElseGet(() -> {
+                        Rice newRice = riceApi.getRice(riceType, year, month, day);
+                        riceRepository.save(newRice);
+                        return newRice;
+            });
 
-            else {
-                rice = riceRepository.findById(id)
-                        .orElseThrow(()-> new EntityNotFoundException("찾을 수 없습니다."));
-            }
             mealCache.put(id, rice);
         }
 

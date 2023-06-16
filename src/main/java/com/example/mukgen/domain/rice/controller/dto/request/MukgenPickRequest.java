@@ -14,4 +14,5 @@ public class MukgenPickRequest {
     private int day;
 
     private RiceType riceType;
+
 }

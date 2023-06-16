@@ -1,6 +1,5 @@
 package com.example.mukgen.domain.auth.controller;
 
-import com.example.mukgen.domain.auth.controller.request.CodeRequest;
 import com.example.mukgen.domain.auth.controller.request.ReIssueRequest;
 import com.example.mukgen.domain.auth.controller.request.UserLoginRequest;
 import com.example.mukgen.domain.auth.controller.request.UserSignupRequest;
@@ -19,13 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthService authService;
-
-    @PostMapping("/signup/info")
-    public LoginResponse infoSignUp(
-            @RequestBody CodeRequest request
-    ){
-        return authService.infoAuth(request.getCode());
-    }
 
     @PostMapping("/login")
     public LoginResponse login(
