@@ -9,6 +9,7 @@ import com.example.mukgen.domain.auth.service.exception.PassWordCheckMismatchExc
 import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.entity.type.UserRole;
 import com.example.mukgen.domain.user.repository.UserRepository;
+import com.example.mukgen.domain.user.service.exception.PasswordMismatchException;
 import com.example.mukgen.domain.user.service.exception.UserAlreadyExistException;
 import com.example.mukgen.domain.user.service.exception.UserNotFoundException;
 import com.example.mukgen.global.config.security.jwt.JwtTokenProvider;
@@ -54,8 +55,13 @@ public class AuthService {
     }
 
     public LoginResponse login(UserLoginRequest request){
+
        User user = userRepository.findByAccountId(request.getAccountId())
                .orElseThrow(()-> UserNotFoundException.EXCEPTION);
+
+       if(!passwordEncoder.matches(request.getPassword(), user.getPassword())){
+           throw PasswordMismatchException.EXCEPTION;
+       }
 
        return LoginResponse.builder()
                .tokenResponse(jwtTokenProvider.createToken(user.getAccountId()))

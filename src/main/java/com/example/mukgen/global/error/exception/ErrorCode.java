@@ -19,6 +19,7 @@ public enum ErrorCode {
     DELIVERY_PARTY_FULL(400, "이 배달파티는 모집이 끝났습니다."),
     DELIVERY_PARTY_WRITER_CANT_LEAVE(400, "배달파티 작성자는 떠날 수 없습니다."),
     REVIEW_YET_TIME(400, "아직 작성할 수 없는 급식 입니다."),
+    PASSWORD_MISMATCH(400, "비밀번호가 일치하지 않습니다."),
 
     // UnAuthorized
     EXPIRED_TOKEN(401 , "Expired token"),
@@ -35,7 +36,6 @@ public enum ErrorCode {
 
     // Not Found
     USER_NOT_FOUND(404,"찾을 수 없는 유저입니다."),
-    PASSWORD_MISMATCH(404, "비밀번호가 일치하지 않습니다."),
     BOARD_NOT_FOUND(404, "찾을 수 없는 게시글 입니다."),
     RICE_NOT_FOUND(404,"찾을 수 없는 급식입니다."),
     REVIEW_NOT_FOUND(404,"찾을 수 없는 리뷰입니다."),
