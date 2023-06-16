@@ -9,6 +9,8 @@ import lombok.Getter;
 @Builder
 public class ReviewRankResponse {
 
+    private String profileUrl;
+
     private String userName;
 
     private Integer reviewCount;
@@ -23,6 +25,7 @@ public class ReviewRankResponse {
                             .sum())/(float)user.getReviewList().size();
 
         return ReviewRankResponse.builder()
+                .profileUrl(user.getProfileUrl())
                 .userName(user.getName())
                 .reviewCount(user.getReviewList().size())
                 .averageReview(aveCount)
