@@ -1,6 +1,6 @@
 package com.example.mukgen.domain.review.entity;
 
-import com.example.mukgen.domain.BaseTimeEntity;
+import com.example.mukgen.global.common.entity.BaseTimeEntity;
 import com.example.mukgen.domain.rice.entity.Rice;
 import com.example.mukgen.domain.user.entity.User;
 import lombok.*;
@@ -20,14 +20,17 @@ import java.util.List;
 @Entity(name = "tbl_review")
 public class Review extends BaseTimeEntity {
 
-    @Id
-    @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(name = "count", nullable = false)
     private int count;
 
+    @Column(name = "review", nullable = false)
     private String review;
 
+    @Column(name = "image_url", nullable = false)
     private String imageUrl;
 
     @Column(name = "is_deleted")

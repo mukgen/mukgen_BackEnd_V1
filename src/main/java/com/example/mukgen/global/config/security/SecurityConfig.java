@@ -1,6 +1,8 @@
 package com.example.mukgen.global.config.security;
 
 import com.example.mukgen.global.config.FilterConfig;
+import com.example.mukgen.global.config.security.auth.CustomUserDetailService;
+import com.example.mukgen.global.config.security.jwt.JwtResolver;
 import com.example.mukgen.global.config.security.jwt.JwtTokenProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -12,25 +14,29 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig{
 
     private final JwtTokenProvider jwtTokenProvider;
 
-    public final ObjectMapper objectMapper;
+    private final JwtResolver jwtResolver;
+
+    private final ObjectMapper objectMapper;
+
+    private final CustomUserDetailService userDetailService;
 
     @Bean
     public PasswordEncoder passwordEncoder(){
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
-    @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
-
-        httpSecurity
+    @Bean
+    protected SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
+        return httpSecurity
                 .csrf().disable()
                 .exceptionHandling()
 
@@ -50,7 +56,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
 
                 .and()
-                .apply(new FilterConfig(jwtTokenProvider, objectMapper));
+                .apply(new FilterConfig(jwtTokenProvider, jwtResolver, objectMapper, userDetailService))
+
+                .and().build();
     }
 
 }

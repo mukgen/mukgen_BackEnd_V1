@@ -27,27 +27,22 @@ public class UserController {
     private final BoardService boardService;
 
     @GetMapping("/profile")
-    public UserInfoResponse userDetails(){
-
-        return userService.findUser();
+    public UserInfoResponse userDetails() {
+        return userService.getProfile();
     }
 
     @PostMapping("/profile/upload")
-    public String uploadFile(
-            @RequestParam("images")MultipartFile multipartFile
-            ) throws IOException {
-
+    public String uploadFile(@RequestParam("images") MultipartFile multipartFile) throws IOException {
         return userService.profileUpload(multipartFile);
-
     }
 
     @GetMapping("/board")
-    public BoardListResponse userBoardList(){
+    public BoardListResponse userBoardList() {
         return boardService.findMyBoard();
     }
 
     @GetMapping("/review")
-    public ReviewListResponse userReviewList(){
+    public ReviewListResponse userReviewList() {
         return reviewService.findMyReview();
     }
 

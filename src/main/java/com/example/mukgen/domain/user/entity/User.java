@@ -46,6 +46,7 @@ public class User {
     private String phoneNumber;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
     private UserRole role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
