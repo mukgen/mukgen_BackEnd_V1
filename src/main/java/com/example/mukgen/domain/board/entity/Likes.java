@@ -1,6 +1,6 @@
 package com.example.mukgen.domain.board.entity;
 
-import com.example.mukgen.domain.BaseTimeEntity;
+import com.example.mukgen.global.common.entity.BaseTimeEntity;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;

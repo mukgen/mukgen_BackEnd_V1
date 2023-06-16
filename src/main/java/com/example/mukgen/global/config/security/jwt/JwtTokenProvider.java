@@ -5,18 +5,15 @@ import com.example.mukgen.domain.auth.controller.response.TokenResponse;
 import com.example.mukgen.domain.auth.entity.RefreshToken;
 import com.example.mukgen.domain.auth.repository.RefreshTokenRepository;
 import com.example.mukgen.domain.user.repository.UserRepository;
-import com.example.mukgen.global.config.security.auth.CustomUserDetailService;
 import com.example.mukgen.global.exception.ExpiredTokenException;
 import com.example.mukgen.global.exception.InvalidTokenException;
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 @RequiredArgsConstructor
@@ -25,15 +22,11 @@ public class JwtTokenProvider {
 
     private final String secretKey = "mukgenproject123!@#mukgenproject123!@#mukgenproject123!@#";
 
-    private final String prefix = "Bearer ";
-
     private final Long accessExpiredExp = 60 * 30 * 1000L;
 
     private final Long refreshExpiredExp = 60 * 60 * 120 * 1000L;
 
     private final RefreshTokenRepository refreshTokenRepository;
-
-    private final CustomUserDetailService userDetailsService;
 
     private final UserRepository userRepository;
 
@@ -93,47 +86,23 @@ public class JwtTokenProvider {
         return rfToken;
     }
 
-
-    // JWT 토큰에서 인증 정보 조회
-    public Authentication getAuthentication(String token){
-        UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserPk(token));
-        return new UsernamePasswordAuthenticationToken(userDetails,"",userDetails.getAuthorities());
-    }
-
     //토큰에서 회원 정보 추출
-    public String getUserPk(String token){
+    private Claims getBody(String token){
         try{
-            return Jwts
-                    .parser()
-                    .setSigningKey(secretKey)
-                    .parseClaimsJws(token)
-                    .getBody()
-                    .getSubject();
-        }catch (ExpiredJwtException e){
-            throw ExpiredTokenException.EXCEPTION;
-        } catch (Exception e){
+            return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+        } catch (JwtException e){
             throw InvalidTokenException.EXCEPTION;
         }
-
     }
 
-    public String resolveToken(HttpServletRequest request){
+    public String getSubjectWithExpiredCheck(String token){
 
-        String bearerToken = request.getHeader("Authorization");
+        Claims body = getBody(token);
 
-        if(StringUtils.hasText(bearerToken) && bearerToken.startsWith(prefix)
-                && bearerToken.length() > prefix.length()+1){
-            return bearerToken.substring(7);
-        }
-        return null;
-    }
-
-    public boolean validateTokenExp(String jwtToken){
-        try{
-            Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);
-            return !claims.getBody().getExpiration().before(new Date());
-        } catch (Exception e){
-            return false;
+        if(body.getExpiration().before(new Date())) {
+           throw ExpiredTokenException.EXCEPTION;
+        } else {
+            return body.getSubject();
         }
     }
 }

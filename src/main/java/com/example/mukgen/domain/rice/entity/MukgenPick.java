@@ -1,6 +1,6 @@
 package com.example.mukgen.domain.rice.entity;
 
-import com.example.mukgen.domain.BaseTimeEntity;
+import com.example.mukgen.global.common.entity.BaseTimeEntity;
 import lombok.*;
 
 import javax.persistence.Entity;

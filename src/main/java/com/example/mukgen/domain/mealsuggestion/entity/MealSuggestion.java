@@ -1,6 +1,6 @@
 package com.example.mukgen.domain.mealsuggestion.entity;
 
-import com.example.mukgen.domain.BaseTimeEntity;
+import com.example.mukgen.global.common.entity.BaseTimeEntity;
 import com.example.mukgen.domain.user.entity.User;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;

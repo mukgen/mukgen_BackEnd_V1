@@ -3,9 +3,9 @@ package com.example.mukgen.domain.user.controller.response;
 import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.entity.type.UserRole;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
+@Data
 @Builder
 public class UserInfoResponse {
 

@@ -1,4 +1,4 @@
-package com.example.mukgen.domain;
+package com.example.mukgen.global.common.entity;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
