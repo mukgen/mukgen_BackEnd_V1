@@ -7,7 +7,7 @@ import com.example.mukgen.domain.board.entity.Board;
 import com.example.mukgen.domain.board.repository.BoardRepository;
 import com.example.mukgen.domain.board.repository.LikeRepository;
 import com.example.mukgen.domain.board.service.exception.BoardNotFoundException;
-import com.example.mukgen.domain.board.service.exception.BoardWriterMissMatchException;
+import com.example.mukgen.domain.board.service.exception.BoardWriterMissmatchException;
 import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.service.UserFacade;
 import lombok.RequiredArgsConstructor;
@@ -100,7 +100,7 @@ public class BoardService {
 
         if(!userFacade.currentUser().equals(board.getUser())){
 
-            throw BoardWriterMissMatchException.EXCEPTION;
+            throw BoardWriterMissmatchException.EXCEPTION;
         }
         boardRepository.deleteById(boardId);
     }

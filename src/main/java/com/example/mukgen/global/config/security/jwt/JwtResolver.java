@@ -10,14 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 public class JwtResolver {
 
-    private final String prefix = "Bearer ";
+    private final JwtProperties jwtProperties;
 
     public String resolveToken(HttpServletRequest request){
 
-        String bearerToken = request.getHeader("Authorization");
+        String bearerToken = request.getHeader(jwtProperties.getHeader());
 
-        if(StringUtils.hasText(bearerToken) && bearerToken.startsWith(prefix)
-                && bearerToken.length() > prefix.length()+1){
+        if(StringUtils.hasText(bearerToken) && bearerToken.startsWith(jwtProperties.getPrefix())
+                && bearerToken.length() > jwtProperties.getPrefix().length()+1){
             return bearerToken.substring(7);
         }
         return null;

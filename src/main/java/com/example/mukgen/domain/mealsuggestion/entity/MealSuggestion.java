@@ -22,7 +22,7 @@ public class MealSuggestion extends BaseTimeEntity {
     @Column(name = "content", length = 300, nullable = false)
     private String content;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 

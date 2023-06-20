@@ -8,7 +8,7 @@ import com.example.mukgen.domain.board.controller.dto.request.BoardCommentUpdate
 import com.example.mukgen.domain.board.entity.BoardComment;
 import com.example.mukgen.domain.board.repository.BoardCommentRepository;
 import com.example.mukgen.domain.board.service.exception.BoardCommentNotFoundException;
-import com.example.mukgen.domain.board.service.exception.BoardCommentWriterMissMatchException;
+import com.example.mukgen.domain.board.service.exception.BoardCommentWriterMissmatchException;
 import com.example.mukgen.domain.user.service.UserFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -54,7 +54,7 @@ public class BoardCommentService {
                 .orElseThrow(() -> BoardCommentNotFoundException.EXCEPTION);
 
         if(!userFacade.currentUser().getAccountId().equals(boardComment.getWriter())){
-            throw BoardCommentWriterMissMatchException.EXCEPTION;
+            throw BoardCommentWriterMissmatchException.EXCEPTION;
         }
 
         boardComment.getBoard().removeCommentCount();
@@ -72,7 +72,7 @@ public class BoardCommentService {
                 .orElseThrow(() -> BoardCommentNotFoundException.EXCEPTION);
 
         if(!userFacade.currentUser().getAccountId().equals(boardComment.getWriter())){
-            throw BoardCommentWriterMissMatchException.EXCEPTION;
+            throw BoardCommentWriterMissmatchException.EXCEPTION;
         }
 
         boardComment.updateBoardComment(request.getContent());

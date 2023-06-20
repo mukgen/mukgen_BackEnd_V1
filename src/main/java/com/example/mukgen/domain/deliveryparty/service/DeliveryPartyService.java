@@ -32,7 +32,7 @@ public class DeliveryPartyService {
         User user = userFacade.currentUser();
 
         if(deliveryPartyRepository.existsByWriterAccountId(user.getAccountId())){
-            throw DeliveryPartyAlreadyExists.EXCEPTION;
+            throw DeliveryPartyAlreadyExistsException.EXCEPTION;
         }
 
         if(request.getMeetTime().isBefore(LocalDateTime.now())){
@@ -73,14 +73,14 @@ public class DeliveryPartyService {
                 .orElseThrow(()-> DeliveryPartyNotFoundException.EXCEPTION);
 
         if(deliveryParty.getUserList().size()>=deliveryParty.getParticipantNumber()){
-            throw DeliveryPartyFull.EXCEPTION;
+            throw DeliveryPartyFullException.EXCEPTION;
         }
 
         User user = userFacade.currentUser();
 
         if(deliveryPartyRepository.existsByWriterAccountId(user.getAccountId())){
 
-            throw DeliveryPartyInProgress.EXCEPTION;
+            throw DeliveryPartyInProgressException.EXCEPTION;
         }
 
         deliveryParty.joinDeliveryParty(user);
@@ -117,7 +117,7 @@ public class DeliveryPartyService {
 
         if(!curUser.getAccountId().equals(deliveryParty.getWriterAccountId())){
 
-            throw DeliveryPartyWriterMismatch.EXCEPTION;
+            throw DeliveryPartyWriterMismatchException.EXCEPTION;
         }
 
         List<User> users = new ArrayList<>(deliveryParty.getUserList());

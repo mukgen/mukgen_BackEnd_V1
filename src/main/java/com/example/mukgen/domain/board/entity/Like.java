@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Entity(name = "tbl_likes")
-public class Likes extends BaseTimeEntity {
+public class Like extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +30,7 @@ public class Likes extends BaseTimeEntity {
     private Boolean isDeleted = false;
 
     @Builder
-    public Likes(Board board, String userName) {
+    public Like(Board board, String userName) {
         this.board = board;
         this.userName = userName;
     }
