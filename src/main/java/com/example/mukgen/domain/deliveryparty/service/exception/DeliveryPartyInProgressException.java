@@ -3,11 +3,11 @@ package com.example.mukgen.domain.deliveryparty.service.exception;
 import com.example.mukgen.global.error.exception.BusinessException;
 import com.example.mukgen.global.error.exception.ErrorCode;
 
-public class DeliveryPartyInProgress extends BusinessException {
+public class DeliveryPartyInProgressException extends BusinessException {
 
-    public static final BusinessException EXCEPTION = new DeliveryPartyInProgress();
+    public static final BusinessException EXCEPTION = new DeliveryPartyInProgressException();
 
-    public DeliveryPartyInProgress() {
+    public DeliveryPartyInProgressException() {
         super(ErrorCode.DELIVERY_PARTY_IN_PROGRESS);
     }
 }

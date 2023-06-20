@@ -3,11 +3,11 @@ package com.example.mukgen.domain.board.service.exception;
 import com.example.mukgen.global.error.exception.BusinessException;
 import com.example.mukgen.global.error.exception.ErrorCode;
 
-public class BoardWriterMissMatchException extends BusinessException {
+public class BoardWriterMissmatchException extends BusinessException {
 
-    public static final BusinessException EXCEPTION = new BoardWriterMissMatchException();
+    public static final BusinessException EXCEPTION = new BoardWriterMissmatchException();
 
-    public BoardWriterMissMatchException() {
+    public BoardWriterMissmatchException() {
         super(ErrorCode.BOARD_WRITER_MISMATCH);
     }
 }
