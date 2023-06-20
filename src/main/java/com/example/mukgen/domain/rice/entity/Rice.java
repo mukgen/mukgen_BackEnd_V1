@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -20,8 +21,10 @@ public class Rice {
     @Id
     private int id;
 
+    @Column(name = "item", nullable = false)
     private String item;
 
+    @Column(name = "rice_type", nullable = false)
     private RiceType riceType;
 
     @OneToMany(mappedBy = "rice")
