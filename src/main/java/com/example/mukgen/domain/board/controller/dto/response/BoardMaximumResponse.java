@@ -35,7 +35,7 @@ public class BoardMaximumResponse {
 
     public static BoardMaximumResponse of(Board board, boolean isLiked){
 
-        List<LikeResponse> likeResponses = board.getLikesList().stream()
+        List<LikeResponse> likeResponses = board.getLikeList().stream()
                 .map(it -> LikeResponse.builder()
                         .userName(it.getUserName()).build()).toList();
 

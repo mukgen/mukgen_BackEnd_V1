@@ -50,7 +50,7 @@ public class Board extends BaseTimeEntity {
     private User user;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
-    private List<Likes> likesList = new ArrayList<>();
+    private List<Like> likeList = new ArrayList<>();
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
     private List<BoardComment> boardCommentList = new ArrayList<>();
@@ -92,7 +92,7 @@ public class Board extends BaseTimeEntity {
 
     @Builder
     public Board(Long id, String title, String content, int likeCount,
-            int viewCount, User user, List<Likes> likesList
+            int viewCount, User user, List<Like> likeList
             , List<BoardComment> boardCommentList
     ) {
         this.id = id;
@@ -101,7 +101,7 @@ public class Board extends BaseTimeEntity {
         this.likeCount = likeCount;
         this.viewCount = viewCount;
         this.user = user;
-        this.likesList = likesList;
+        this.likeList = likeList;
         this.boardCommentList = boardCommentList;
     }
 }
