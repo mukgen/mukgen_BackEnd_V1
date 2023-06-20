@@ -15,7 +15,7 @@ import javax.persistence.Id;
 public class MukgenPick extends BaseTimeEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = )
     private Long id;
 
     private int month;
