@@ -13,7 +13,6 @@ import com.example.mukgen.domain.user.service.exception.PasswordMismatchExceptio
 import com.example.mukgen.domain.user.service.exception.UserAlreadyExistException;
 import com.example.mukgen.domain.user.service.exception.UserNotFoundException;
 import com.example.mukgen.global.config.security.jwt.JwtTokenProvider;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,8 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @Service
 public class AuthService {
-
-    private final ObjectMapper objectMapper;
 
     private final JwtTokenProvider jwtTokenProvider;
 
