@@ -28,7 +28,11 @@ info:
     redirectUri: ${REDIRECT_URI}
 
 jwt:
-  secret: ${JWT_SECRET}
+  secretKey: ${JWT_SECRET_KEY:dGVzdA=ahsjdfjhaskldfjhk1~@#$@!akdsfhaskdfhk=}
+  accessExpiredExp: ${JWT_ACCESS_EXP:3600}
+  refreshExpiredExp: ${JWT_REFRESH_EXP:3600}
+  header: ${JWT_HEADER:Authorization}
+  prefix: ${JWT_PREFIX:Bearer}
 
 logging:
   level:

@@ -20,11 +20,7 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-    private final String secretKey = "mukgenproject123!@#mukgenproject123!@#mukgenproject123!@#";
-
-    private final Long accessExpiredExp = 60 * 30 * 1000L;
-
-    private final Long refreshExpiredExp = 60 * 60 * 120 * 1000L;
+    private final JwtProperties jwtProperties;
 
     private final RefreshTokenRepository refreshTokenRepository;
 
@@ -68,8 +64,8 @@ public class JwtTokenProvider {
         return Jwts.builder()
                 .setSubject(accountId)
                 .setIssuedAt(now)
-                .setExpiration(new Date(now.getTime() + accessExpiredExp))
-                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .setExpiration(new Date(now.getTime() + jwtProperties.getAccessExpiredExp()))
+                .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey())
                 .compact();
     }
 
@@ -79,8 +75,8 @@ public class JwtTokenProvider {
 
         String rfToken = Jwts.builder()
                 .setIssuedAt(now)
-                .setExpiration(new Date(now.getTime() + refreshExpiredExp))
-                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .setExpiration(new Date(now.getTime() + jwtProperties.getRefreshExpiredExp()))
+                .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey())
                 .compact();
 
         return rfToken;
@@ -89,7 +85,7 @@ public class JwtTokenProvider {
     //토큰에서 회원 정보 추출
     private Claims getBody(String token){
         try{
-            return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+            return Jwts.parser().setSigningKey(jwtProperties.getSecretKey()).parseClaimsJws(token).getBody();
         } catch (JwtException e){
             throw InvalidTokenException.EXCEPTION;
         }
