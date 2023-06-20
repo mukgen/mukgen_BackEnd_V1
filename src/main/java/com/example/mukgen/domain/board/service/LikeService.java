@@ -4,7 +4,7 @@ import com.example.mukgen.domain.board.controller.dto.response.LikeClickResponse
 import com.example.mukgen.domain.board.entity.Board;
 import com.example.mukgen.domain.board.repository.BoardRepository;
 import com.example.mukgen.domain.board.service.exception.BoardNotFoundException;
-import com.example.mukgen.domain.board.entity.Likes;
+import com.example.mukgen.domain.board.entity.Like;
 import com.example.mukgen.domain.board.repository.LikeRepository;
 import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.service.UserFacade;
@@ -36,7 +36,7 @@ public class LikeService {
             likeRepository.removeByBoardAndUserName(board,curUser.getName());
         }
         else{
-            Likes like = new Likes(board,curUser.getName());
+            Like like = new Like(board,curUser.getName());
             likeRepository.save(like);
             board.addLike();
         }
