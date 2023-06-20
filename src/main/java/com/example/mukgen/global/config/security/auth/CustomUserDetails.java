@@ -1,7 +1,6 @@
 package com.example.mukgen.global.config.security.auth;
 
 import com.example.mukgen.domain.user.entity.User;
-import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
-@Getter
 public record CustomUserDetails(User user) implements UserDetails {
 
     @Override
