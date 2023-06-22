@@ -21,7 +21,6 @@ import java.util.List;
 public class Review extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Long id;
 
     @Column(name = "count", nullable = false)
@@ -30,7 +29,7 @@ public class Review extends BaseTimeEntity {
     @Column(name = "review", nullable = false)
     private String review;
 
-    @Column(name = "image_url", nullable = false)
+    @Column(name = "image_url", nullable = true)
     private String imageUrl;
 
     @Column(name = "is_deleted")
