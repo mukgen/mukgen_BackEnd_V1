@@ -50,7 +50,7 @@ jobs:
         key: ${{ secrets.PRIVATE_KEY }} # pem 키
         # 도커 작업
         script: |
-          docker ps -a --format '{{.ID}} {{.Names}}' | grep -v grafana | grep -v jovial_elion | awk '{print $1}' | xargs -r docker stop
+          docker ps -a --format '{{.ID}} {{.Names}}' | grep -v grafana | grep -v awesome_hypatia | awk '{print $1}' | xargs -r docker stop
           docker pull hyunsu1768/mukgen:latest
           docker-compose up -d
           docker rm $(docker ps --filter 'status=exited' -a -q)
