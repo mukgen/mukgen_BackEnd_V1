@@ -6,6 +6,7 @@ import com.example.mukgen.domain.rice.controller.dto.response.MukgenPickResponse
 import com.example.mukgen.domain.rice.controller.dto.response.RiceResponse;
 import com.example.mukgen.domain.rice.controller.dto.response.RiceTodayResponse;
 import com.example.mukgen.domain.rice.service.RiceService;
+import com.example.mukgen.infra.feign.client.NeisUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +21,8 @@ import java.time.ZonedDateTime;
 public class RiceController {
 
     private final RiceService riceService;
+
+    private final NeisUtil neisUtil;
 
     @GetMapping("/meal")
     public RiceResponse mealDetails(
