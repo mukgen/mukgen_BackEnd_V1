@@ -20,11 +20,6 @@ repositories {
     maven { url = uri("https://repo.spring.io/milestone") }
     maven { url = uri("https://repo.spring.io/snapshot") }
 }
-dependencyManagement {
-    imports {
-        mavenBom("org.springframework.cloud:spring-cloud-dependencies:2021.0.3")
-    }
-}
 
 dependencies {
 
@@ -55,8 +50,5 @@ dependencies {
     // Actuator
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
-
-    // Feign Client
-    implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
 
 }

@@ -1,8 +1,9 @@
 package com.example.mukgen.domain.rice.entity;
 
 import com.example.mukgen.domain.review.entity.Review;
-import com.example.mukgen.global.common.entity.BaseTimeEntity;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,12 +13,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Builder
-@AllArgsConstructor
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity(name = "tbl_rice")
-public class Rice extends BaseTimeEntity {
+public class Rice {
 
     @Id
     private int id;

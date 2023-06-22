@@ -12,12 +12,10 @@ import com.example.mukgen.domain.rice.entity.RiceType;
 import com.example.mukgen.domain.rice.repository.MukgenPickRepository;
 import com.example.mukgen.domain.rice.repository.RiceRepository;
 import com.example.mukgen.domain.rice.service.exception.MukgenPickNotFoundException;
-import com.example.mukgen.domain.rice.service.exception.RiceNotFoundException;
 import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.entity.type.UserRole;
 import com.example.mukgen.domain.user.service.UserFacade;
 import com.example.mukgen.domain.user.service.exception.NoPermissionException;
-import com.example.mukgen.infra.feign.client.NeisUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,7 +36,7 @@ public class RiceService {
 
     private final UserFacade userFacade;
 
-    private final NeisUtil neisUtil;
+    private final RiceApi riceApi;
 
     private final RiceRepository riceRepository;
 
@@ -70,16 +68,10 @@ public class RiceService {
 
             rice = riceRepository.findById(id)
                     .orElseGet(() -> {
-                        Rice newRice = neisUtil.findRice("json",
-                                        "G10",
-                                        "7430310",
-                                        String.valueOf(year * 10000 + month * 100 + day))
-                                .stream()
-                                .filter(rice1 -> rice1.getRiceType().equals(riceType))
-                                .findFirst()
-                                .orElseThrow(()->RiceNotFoundException.EXCEPTION);
+                        Rice newRice = riceApi.getRice(riceType, year, month, day);
+                        riceRepository.save(newRice);
                         return newRice;
-                    });
+            });
 
             mealCache.put(id, rice);
         }
@@ -129,10 +121,12 @@ public class RiceService {
         int count=1;
         while(count<=day){
             try {
-                neisUtil.findRice("json",
-                        "G10",
-                        "7430310",
-                        String.valueOf(curDate.getYear()*10000+month*100+count));
+                RiceType[] riceTypes = {RiceType.LUNCH, RiceType.BREAKFAST, RiceType.DINNER};
+
+                for (RiceType riceType : riceTypes) {
+                    Rice rice = riceApi.getRice(riceType, curDate.getYear(), month, count);
+                    riceRepository.save(rice);
+                }
             } finally {
                 count++;
             }
