@@ -9,9 +9,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -21,59 +18,31 @@ public class NeisUtil {
 
     private final NeisFeignClient neisFeignClient;
 
-    public List<Rice> findRice(String type, String code, String schoolCode, String day){
+    public Rice findRice(String type, String code, String schoolCode, String day, RiceType riceType){
 
-        String jsonStr = neisFeignClient.getRice(type, code, schoolCode, day);
+        final JSONObject data = new JSONObject(neisFeignClient.getRice(type, code, schoolCode, day));
 
-        List<Rice> riceList = new ArrayList<>();
-
-        JSONObject obj = new JSONObject(jsonStr);
-        if(obj.has("mealServiceDietInfo")){
-            JSONArray mealServiceDietInfoArray = obj.getJSONArray("mealServiceDietInfo");
-
-            // Iterate through each mealServiceDietInfo element
-            for (int i = 0; i < mealServiceDietInfoArray.length(); i++) {
-                JSONObject mealServiceDietInfo = mealServiceDietInfoArray.getJSONObject(i);
-
-                if(mealServiceDietInfo.has("row")){
-                    JSONArray rowArray = mealServiceDietInfo.getJSONArray("row");
-
-                    // Iterate through each row element
-                    for (int j = 0; j < rowArray.length(); j++) {
-                        JSONObject row = rowArray.getJSONObject(j);
-                        String mealType = row.getString("MMEAL_SC_NM");
-                        String mealName = row.getString("DDISH_NM");
-                        String mealYMD = row.getString("MLSV_YMD");
-
-                        switch(mealType){
-                            case "조식":
-                                riceList.add(riceRepository.save(Rice.builder()
-                                        .id(Integer.parseInt(mealYMD) * 10 + 1)
-                                        .item(cleanMealName(mealName))
-                                        .riceType(RiceType.BREAKFAST)
-                                        .build()));
-                                break;
-                            case "중식":
-                                riceList.add(riceRepository.save(Rice.builder()
-                                        .id(Integer.parseInt(mealYMD)*10+2)
-                                        .item(cleanMealName(mealName))
-                                        .riceType(RiceType.LUNCH)
-                                        .build()));
-                                break;
-                            case "석식":
-                                riceList.add(riceRepository.save(Rice.builder()
-                                        .id(Integer.parseInt(mealYMD)*10+3)
-                                        .item(cleanMealName(mealName))
-                                        .riceType(RiceType.DINNER)
-                                        .build()));
-                                break;
-                        }
-                    }
+        int addId = switch (riceType) {
+            case BREAKFAST -> 1;
+            case LUNCH -> 2;
+            case DINNER -> 3;
+        };
+        int id = Integer.parseInt(day)*10 + addId;
+        if (data.has("mealServiceDietInfo")) {
+            final JSONArray array = data.getJSONArray("mealServiceDietInfo").getJSONObject(1).getJSONArray("row");
+            int length = array.length();
+            for (int i = 0; i < length; i++) {
+                final JSONObject json = array.getJSONObject(i);
+                if (json.getString("MMEAL_SC_NM").equals(riceType.getRealTag())) {
+                    return Rice.builder()
+                            .riceType(riceType)
+                            .item(cleanMealName(json.getString("DDISH_NM")))
+                            .id(Integer.parseInt(day)*10 + addId)
+                            .build();
                 }
             }
         }
-
-        return riceList;
+        return new Rice(id);
     }
 
     public String cleanMealName(String mealName) {

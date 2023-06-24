@@ -25,7 +25,7 @@ public class Rice extends BaseTimeEntity {
     @Column(name = "item", nullable = false)
     private String item;
 
-    @Column(name = "rice_type", nullable = false)
+    @Column(name = "rice_type", nullable = true)
     private RiceType riceType;
 
     @OneToMany(mappedBy = "rice")
