@@ -12,7 +12,6 @@ import com.example.mukgen.domain.rice.entity.RiceType;
 import com.example.mukgen.domain.rice.repository.MukgenPickRepository;
 import com.example.mukgen.domain.rice.repository.RiceRepository;
 import com.example.mukgen.domain.rice.service.exception.MukgenPickNotFoundException;
-import com.example.mukgen.domain.rice.service.exception.RiceNotFoundException;
 import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.entity.type.UserRole;
 import com.example.mukgen.domain.user.service.UserFacade;
@@ -73,11 +72,7 @@ public class RiceService {
                         Rice newRice = neisUtil.findRice("json",
                                         "G10",
                                         "7430310",
-                                        String.valueOf(year * 10000 + month * 100 + day))
-                                .stream()
-                                .filter(rice1 -> rice1.getRiceType().equals(riceType))
-                                .findFirst()
-                                .orElseThrow(()->RiceNotFoundException.EXCEPTION);
+                                        String.valueOf(year * 10000 + month * 100 + day),riceType);// 20230000
                         return newRice;
                     });
 
@@ -129,10 +124,15 @@ public class RiceService {
         int count=1;
         while(count<=day){
             try {
-                neisUtil.findRice("json",
-                        "G10",
-                        "7430310",
-                        String.valueOf(curDate.getYear()*10000+month*100+count));
+                RiceType[] riceTypes = {RiceType.LUNCH, RiceType.BREAKFAST, RiceType.DINNER};
+                for (RiceType riceType : riceTypes) {
+                    Rice rice = neisUtil.findRice("json",
+                            "G10",
+                            "7430310",
+                            String.valueOf(curDate.getYear()*10000+curDate.getMonthValue()*100+count),
+                            riceType);
+                    riceRepository.save(rice);
+                }
             } finally {
                 count++;
             }
