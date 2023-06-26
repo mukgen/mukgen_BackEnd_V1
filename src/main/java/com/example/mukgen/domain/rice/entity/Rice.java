@@ -28,6 +28,8 @@ public class Rice extends BaseTimeEntity {
     @Column(name = "rice_type", nullable = true)
     private RiceType riceType;
 
+    private int month;
+
     @OneToMany(mappedBy = "rice")
     private List<Review> reviewList = new ArrayList<>();
 

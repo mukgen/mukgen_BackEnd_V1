@@ -1,4 +1,4 @@
-package com.example.mukgen.infra.feign.client;
+package com.example.mukgen.infra.feign.rice;
 
 import com.example.mukgen.domain.rice.entity.Rice;
 import com.example.mukgen.domain.rice.entity.RiceType;
@@ -38,6 +38,7 @@ public class NeisUtil {
                             .riceType(riceType)
                             .item(cleanMealName(json.getString("DDISH_NM")))
                             .id(Integer.parseInt(day)*10 + addId)
+                            .month(Integer.parseInt(day.substring(4, 6)))
                             .build();
                 }
             }
@@ -48,4 +49,5 @@ public class NeisUtil {
     public String cleanMealName(String mealName) {
         return mealName.replaceAll("\\(([^(^)]+)\\)", "").replaceAll("([.*\\-]+)", "").replace("<br/>", ",").replace(" ","");
     }
+
 }
