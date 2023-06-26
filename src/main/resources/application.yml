@@ -42,7 +42,8 @@ logging:
         type:
           descriptor:
             sql: trace
-
+gpt:
+  secret: ${GPT_SECRET}
 cloud:
   aws:
     credentials:
