@@ -1,9 +1,9 @@
 package com.example.mukgen.domain.rice.service;
 
 
-import com.example.mukgen.domain.rice.controller.dto.request.MukgenPickRequest;
 import com.example.mukgen.domain.rice.controller.dto.request.RiceRequest;
 import com.example.mukgen.domain.rice.controller.dto.response.MukgenPickResponse;
+import com.example.mukgen.domain.rice.controller.dto.response.RiceMonthListResponse;
 import com.example.mukgen.domain.rice.controller.dto.response.RiceResponse;
 import com.example.mukgen.domain.rice.controller.dto.response.RiceTodayResponse;
 import com.example.mukgen.domain.rice.entity.MukgenPick;
@@ -12,16 +12,22 @@ import com.example.mukgen.domain.rice.entity.RiceType;
 import com.example.mukgen.domain.rice.repository.MukgenPickRepository;
 import com.example.mukgen.domain.rice.repository.RiceRepository;
 import com.example.mukgen.domain.rice.service.exception.MukgenPickNotFoundException;
+import com.example.mukgen.domain.rice.service.exception.RiceNotFoundException;
 import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.entity.type.UserRole;
 import com.example.mukgen.domain.user.service.UserFacade;
 import com.example.mukgen.domain.user.service.exception.NoPermissionException;
-import com.example.mukgen.infra.feign.client.NeisUtil;
+import com.example.mukgen.infra.feign.gpt.GptFeignClient;
+import com.example.mukgen.infra.feign.gpt.GptFeignRequest;
+import com.example.mukgen.infra.feign.gpt.GptResponse;
+import com.example.mukgen.infra.feign.gpt.Message;
+import com.example.mukgen.infra.feign.rice.NeisUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -34,6 +40,10 @@ import java.util.concurrent.ConcurrentHashMap;
 @Transactional
 @Service
 public class RiceService {
+
+    private final GptFeignClient gptFeignClient;
+
+    private final ObjectMapper objectMapper;
 
     private final UserFacade userFacade;
 
@@ -80,7 +90,7 @@ public class RiceService {
         }
 
         return RiceResponse.builder()
-                .riceType(riceType.getTag())
+                .riceType(riceType)
                 .riceId(id)
                 .item(rice.getItem())
                 .build();
@@ -139,32 +149,24 @@ public class RiceService {
         }
     }
 
-    public void setMukgenPick(
-            MukgenPickRequest request
-    ){
+    public MukgenPick setMukgenPick() throws JsonProcessingException {
 
         User user = userFacade.currentUser();
-
-        int addId = switch (request.getRiceType()) {
-            case BREAKFAST -> 1;
-            case LUNCH -> 2;
-            case DINNER -> 3;
-        };
-
-        int id = (LocalDateTime.now().getYear() * 10000 + request.getMonth() * 100 + request.getDay()) * 10 + addId;
-
         if(!user.getRole().equals(UserRole.ADMIN)){
             throw NoPermissionException.EXCEPTION;
         }
 
+        Rice rice = riceRepository.findById(findMukgenPickGpt())
+                .orElseThrow(() -> RiceNotFoundException.EXCEPTION);
+
         MukgenPick mukgenPick = MukgenPick.builder()
-                .riceId(id)
-                .riceType(request.getRiceType())
-                .day(request.getDay())
-                .month(request.getMonth())
+                .riceId(rice.getId())
+                .riceType(rice.getRiceType())
+                .day(Integer.parseInt(String.valueOf(rice.getId()).substring(6,8)))
+                .month(Integer.parseInt(String.valueOf(rice.getId()).substring(4,6)))
                 .build();
 
-        mukgenPickRepository.save(mukgenPick);
+        return mukgenPickRepository.save(mukgenPick);
 
     }
 
@@ -174,6 +176,49 @@ public class RiceService {
                 .orElseThrow(() -> MukgenPickNotFoundException.EXCEPTION);
 
         return MukgenPickResponse.of(mukgenPick);
+    }
+
+    public RiceMonthListResponse findMonthRices(int month){
+
+        ZonedDateTime curDate = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
+
+        int filterId = (curDate.getYear() * 10000 + curDate.getMonthValue() * 100 + curDate.getDayOfMonth()) * 10;
+        return RiceMonthListResponse.builder()
+                .riceResponseList(riceRepository.findAllByMonth(month).stream()
+                        .filter(riceId -> riceId.getId()>filterId)
+                        .map(RiceResponse::of)
+                        .toList())
+                        .build();
+
+    }
+
+    public int findMukgenPickGpt() throws JsonProcessingException {
+        StringBuilder riceId = new StringBuilder();
+        String answerMessage = "";
+        RiceMonthListResponse monthRices = findMonthRices(6);
+        String riceListJson = objectMapper.writeValueAsString(monthRices.getRiceResponseList());
+        answerMessage+=riceListJson;
+        answerMessage+="위에있는 급식 을 보고 너의 어떠한 주관이 포함되어도 상관 없으니 가장 맛있을것 같은 급식을 하나만 선택해서 다른말 하지말고 riceId만 말해 급식정보 필요없어";
+        List<Message> messages = new ArrayList<>();
+        Message message = new Message("user", answerMessage);
+        messages.add(message);
+        GptFeignRequest gptFeignRequest = GptFeignRequest.builder()
+                .messages(messages)
+                .model("gpt-3.5-turbo-16k")
+                .build();
+        GptResponse response = gptFeignClient.getResponse(gptFeignRequest);
+        String content="";
+        List<GptResponse.choice> choices = response.getChoices();
+        for (GptResponse.choice choice : choices) {
+            Message message1 = choice.getMessage();
+            content = message1.getContent();
+        }
+        for(int i=0;i<content.length();i++){
+            if(content.charAt(i)>='0'&&content.charAt(i)<='9'){
+                riceId.append(content.charAt(i));
+            }
+        }
+        return Integer.parseInt(riceId.toString());
     }
 
 }

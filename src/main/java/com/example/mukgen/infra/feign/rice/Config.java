@@ -1,4 +1,4 @@
-package com.example.mukgen.infra.feign.client;
+package com.example.mukgen.infra.feign.rice;
 
 import feign.Logger;
 import org.springframework.context.annotation.Bean;

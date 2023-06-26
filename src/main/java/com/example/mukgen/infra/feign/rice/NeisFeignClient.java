@@ -1,4 +1,4 @@
-package com.example.mukgen.infra.feign.client;
+package com.example.mukgen.infra.feign.rice;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
