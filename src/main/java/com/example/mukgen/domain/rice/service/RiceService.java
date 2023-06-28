@@ -127,6 +127,12 @@ public class RiceService {
 
     public void downLoadAllRice(int month){
 
+        User user = userFacade.currentUser();
+
+        if(!user.getRole().equals(UserRole.ADMIN)){
+            throw NoPermissionException.EXCEPTION;
+        }
+
         ZonedDateTime curDate = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
 
         int day = YearMonth.now().atEndOfMonth().getDayOfMonth();
@@ -192,7 +198,7 @@ public class RiceService {
 
     }
 
-    public int findMukgenPickGpt() throws JsonProcessingException {
+    private int findMukgenPickGpt() throws JsonProcessingException {
         StringBuilder riceId = new StringBuilder();
         String answerMessage = "";
         RiceMonthListResponse monthRices = findMonthRices(6);
