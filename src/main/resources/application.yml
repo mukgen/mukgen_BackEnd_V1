@@ -65,4 +65,4 @@ management:
         include: prometheus
 
 server:
-  port: 443
+  port: 80
