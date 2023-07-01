@@ -63,5 +63,3 @@ management:
     web:
       exposure:
         include: prometheus
-server:
-  port: 80
