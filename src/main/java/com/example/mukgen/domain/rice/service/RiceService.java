@@ -154,6 +154,29 @@ public class RiceService {
             }
         }
     }
+    public void autoDownLoadAllRice(int month){
+
+        ZonedDateTime curDate = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
+
+        int day = YearMonth.now().atEndOfMonth().getDayOfMonth();
+
+        int count=1;
+        while(count<=day){
+            try {
+                RiceType[] riceTypes = {RiceType.LUNCH, RiceType.BREAKFAST, RiceType.DINNER};
+                for (RiceType riceType : riceTypes) {
+                    Rice rice = neisUtil.findRice("json",
+                            "G10",
+                            "7430310",
+                            String.valueOf(curDate.getYear()*10000+curDate.getMonthValue()*100+count),
+                            riceType);
+                    riceRepository.save(rice);
+                }
+            } finally {
+                count++;
+            }
+        }
+    }
 
     public MukgenPick setMukgenPick() throws JsonProcessingException {
 
