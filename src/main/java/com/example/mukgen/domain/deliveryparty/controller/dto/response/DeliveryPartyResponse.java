@@ -2,6 +2,7 @@ package com.example.mukgen.domain.deliveryparty.controller.dto.response;
 
 import com.example.mukgen.domain.deliveryparty.entity.DeliveryParty;
 import com.example.mukgen.domain.user.controller.response.UserInfoResponse;
+import com.example.mukgen.domain.user.entity.User;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -26,13 +27,21 @@ public class DeliveryPartyResponse {
 
     private Integer curParticipantNumber;
 
-    public static DeliveryPartyResponse of(DeliveryParty deliveryParty){
+    public static DeliveryPartyResponse of(DeliveryParty deliveryParty, User writerEntity){
 
         List<UserInfoResponse> userInfoResponses =
                 deliveryParty.getUserList()
                         .stream()
                         .map(UserInfoResponse::of)
                         .toList();
+
+
+        UserInfoResponse writer = UserInfoResponse.of(writerEntity);
+
+        if (userInfoResponses.contains(writer)) {
+            userInfoResponses.remove(writer);
+            userInfoResponses.add(0, writer);
+        }
 
         return DeliveryPartyResponse.builder()
                 .participantNumber(deliveryParty.getParticipantNumber())

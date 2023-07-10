@@ -7,7 +7,9 @@ import com.example.mukgen.domain.deliveryparty.entity.DeliveryParty;
 import com.example.mukgen.domain.deliveryparty.repository.DeliveryPartyRepository;
 import com.example.mukgen.domain.deliveryparty.service.exception.*;
 import com.example.mukgen.domain.user.entity.User;
+import com.example.mukgen.domain.user.repository.UserRepository;
 import com.example.mukgen.domain.user.service.UserFacade;
+import com.example.mukgen.domain.user.service.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +22,8 @@ import java.util.List;
 @Transactional
 @Service
 public class DeliveryPartyService {
+
+    private final UserRepository userRepository;
 
     private final DeliveryPartyRepository deliveryPartyRepository;
 
@@ -60,7 +64,10 @@ public class DeliveryPartyService {
                         deliveryPartyRepository
                                 .findAllByMeetTimeAfter(LocalDateTime.now())
                                 .stream()
-                                .map(DeliveryPartyResponse::of)
+                                .map(it -> DeliveryPartyResponse.of(
+                                        it,
+                                        userRepository.findByAccountId(it.getWriterAccountId())
+                                                .orElseThrow(()-> UserNotFoundException.EXCEPTION)))
                                 .toList())
                 .build();
     }
