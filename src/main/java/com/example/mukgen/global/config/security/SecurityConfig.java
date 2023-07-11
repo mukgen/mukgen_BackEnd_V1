@@ -50,6 +50,7 @@ public class SecurityConfig{
 
                 .and()
                 .authorizeRequests()
+                .antMatchers("/chef/**").hasRole("CHEF")
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers("/actuator/**").permitAll()
                 .antMatchers("/").permitAll()
