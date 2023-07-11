@@ -26,6 +26,8 @@ public class DeliveryPartyResponse {
 
     private Integer curParticipantNumber;
 
+    private String writerAccountId;
+
     public static DeliveryPartyResponse of(DeliveryParty deliveryParty){
 
         List<UserInfoResponse> userInfoResponses =
@@ -35,6 +37,7 @@ public class DeliveryPartyResponse {
                         .toList();
 
         return DeliveryPartyResponse.builder()
+                .writerAccountId(deliveryParty.getWriterAccountId())
                 .participantNumber(deliveryParty.getParticipantNumber())
                 .curParticipantNumber(deliveryParty.getUserList().size())
                 .deliveryPartyId(deliveryParty.getId())
