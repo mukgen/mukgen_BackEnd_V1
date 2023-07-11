@@ -2,6 +2,7 @@ package com.example.mukgen.domain.mealsuggestion.controller;
 
 import com.example.mukgen.domain.mealsuggestion.controller.dto.request.MealSuggestionCreateRequest;
 import com.example.mukgen.domain.mealsuggestion.controller.dto.request.MealSuggestionUpdateRequest;
+import com.example.mukgen.domain.mealsuggestion.controller.dto.response.MealStatusListResponse;
 import com.example.mukgen.domain.mealsuggestion.controller.dto.response.MealSuggestionListResponse;
 import com.example.mukgen.domain.mealsuggestion.service.MealSuggestionService;
 import lombok.RequiredArgsConstructor;
@@ -62,5 +63,10 @@ public class MealSuggestionController {
             @PathVariable Long mealSuggestionId
     ) {
         mealSuggestionService.addDislike(mealSuggestionId);
+    }
+
+    @GetMapping("/statistics")
+    public MealStatusListResponse findMealSuggestionStatistics(){
+        return mealSuggestionService.getMealStatusList();
     }
 }

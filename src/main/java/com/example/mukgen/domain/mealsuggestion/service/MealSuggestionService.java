@@ -2,6 +2,8 @@ package com.example.mukgen.domain.mealsuggestion.service;
 
 import com.example.mukgen.domain.mealsuggestion.controller.dto.request.MealSuggestionCreateRequest;
 import com.example.mukgen.domain.mealsuggestion.controller.dto.request.MealSuggestionUpdateRequest;
+import com.example.mukgen.domain.mealsuggestion.controller.dto.response.MealStatusListResponse;
+import com.example.mukgen.domain.mealsuggestion.controller.dto.response.MealStatusResponse;
 import com.example.mukgen.domain.mealsuggestion.controller.dto.response.MealSuggestionListResponse;
 import com.example.mukgen.domain.mealsuggestion.controller.dto.response.MealSuggestionResponse;
 import com.example.mukgen.domain.mealsuggestion.entity.MealSuggestion;
@@ -15,6 +17,10 @@ import com.example.mukgen.domain.user.service.exception.NoPermissionException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Transactional()
@@ -108,5 +114,26 @@ public class MealSuggestionService {
                         .orElseThrow(() -> MealSuggestionNotFoundException.EXCEPTION);
 
         mealSuggestion.addDislike();
+    }
+
+    public MealStatusListResponse getMealStatusList(){
+
+        LocalDateTime now = LocalDateTime.now().minusDays(6);
+
+        List<MealStatusResponse> mealStatusResponseList = new ArrayList<>();
+
+        for(int i=0;i<7;i++){
+            List<MealSuggestion> mealSuggestionList = mealSuggestionRepository.findAllByMonthAndDay(now.getMonthValue(), now.getDayOfMonth());
+            MealStatusResponse mealStatusResponse = MealStatusResponse.builder()
+                    .totalCount(mealSuggestionList.size())
+                    .suggestionDate(now)
+                    .build();
+            mealStatusResponseList.add(mealStatusResponse);
+            now = now.plusDays(1);
+        }
+
+        return MealStatusListResponse.builder()
+                .mealStatusResponseList(mealStatusResponseList)
+                .build();
     }
 }
