@@ -51,4 +51,14 @@ public class ReviewController {
         return reviewService.findUserReview();
     }
 
+    @GetMapping("/all")
+    public ReviewMaximumListResponse reviewAll(){
+        return reviewService.findAllReview();
+    }
+
+    @GetMapping("/statistics")
+    public ReviewStatisticsResponse reviewStatistics(){
+        return reviewService.reviewStatistics();
+    }
+
 }

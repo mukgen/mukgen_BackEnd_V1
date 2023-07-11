@@ -16,16 +16,14 @@ import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.service.UserFacade;
 import com.example.mukgen.infra.s3.service.S3Util;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityManager;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
@@ -91,6 +89,8 @@ public class ReviewService {
                 .rice(rice)
                 .count(request.getCount())
                 .review(request.getReview())
+                .month(curDate.getMonthValue())
+                .day(curDate.getDayOfMonth())
                 .build();
 
         reviewRepository.save(review);
@@ -212,6 +212,27 @@ public class ReviewService {
         review.modifyImageUrl(profileUrl);
 
         return profileUrl;
+    }
+
+    public ReviewMaximumListResponse findAllReview(){
+
+        LocalDateTime time = LocalDateTime.now().minusDays(7);
+
+        List<ReviewMaximumResponse> reviewMaximumResponses = reviewRepository.findAllByCreatedAtGreaterThan(time, Sort.by(Sort.Direction.DESC, "createdAt"))
+                .stream()
+                .map(ReviewMaximumResponse::of)
+                .toList();
+
+        return ReviewMaximumListResponse.builder()
+                .reviewMaximumResponseList(reviewMaximumResponses)
+                .build();
+
+    }
+
+    public ReviewStatisticsResponse reviewStatistics(){
+        LocalDateTime now = LocalDateTime.now();
+        List<Review> todayReview = reviewRepository.findAllByMonthAndDay(now.getMonthValue(), now.getDayOfMonth());
+        return ReviewStatisticsResponse.fromReviewList(todayReview);
     }
 
 

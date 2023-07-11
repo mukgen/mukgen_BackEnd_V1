@@ -43,6 +43,12 @@ public class Review extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column(name = "day")
+    private int day;
+
+    @Column(name = "month")
+    private int month;
+
     @OneToMany(mappedBy = "review", cascade = CascadeType.REMOVE)
     private List<ReviewComment> reviewCommentList = new ArrayList<>();
 
