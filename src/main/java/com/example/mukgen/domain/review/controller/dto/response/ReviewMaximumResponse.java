@@ -4,6 +4,7 @@ import com.example.mukgen.domain.review.entity.Review;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -16,6 +17,8 @@ public class ReviewMaximumResponse {
 
     private String content;
 
+    private LocalDateTime createdAt;
+
     private List<ReviewCommentResponse> reviewCommentResponseList;
 
     public static ReviewMaximumResponse of(Review review){
@@ -26,9 +29,10 @@ public class ReviewMaximumResponse {
                         .toList();
 
         return ReviewMaximumResponse.builder()
+                .createdAt(review.getCreatedAt())
                 .content(review.getReview())
                 .count(review.getCount())
-                .userName(review.getReview())
+                .userName(review.getUser().getName())
                 .reviewCommentResponseList(reviewCommentResponseList)
                 .build();
     }

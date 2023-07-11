@@ -39,7 +39,7 @@ public class ReviewCommentService {
 
         User user = userFacade.currentUser();
 
-        if (user.getRole() != UserRole.TEACHER)
+        if (user.getRole() != UserRole.CHEF)
             throw NoPermissionException.EXCEPTION;
 
         ReviewComment reviewComment = ReviewComment.builder()

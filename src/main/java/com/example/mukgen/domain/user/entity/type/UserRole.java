@@ -6,5 +6,7 @@ public enum UserRole {
 
     STUDENT,
 
+    CHEF,
+
     ADMIN
 }
