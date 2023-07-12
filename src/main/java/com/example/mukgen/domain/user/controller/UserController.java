@@ -8,6 +8,7 @@ import com.example.mukgen.domain.user.controller.response.UserInfoResponse;
 import com.example.mukgen.domain.user.service.UserService;
 import com.example.mukgen.infra.s3.service.S3Util;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,6 +33,7 @@ public class UserController {
     }
 
     @PostMapping("/profile/upload")
+    @ResponseStatus(HttpStatus.CREATED)
     public String uploadFile(@RequestParam("images") MultipartFile multipartFile) throws IOException {
         return userService.profileUpload(multipartFile);
     }

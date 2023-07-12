@@ -10,6 +10,7 @@ import com.example.mukgen.domain.rice.service.RiceService;
 import com.example.mukgen.infra.feign.rice.NeisUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.ZoneId;
@@ -36,12 +37,14 @@ public class RiceController {
     }
 
     @PostMapping("/meal/download")
+    @ResponseStatus(HttpStatus.CREATED)
     public void mealDownload(){
         ZonedDateTime curDate = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
         riceService.downLoadAllRice(curDate.getMonthValue());
     }
 
     @PostMapping("/mukgen-pick")
+    @ResponseStatus(HttpStatus.CREATED)
     public MukgenPick mukgenPickAdd() throws JsonProcessingException {
         return riceService.setMukgenPick();
     }

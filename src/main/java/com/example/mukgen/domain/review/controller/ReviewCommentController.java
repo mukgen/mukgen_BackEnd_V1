@@ -4,6 +4,7 @@ import com.example.mukgen.domain.review.controller.dto.request.ReviewCommentCrea
 import com.example.mukgen.domain.review.controller.dto.request.ReviewCommentUpdateRequest;
 import com.example.mukgen.domain.review.service.ReviewCommentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -16,6 +17,7 @@ public class ReviewCommentController {
     private final ReviewCommentService reviewCommentService;
 
     @PostMapping("/{reviewId}")
+    @ResponseStatus(HttpStatus.CREATED)
     public void reviewCommentAdd(
             @RequestBody @Valid ReviewCommentCreateRequest request,
             @PathVariable Long reviewId

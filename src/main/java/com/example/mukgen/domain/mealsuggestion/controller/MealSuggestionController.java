@@ -6,6 +6,7 @@ import com.example.mukgen.domain.mealsuggestion.controller.dto.response.MealStat
 import com.example.mukgen.domain.mealsuggestion.controller.dto.response.MealSuggestionListResponse;
 import com.example.mukgen.domain.mealsuggestion.service.MealSuggestionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -18,6 +19,7 @@ public class MealSuggestionController {
     private final MealSuggestionService mealSuggestionService;
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public void mealSuggestionAdd(
             @RequestBody @Valid MealSuggestionCreateRequest request
     ) {
@@ -45,6 +47,7 @@ public class MealSuggestionController {
     }
 
     @PostMapping("/check/{mealSuggestionId}")
+    @ResponseStatus(HttpStatus.CREATED)
     public void checkClick(
             @PathVariable Long mealSuggestionId
     ) {
@@ -52,6 +55,7 @@ public class MealSuggestionController {
     }
 
     @PostMapping("/like/{mealSuggestionId}")
+    @ResponseStatus(HttpStatus.CREATED)
     public void likeAdd(
             @PathVariable Long mealSuggestionId
     ) {
@@ -59,6 +63,7 @@ public class MealSuggestionController {
     }
 
     @PostMapping("/hate/{mealSuggestionId}")
+    @ResponseStatus(HttpStatus.CREATED)
     public void dislikeAdd(
             @PathVariable Long mealSuggestionId
     ) {

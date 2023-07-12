@@ -28,6 +28,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -181,9 +182,25 @@ public class RiceService {
     public MukgenPick setMukgenPick() throws JsonProcessingException {
 
         User user = userFacade.currentUser();
-        if(!user.getRole().equals(UserRole.ADMIN)){
+
+        if(user.getRole()!=UserRole.ADMIN){
             throw NoPermissionException.EXCEPTION;
         }
+
+        Rice rice = riceRepository.findById(findMukgenPickGpt())
+                .orElseThrow(() -> RiceNotFoundException.EXCEPTION);
+
+        MukgenPick mukgenPick = MukgenPick.builder()
+                .riceId(rice.getId())
+                .riceType(rice.getRiceType())
+                .day(Integer.parseInt(String.valueOf(rice.getId()).substring(6,8)))
+                .month(Integer.parseInt(String.valueOf(rice.getId()).substring(4,6)))
+                .build();
+
+        return mukgenPickRepository.save(mukgenPick);
+
+    }
+    public MukgenPick setMukgenPickAuto() throws JsonProcessingException {
 
         Rice rice = riceRepository.findById(findMukgenPickGpt())
                 .orElseThrow(() -> RiceNotFoundException.EXCEPTION);
@@ -224,7 +241,7 @@ public class RiceService {
     private int findMukgenPickGpt() throws JsonProcessingException {
         StringBuilder riceId = new StringBuilder();
         String answerMessage = "";
-        RiceMonthListResponse monthRices = findMonthRices(6);
+        RiceMonthListResponse monthRices = findMonthRices(LocalDateTime.now().getMonthValue());
         String riceListJson = objectMapper.writeValueAsString(monthRices.getRiceResponseList());
         answerMessage+=riceListJson;
         answerMessage+="위에있는 급식 을 보고 너의 어떠한 주관이 포함되어도 상관 없으니 가장 맛있을것 같은 급식을 하나만 선택해서 다른말 하지말고 riceId만 말해 급식정보 필요없어";

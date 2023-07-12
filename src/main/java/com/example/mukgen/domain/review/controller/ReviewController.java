@@ -4,6 +4,7 @@ import com.example.mukgen.domain.review.controller.dto.request.ReviewCreateReque
 import com.example.mukgen.domain.review.controller.dto.response.*;
 import com.example.mukgen.domain.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,6 +18,7 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @PostMapping("/{mealId}")
+    @ResponseStatus(HttpStatus.CREATED)
     public void reviewAdd(
             @PathVariable int mealId,
             @RequestPart("request") @Valid ReviewCreateRequest request,
