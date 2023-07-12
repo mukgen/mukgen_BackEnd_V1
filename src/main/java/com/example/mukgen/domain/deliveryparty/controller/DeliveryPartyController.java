@@ -4,6 +4,7 @@ import com.example.mukgen.domain.deliveryparty.controller.dto.request.DeliveryPa
 import com.example.mukgen.domain.deliveryparty.controller.dto.response.DeliveryPartyListResponse;
 import com.example.mukgen.domain.deliveryparty.service.DeliveryPartyService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -16,6 +17,7 @@ public class DeliveryPartyController {
     private final DeliveryPartyService deliveryPartyService;
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public void deliveryPartyAdd(
             @RequestBody @Valid DeliveryPartyRequest request
             ){

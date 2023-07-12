@@ -4,6 +4,7 @@ import com.example.mukgen.domain.board.controller.dto.request.BoardCommentCreate
 import com.example.mukgen.domain.board.controller.dto.request.BoardCommentUpdateRequest;
 import com.example.mukgen.domain.board.service.BoardCommentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -16,6 +17,7 @@ public class BoardCommentController {
     private final BoardCommentService boardCommentService;
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public void boardCommentAdd(
             @RequestBody @Valid BoardCommentCreateRequest request
             ){
