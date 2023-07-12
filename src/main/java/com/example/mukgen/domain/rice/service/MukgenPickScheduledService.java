@@ -19,10 +19,16 @@ public class MukgenPickScheduledService {
 
     @Scheduled(cron = "0 0 0 * * *")
     public void autoSetMukgenPick() throws JsonProcessingException {
+        System.out.println("확인");
         ZonedDateTime curDate = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
         MukgenPickResponse mukgenPick = riceService.findMukgenPick();
-        if(mukgenPick.getDay()<curDate.getDayOfMonth()){
-            riceService.setMukgenPick();
+        if(mukgenPick.getMonth()<curDate.getMonthValue()){
+            riceService.setMukgenPickAuto();
+        }
+        else if(mukgenPick.getMonth() == curDate.getMonthValue()){
+            if(mukgenPick.getDay()<curDate.getDayOfMonth()){
+                riceService.setMukgenPickAuto();
+            }
         }
     }
 

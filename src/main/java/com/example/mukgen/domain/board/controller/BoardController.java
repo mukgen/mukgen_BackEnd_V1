@@ -7,6 +7,7 @@ import com.example.mukgen.domain.board.controller.dto.response.BoardPopularListR
 import com.example.mukgen.domain.board.controller.dto.response.BoardTabListResponse;
 import com.example.mukgen.domain.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -19,6 +20,7 @@ public class BoardController {
     private final BoardService boardService;
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public void boardAdd(
             @RequestBody @Valid BoardCreateRequest request
     ){
