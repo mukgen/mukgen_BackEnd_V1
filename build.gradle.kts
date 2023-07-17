@@ -1,7 +1,23 @@
 plugins {
     java
+    id ("com.google.cloud.tools.jib") version "3.1.2"
     id("org.springframework.boot") version "2.7.11-SNAPSHOT"
     id("io.spring.dependency-management") version "1.0.15.RELEASE"
+}
+
+jib {
+    from {
+        image = "openjdk:19"
+    }
+    to {
+        image = "hyunsu1768/mukgen"
+        tags = setOf("latest")
+    }
+    container {
+        creationTime = "USE_CURRENT_TIMESTAMP"
+        jvmFlags = listOf("-Dspring.profiles.active=local", "-XX:+UseContainerSupport", "-Dserver.port=80", "-Dfile.encoding=UTF-8")
+        ports = listOf("80")
+    }
 }
 
 group = "com.example"
@@ -58,5 +74,7 @@ dependencies {
 
     // Feign Client
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
+
+
 
 }
