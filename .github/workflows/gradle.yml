@@ -37,7 +37,7 @@ jobs:
 
     - name: Build with Jib
       run: ./gradlew jib
-
+      
     - name: Deploy
       uses: appleboy/ssh-action@master
       with:
