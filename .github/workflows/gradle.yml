@@ -29,18 +29,11 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
-    - name: Build with Gradle
-      run: ./gradlew build
-
-    - name: Docker build
-      run: |
-        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-        docker build --build-arg DEPENDENCY=build/dependency -t ${{ secrets.DOCKER_USERNAME }}/mukgen --platform linux/amd64 .
-        docker push ${{ secrets.DOCKER_USERNAME }}/mukgen:latest
+    - name: Build with Jib
+      run: ./gradlew jib
 
     - name: Deploy
       uses: appleboy/ssh-action@master
