@@ -21,9 +21,11 @@ public class ReviewController {
     @ResponseStatus(HttpStatus.CREATED)
     public void reviewAdd(
             @PathVariable int mealId,
-            @RequestPart("request") @Valid ReviewCreateRequest request,
+            @RequestParam("count") @Valid int count,
+            @RequestParam("review") @Valid String review,
             @RequestPart(value = "images", required = false) MultipartFile multipartFile
     ) throws IOException {
+        ReviewCreateRequest request = new ReviewCreateRequest(count, review);
         if(multipartFile != null) {
             reviewService.addReview(request, mealId, multipartFile);
         } else{
