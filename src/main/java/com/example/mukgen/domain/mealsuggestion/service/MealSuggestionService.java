@@ -126,7 +126,8 @@ public class MealSuggestionService {
             List<MealSuggestion> mealSuggestionList = mealSuggestionRepository.findAllByMonthAndDay(now.getMonthValue(), now.getDayOfMonth());
             MealStatusResponse mealStatusResponse = MealStatusResponse.builder()
                     .totalCount(mealSuggestionList.size())
-                    .suggestionDate(now)
+                    .month(now.getMonthValue())
+                    .day(now.getDayOfMonth())
                     .build();
             mealStatusResponseList.add(mealStatusResponse);
             now = now.plusDays(1);
