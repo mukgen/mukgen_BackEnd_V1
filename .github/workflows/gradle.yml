@@ -35,9 +35,12 @@ jobs:
     - name: Docker Login
       run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
+    - name: Docker Login
+      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
     - name: Build with Jib
       run: ./gradlew jib
-
+      
     - name: Deploy
       uses: appleboy/ssh-action@master
       with:
