@@ -15,7 +15,7 @@ public class ReviewRankResponse {
 
     private Integer reviewCount;
 
-    private Float averageReview;
+    private String averageReview;
 
     public static ReviewRankResponse of(User user){
 
@@ -28,7 +28,7 @@ public class ReviewRankResponse {
                 .profileUrl(user.getProfileUrl())
                 .userName(user.getName())
                 .reviewCount(user.getReviewList().size())
-                .averageReview(aveCount)
+                .averageReview(String.format("%.2f", aveCount))
                 .build();
     }
 }
