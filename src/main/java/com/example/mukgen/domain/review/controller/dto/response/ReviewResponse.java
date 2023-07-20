@@ -13,6 +13,8 @@ public class ReviewResponse {
 
     private int count;
 
+    private String review;
+
     private String userName;
 
     private RiceType riceType;
@@ -23,6 +25,7 @@ public class ReviewResponse {
 
         return ReviewResponse.builder()
                 .reviewId(review.getId())
+                .review(review.getReview())
                 .riceType(review.getRice().getRiceType())
                 .riceId(review.getRice().getId())
                 .count(review.getCount())
