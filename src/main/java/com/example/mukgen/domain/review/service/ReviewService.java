@@ -25,6 +25,7 @@ import javax.persistence.EntityManager;
 import java.io.IOException;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -163,14 +164,25 @@ public class ReviewService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         int riceId = Integer.parseInt(currentDate.format(formatter))*10;
 
-        var reviewResponseLists = List.of(
+        List<ReviewListResponse> review = List.of(
                 findReview(riceId + 1),
                 findReview(riceId + 2),
                 findReview(riceId + 3)
         );
 
+        List<ReviewResponse> result = new ArrayList<>();
+
+        for(ReviewListResponse reviewListResponse : review){
+            List<ReviewResponse> reviewResponseList = reviewListResponse.getReviewResponseList();
+            for (ReviewResponse reviewResponse : reviewResponseList) {
+               result.add(reviewResponse);
+            }
+        }
+
+
+
         return ReviewTodayListResponse.builder()
-                .reviewListResponses(reviewResponseLists)
+                .reviewResponseList(result)
                 .build();
 
     }
