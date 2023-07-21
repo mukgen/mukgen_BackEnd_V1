@@ -48,6 +48,12 @@ public class MealSuggestion extends BaseTimeEntity {
     @Column(name = "day")
     private int day;
 
+    @Column(name = "hour")
+    private int hour;
+
+    @Column(name = "minute")
+    private int minute;
+
     public void addLike() {
         this.likeCount++;
     }
@@ -77,6 +83,8 @@ public class MealSuggestion extends BaseTimeEntity {
     ) {
         this.day = LocalDateTime.now().getDayOfMonth();
         this.month = LocalDateTime.now().getMonthValue();
+        this.hour = LocalDateTime.now().getHour();
+        this.minute = LocalDateTime.now().getMinute();
         this.content = content;
         this.user = user;
         this.likeCount = likeCount;

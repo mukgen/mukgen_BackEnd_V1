@@ -18,6 +18,14 @@ public class MealSuggestionResponse {
 
     private boolean isChecked;
 
+    private int month;
+
+    private int day;
+
+    private int hour;
+
+    private int minute;
+
     public static MealSuggestionResponse of(MealSuggestion mealSuggestion) {
 
         return MealSuggestionResponse.builder()
@@ -26,6 +34,10 @@ public class MealSuggestionResponse {
                 .likeCount(mealSuggestion.getLikeCount())
                 .dislikeCount(mealSuggestion.getDislikeCount())
                 .isChecked(mealSuggestion.isChecked())
+                .month(mealSuggestion.getMonth())
+                .day(mealSuggestion.getDay())
+                .hour(mealSuggestion.getHour())
+                .minute(mealSuggestion.getMinute())
                 .build();
     }
 }
