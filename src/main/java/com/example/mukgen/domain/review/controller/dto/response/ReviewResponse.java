@@ -5,6 +5,8 @@ import com.example.mukgen.domain.rice.entity.RiceType;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Builder
 public class ReviewResponse {
@@ -17,6 +19,8 @@ public class ReviewResponse {
 
     private String userName;
 
+    private LocalDateTime createdAt;
+
     private RiceType riceType;
 
     private Long reviewId;
@@ -24,6 +28,7 @@ public class ReviewResponse {
     public static ReviewResponse of(Review review){
 
         return ReviewResponse.builder()
+                .createdAt(review.getCreatedAt())
                 .reviewId(review.getId())
                 .review(review.getReview())
                 .riceType(review.getRice().getRiceType())
