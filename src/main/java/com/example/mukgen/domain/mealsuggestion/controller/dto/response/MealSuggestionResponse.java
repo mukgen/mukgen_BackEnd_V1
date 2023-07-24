@@ -4,6 +4,8 @@ import com.example.mukgen.domain.mealsuggestion.entity.MealSuggestion;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Builder
 public class MealSuggestionResponse {
@@ -18,13 +20,7 @@ public class MealSuggestionResponse {
 
     private boolean isChecked;
 
-    private int month;
-
-    private int day;
-
-    private int hour;
-
-    private int minute;
+    private LocalDateTime createdAt;
 
     public static MealSuggestionResponse of(MealSuggestion mealSuggestion) {
 
@@ -34,10 +30,7 @@ public class MealSuggestionResponse {
                 .likeCount(mealSuggestion.getLikeCount())
                 .dislikeCount(mealSuggestion.getDislikeCount())
                 .isChecked(mealSuggestion.isChecked())
-                .month(mealSuggestion.getMonth())
-                .day(mealSuggestion.getDay())
-                .hour(mealSuggestion.getHour())
-                .minute(mealSuggestion.getMinute())
+                .createdAt(mealSuggestion.getCreatedAt())
                 .build();
     }
 }
