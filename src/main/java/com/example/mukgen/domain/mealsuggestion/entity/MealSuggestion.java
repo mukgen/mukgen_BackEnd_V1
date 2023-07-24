@@ -10,6 +10,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @SQLDelete(sql = "UPDATE tbl_meal_suggestion SET is_deleted = true WHERE id = ?")
@@ -41,6 +42,12 @@ public class MealSuggestion extends BaseTimeEntity {
     @Column(name = "is_checked")
     private boolean isChecked = false;
 
+    @Column(name = "month")
+    private int month;
+
+    @Column(name = "day")
+    private int day;
+
     public void addLike() {
         this.likeCount++;
     }
@@ -68,6 +75,8 @@ public class MealSuggestion extends BaseTimeEntity {
             boolean isDeleted,
             boolean isChecked
     ) {
+        this.day = LocalDateTime.now().getDayOfMonth();
+        this.month = LocalDateTime.now().getMonthValue();
         this.content = content;
         this.user = user;
         this.likeCount = likeCount;
