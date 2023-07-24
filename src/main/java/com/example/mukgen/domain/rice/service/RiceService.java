@@ -90,11 +90,7 @@ public class RiceService {
             mealCache.put(id, rice);
         }
 
-        return RiceResponse.builder()
-                .riceType(riceType.getTag())
-                .riceId(id)
-                .item(rice.getItem())
-                .build();
+        return RiceResponse.of(rice);
     }
 
     public RiceTodayResponse findTodayRice(){
