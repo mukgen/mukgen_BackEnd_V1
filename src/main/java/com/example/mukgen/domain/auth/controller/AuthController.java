@@ -25,6 +25,11 @@ public class AuthController {
         return authService.login(request);
     }
 
+    @PostMapping("/login/chef")
+    public TokenResponse loginChef(@RequestBody UserLoginRequest request){
+        return authService.loginChef(request);
+    }
+
     @PostMapping("/signup/general")
     @ResponseStatus(HttpStatus.CREATED)
     public void signup(

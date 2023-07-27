@@ -9,6 +9,7 @@ import com.example.mukgen.domain.auth.service.exception.PassWordCheckMismatchExc
 import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.entity.type.UserRole;
 import com.example.mukgen.domain.user.repository.UserRepository;
+import com.example.mukgen.domain.user.service.exception.NoPermissionException;
 import com.example.mukgen.domain.user.service.exception.PasswordMismatchException;
 import com.example.mukgen.domain.user.service.exception.UserAlreadyExistException;
 import com.example.mukgen.domain.user.service.exception.UserNotFoundException;
@@ -64,6 +65,23 @@ public class AuthService {
                .tokenResponse(jwtTokenProvider.createToken(user.getAccountId()))
                .message(user.getName() + "님 환영합니다!")
                .build();
+
+    }
+
+    public TokenResponse loginChef(UserLoginRequest request){
+
+        User user = userRepository.findByAccountId(request.getAccountId())
+                .orElseThrow(()->UserNotFoundException.EXCEPTION);
+
+        if(!passwordEncoder.matches(request.getPassword(), user.getPassword())){
+            throw PasswordMismatchException.EXCEPTION;
+        }
+
+        if(user.getRole()!=UserRole.CHEF){
+            throw NoPermissionException.EXCEPTION;
+        }
+
+        return jwtTokenProvider.createToken(user.getAccountId());
 
     }
 
