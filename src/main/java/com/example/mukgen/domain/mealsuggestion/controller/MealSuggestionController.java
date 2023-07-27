@@ -62,7 +62,7 @@ public class MealSuggestionController {
         mealSuggestionService.addLike(mealSuggestionId);
     }
 
-    @PostMapping("/hate/{mealSuggestionId}")
+    @PostMapping("/dislike/{mealSuggestionId}")
     @ResponseStatus(HttpStatus.CREATED)
     public void dislikeAdd(
             @PathVariable Long mealSuggestionId
