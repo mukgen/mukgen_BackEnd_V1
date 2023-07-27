@@ -23,7 +23,7 @@ public class MealSuggestion extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "content", length = 300, nullable = false)
+    @Column(name = "content", length = 60, nullable = false)
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
