@@ -1,7 +1,8 @@
 package com.example.mukgen.infra.mail;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
-public interface ValidMailRepository extends CrudRepository<String, String> {
+@Configuration
+public interface ValidMailRepository extends CrudRepository<ValidMail, String> {
 }

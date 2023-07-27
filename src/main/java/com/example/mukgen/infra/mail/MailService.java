@@ -78,6 +78,6 @@ public class MailService {
         if (!code.getCode().equals(request.getCode()))
             throw new RuntimeException();
 
-        validMailRepository.save(request.getMail());
+        validMailRepository.save(new ValidMail(request.getMail()));
     }
 }
