@@ -28,4 +28,6 @@ public class UserSignupRequest {
 
     @Pattern(regexp = "^010\\d{4}\\d{4}$",message = "(-) 없이 입력해 주세요. ")
     private String phoneNumber;
+
+    private String mail;
 }
