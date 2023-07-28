@@ -26,6 +26,7 @@ public class NeisUtil {
             case BREAKFAST -> 1;
             case LUNCH -> 2;
             case DINNER -> 3;
+            case NONE -> 4;
         };
         int id = Integer.parseInt(day)*10 + addId;
         if (data.has("mealServiceDietInfo")) {
