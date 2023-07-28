@@ -37,7 +37,8 @@ public class MailUtil {
         String mailSubject = "[ 먹젠 ] 이메일 인증 코드입니다.";
 
         String mailText = "이메일 인증 코드입니다 : " + code +
-                "\n해당 코드는 5분간 유효합니다.";
+                "\n해당 코드는 5분간 유효합니다." +
+                "\n인증 코드를 재발급 받으면 이전의 코드는 사용할 수 없게 됩니다.";
 
         try {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
@@ -56,10 +57,8 @@ public class MailUtil {
 
         String code = "";
 
-        do {
-            for (int i = 0; i < 6; i++)
-                code += (int) (random.nextDouble() * 10);
-        } while (codeRepository.existsByCode(code));
+        for (int i = 0; i < 6; i++)
+            code += (int) (random.nextDouble() * 10);
 
         return code;
     }
