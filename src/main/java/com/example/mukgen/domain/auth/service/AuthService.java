@@ -57,6 +57,7 @@ public class AuthService {
                 .name(request.getName())
                 .password(password)
                 .phoneNumber(request.getPhoneNumber())
+                .mail(request.getMail())
                 .build();
 
         userRepository.save(user);
