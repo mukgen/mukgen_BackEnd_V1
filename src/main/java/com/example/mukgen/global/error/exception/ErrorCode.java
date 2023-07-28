@@ -33,6 +33,7 @@ public enum ErrorCode {
     MEAL_SUGGESTION_WRITER_MISMATCH(403, "급식건의 작성자가 다릅니다."),
     DELIVERY_PARTY_WRITER_MISMATCH(403, "배달파티 작성자가 다릅니다."),
     CODE_MISMATCH(403,"올바르지 않은 코드입니다."),
+    INVALID_MAIL(403, "인증되지 않은 메일 주소입니다."),
 
     // Not Found
     USER_NOT_FOUND(404,"찾을 수 없는 유저입니다."),
@@ -44,6 +45,7 @@ public enum ErrorCode {
     MEAL_SUGGESTION_NOT_FOUND(404, "찾을 수 없는 급식건의 입니다."),
     TOKEN_NOT_FOUND(404, "찾을 수 없는 토큰 입니다."),
     MUKGEN_PICK_NOT_FOUND(404, "찾을 수 없는 먹젠픽 입니다."),
+    UNAUTHENTICATED_MAIL(404, "인증 코드가 만료되었거나 발급된 적 없는 메일입니다."),
 
     // Conflict
     USER_ALREADY_EXISTS(409, "이미 유저가 존재합니다."),

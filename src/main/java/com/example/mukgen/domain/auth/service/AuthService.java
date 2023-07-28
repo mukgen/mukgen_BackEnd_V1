@@ -5,6 +5,7 @@ import com.example.mukgen.domain.auth.controller.request.UserLoginRequest;
 import com.example.mukgen.domain.auth.controller.request.UserSignupRequest;
 import com.example.mukgen.domain.auth.controller.response.LoginResponse;
 import com.example.mukgen.domain.auth.controller.response.TokenResponse;
+import com.example.mukgen.domain.auth.service.exception.InvalidMailException;
 import com.example.mukgen.domain.auth.service.exception.PassWordCheckMismatchException;
 import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.entity.type.UserRole;
@@ -14,6 +15,7 @@ import com.example.mukgen.domain.user.service.exception.PasswordMismatchExceptio
 import com.example.mukgen.domain.user.service.exception.UserAlreadyExistException;
 import com.example.mukgen.domain.user.service.exception.UserNotFoundException;
 import com.example.mukgen.global.config.security.jwt.JwtTokenProvider;
+import com.example.mukgen.domain.mail.repository.AuthenticatedMailRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,9 +30,19 @@ public class AuthService {
 
     private final UserRepository userRepository;
 
+    private final AuthenticatedMailRepository authenticatedMailRepository;
+
     private final PasswordEncoder passwordEncoder;
 
     public void signup(UserSignupRequest request){
+
+        if (userRepository.existsByMail(request.getMail())) {
+            throw UserAlreadyExistException.EXCEPTION;
+        }
+
+        if (!authenticatedMailRepository.existsById(request.getMail())) {
+            throw InvalidMailException.EXCEPTION;
+        }
 
         if(!request.getPassword().equals(request.getPasswordCheck())){
             throw PassWordCheckMismatchException.EXCEPTION;
@@ -46,10 +58,12 @@ public class AuthService {
                 .name(request.getName())
                 .password(password)
                 .phoneNumber(request.getPhoneNumber())
+                .mail(request.getMail())
                 .build();
 
         userRepository.save(user);
 
+        authenticatedMailRepository.deleteById(request.getMail());
     }
 
     public LoginResponse login(UserLoginRequest request){
