@@ -26,9 +26,7 @@ public class MailUtil {
 
         String code = makeCode();
 
-        if (codeRepository.existsById(request.getMail())) {
-            codeRepository.deleteById(request.getMail());
-        }
+        codeRepository.deleteById(request.getMail());
 
         codeRepository.save(new Code(request.getMail(), code));
 
