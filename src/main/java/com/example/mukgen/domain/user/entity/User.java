@@ -45,6 +45,9 @@ public class User {
     @Column(name = "phone_number", length = 12, nullable = false, columnDefinition = "char(12)")
     private String phoneNumber;
 
+    @Column(name = "mail", nullable = false)
+    private String mail;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
     private UserRole role;

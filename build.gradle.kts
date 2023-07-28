@@ -74,6 +74,7 @@ dependencies {
     // Feign Client
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
 
-
+    // Mail
+    implementation("org.springframework.boot:spring-boot-starter-mail")
 
 }

@@ -53,6 +53,7 @@ public class SecurityConfig{
                 .antMatchers("/chef/**").hasRole("CHEF")
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers("/actuator/**").permitAll()
+                .antMatchers("/mail").permitAll()
                 .antMatchers("/").permitAll()
                 .anyRequest().authenticated()
 
