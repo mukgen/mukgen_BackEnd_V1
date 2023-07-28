@@ -19,6 +19,15 @@ public class RiceResponse {
 
     public static RiceResponse of(Rice rice){
         String item = rice.getItem();
+        if(item.equals("등록된 급식이 없습니다.")){
+            List<String> items = new ArrayList<>();
+            items.add(item);
+            return RiceResponse.builder()
+                    .riceId(rice.getId())
+                    .items(items)
+                    .riceType(rice.getRiceType().getTag())
+                    .build();
+        }
         List<String> items = new ArrayList<>();
         String addItem = "";
         for(int i=0;i<item.length();i++){

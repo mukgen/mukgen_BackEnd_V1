@@ -8,7 +8,9 @@ public enum RiceType {
 
     LUNCH("점심", "중식"),
 
-    DINNER("저녁", "석식");
+    DINNER("저녁", "석식"),
+
+    NONE("없음","없음");
 
     private final String tag;
 

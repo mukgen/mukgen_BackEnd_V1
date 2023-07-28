@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -41,6 +42,8 @@ public class Rice extends BaseTimeEntity {
     }
     public Rice(int id) {
         this.item = "등록된 급식이 없습니다.";
+        this.riceType = RiceType.NONE;
+        this.month = LocalDate.now().getMonthValue();
         this.id = id;
     }
 
