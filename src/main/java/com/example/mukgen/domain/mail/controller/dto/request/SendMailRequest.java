@@ -1,4 +1,4 @@
-package com.example.mukgen.infra.mail;
+package com.example.mukgen.domain.mail.controller.dto.request;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -10,6 +10,7 @@ import javax.validation.constraints.Pattern;
 @Getter
 public class SendMailRequest {
 
-    @Pattern(regexp = "^[a-zA-Z0-9.]@dsm.hs.kr$")
+    @Pattern(regexp = "^\\w+(@dsm+\\.hs+\\.kr)$",
+            message = "메일 주소는 dsm.hs.kr로 끝나는 메일 주소여야 합니다.")
     private String mail;
 }

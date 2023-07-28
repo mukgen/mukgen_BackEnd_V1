@@ -29,5 +29,7 @@ public class UserSignupRequest {
     @Pattern(regexp = "^010\\d{4}\\d{4}$",message = "(-) 없이 입력해 주세요. ")
     private String phoneNumber;
 
+    @Pattern(regexp = "^\\w+(@dsm+\\.hs+\\.kr)$",
+            message = "메일 주소는 dsm.hs.kr로 끝나는 메일 주소여야 합니다.")
     private String mail;
 }

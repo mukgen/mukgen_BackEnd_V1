@@ -1,7 +1,12 @@
-package com.example.mukgen.infra.mail;
+package com.example.mukgen.domain.mail.controller;
 
+import com.example.mukgen.domain.mail.controller.dto.request.SendMailRequest;
+import com.example.mukgen.domain.mail.controller.dto.request.ValidMailRequest;
+import com.example.mukgen.domain.mail.service.MailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @RequestMapping("/mail")
@@ -12,14 +17,14 @@ public class MailController {
 
     @GetMapping
     public void mailSend(
-            @RequestBody SendMailRequest request
+            @RequestBody @Valid SendMailRequest request
     ) {
         mailService.sendMail(request);
     }
 
     @PostMapping
     public void mailValid(
-            @RequestBody ValidMailRequest request
+            @RequestBody @Valid ValidMailRequest request
     ) {
         mailService.validMail(request);
     }

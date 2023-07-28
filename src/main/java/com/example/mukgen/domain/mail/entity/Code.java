@@ -1,4 +1,4 @@
-package com.example.mukgen.infra.mail;
+package com.example.mukgen.domain.mail.entity;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
-import javax.persistence.Entity;
+import javax.persistence.Column;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -14,8 +14,10 @@ import javax.persistence.Entity;
 public class Code {
 
     @Id
+    @Column(name = "mail", nullable = false)
     private String mail;
 
+    @Column(name = "code", length = 6, nullable = false)
     private String code;
 
     public Code(String mail, String code) {
