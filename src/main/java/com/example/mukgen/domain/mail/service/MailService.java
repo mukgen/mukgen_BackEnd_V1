@@ -2,12 +2,12 @@ package com.example.mukgen.domain.mail.service;
 
 import com.example.mukgen.domain.auth.service.exception.CodeMismatchException;
 import com.example.mukgen.domain.mail.controller.dto.request.SendMailRequest;
-import com.example.mukgen.domain.mail.controller.dto.request.ValidMailRequest;
+import com.example.mukgen.domain.mail.controller.dto.request.AuthenticateMailRequest;
 import com.example.mukgen.domain.mail.entity.Code;
-import com.example.mukgen.domain.mail.entity.ValidMail;
+import com.example.mukgen.domain.mail.entity.AuthenticatedMail;
 import com.example.mukgen.domain.mail.repository.CodeRepository;
-import com.example.mukgen.domain.mail.repository.ValidMailRepository;
-import com.example.mukgen.domain.mail.service.exception.NeverValidMailException;
+import com.example.mukgen.domain.mail.repository.AuthenticatedMailRepository;
+import com.example.mukgen.domain.mail.service.exception.UnAuthenticatedMailException;
 import com.example.mukgen.infra.mail.MailUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class MailService {
 
     private final CodeRepository codeRepository;
 
-    private final ValidMailRepository validMailRepository;
+    private final AuthenticatedMailRepository authenticatedMailRepository;
 
     private final MailUtil mailUtil;
 
@@ -28,17 +28,17 @@ public class MailService {
         mailUtil.sendMail(request);
     }
 
-    public void validMail(
-            ValidMailRequest request
+    public void authenticateMail(
+            AuthenticateMailRequest request
     ) {
 
         Code code = codeRepository.findById(request.getMail())
-                .orElseThrow(() -> NeverValidMailException.EXCEPTION);
+                .orElseThrow(() -> UnAuthenticatedMailException.EXCEPTION);
 
         if (!code.getCode().equals(request.getCode())) {
             throw CodeMismatchException.EXCEPTION;
         }
 
-        validMailRepository.save(new ValidMail(request.getMail()));
+        authenticatedMailRepository.save(new AuthenticatedMail(request.getMail()));
     }
 }

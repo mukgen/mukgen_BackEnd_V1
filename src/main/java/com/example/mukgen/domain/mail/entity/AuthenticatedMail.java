@@ -10,13 +10,13 @@ import javax.persistence.Column;
 @Getter
 @Builder
 @RedisHash(timeToLive = 60 * 60)
-public class ValidMail {
+public class AuthenticatedMail {
 
     @Id
     @Column(name = "mail", nullable = false)
     private String mail;
 
-    public ValidMail(String mail) {
+    public AuthenticatedMail(String mail) {
         this.mail = mail;
     }
 }

@@ -1,7 +1,7 @@
 package com.example.mukgen.domain.mail.controller;
 
 import com.example.mukgen.domain.mail.controller.dto.request.SendMailRequest;
-import com.example.mukgen.domain.mail.controller.dto.request.ValidMailRequest;
+import com.example.mukgen.domain.mail.controller.dto.request.AuthenticateMailRequest;
 import com.example.mukgen.domain.mail.service.MailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +23,9 @@ public class MailController {
     }
 
     @PostMapping
-    public void mailValid(
-            @RequestBody @Valid ValidMailRequest request
+    public void mailAuthenticate(
+            @RequestBody @Valid AuthenticateMailRequest request
     ) {
-        mailService.validMail(request);
+        mailService.authenticateMail(request);
     }
 }

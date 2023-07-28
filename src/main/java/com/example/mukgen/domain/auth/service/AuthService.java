@@ -14,7 +14,7 @@ import com.example.mukgen.domain.user.service.exception.PasswordMismatchExceptio
 import com.example.mukgen.domain.user.service.exception.UserAlreadyExistException;
 import com.example.mukgen.domain.user.service.exception.UserNotFoundException;
 import com.example.mukgen.global.config.security.jwt.JwtTokenProvider;
-import com.example.mukgen.domain.mail.repository.ValidMailRepository;
+import com.example.mukgen.domain.mail.repository.AuthenticatedMailRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -29,7 +29,7 @@ public class AuthService {
 
     private final UserRepository userRepository;
 
-    private final ValidMailRepository validMailRepository;
+    private final AuthenticatedMailRepository authenticatedMailRepository;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -39,7 +39,7 @@ public class AuthService {
             throw UserAlreadyExistException.EXCEPTION;
         }
 
-        if (!validMailRepository.existsById(request.getMail())) {
+        if (!authenticatedMailRepository.existsById(request.getMail())) {
             throw InvalidMailException.EXCEPTION;
         }
 
@@ -61,7 +61,7 @@ public class AuthService {
 
         userRepository.save(user);
 
-        validMailRepository.deleteById(request.getMail());
+        authenticatedMailRepository.deleteById(request.getMail());
     }
 
     public LoginResponse login(UserLoginRequest request){

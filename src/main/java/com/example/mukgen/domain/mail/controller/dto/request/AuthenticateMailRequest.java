@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Getter
-public class ValidMailRequest {
+public class AuthenticateMailRequest {
 
     @Pattern(regexp = "^\\w+(@dsm+\\.hs+\\.kr)$",
             message = "메일 주소는 dsm.hs.kr로 끝나는 메일 주소여야 합니다.")
