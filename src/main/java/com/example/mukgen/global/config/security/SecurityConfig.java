@@ -36,7 +36,6 @@ public class SecurityConfig{
     @Bean
     protected SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                .csrf().disable()
                 .exceptionHandling()
 
                 .and()
@@ -49,6 +48,7 @@ public class SecurityConfig{
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
                 .and()
+                .cors().and()
                 .authorizeRequests()
                 .antMatchers("/chef/**").hasRole("CHEF")
                 .antMatchers("/auth/**").permitAll()
