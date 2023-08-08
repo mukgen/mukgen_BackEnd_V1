@@ -45,6 +45,13 @@ public class ReviewController {
         return reviewService.findTodayReview();
     }
 
+    @GetMapping("/otherday/{date}")
+    public ReviewListResponse reviewOtherDayList(
+            @PathVariable int date
+    ) {
+        return reviewService.findOtherDayReview(date);
+    }
+
     @GetMapping("/rank")
     public ReviewRankListResponse reviewRankList(){
         return reviewService.findRankReview();
