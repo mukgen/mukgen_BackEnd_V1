@@ -187,6 +187,27 @@ public class ReviewService {
 
     }
 
+    public  ReviewListResponse findDateReview(int date) {
+
+        int riceId = date * 10;
+
+        List<ReviewListResponse> review = List.of(
+                findReview(++riceId),
+                findReview(++riceId),
+                findReview(++riceId)
+        );
+
+        List<ReviewResponse> reviewResponseList = new ArrayList<>();
+
+        for (ReviewListResponse reviewListResponse : review) {
+            reviewResponseList.addAll(reviewListResponse.getReviewResponseList());
+        }
+
+        return ReviewListResponse.builder()
+                .reviewResponseList(reviewResponseList)
+                .build();
+    }
+
     public ReviewMaximumListResponse findUserReview(){
 
         List<ReviewMaximumResponse> reviewMaximumResponseList =

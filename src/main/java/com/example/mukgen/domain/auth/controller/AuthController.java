@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth")
@@ -32,9 +34,7 @@ public class AuthController {
 
     @PostMapping("/signup/general")
     @ResponseStatus(HttpStatus.CREATED)
-    public void signup(
-            @RequestBody UserSignupRequest request
-            ){
+    public void signup(@RequestBody @Valid UserSignupRequest request){
         authService.signup(request);
     }
 
