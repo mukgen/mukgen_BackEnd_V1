@@ -187,7 +187,7 @@ public class ReviewService {
 
     }
 
-    public  ReviewListResponse findOtherDayReview(int date) {
+    public  ReviewListResponse findDateReview(int date) {
 
         int riceId = date * 10;
 
@@ -197,13 +197,14 @@ public class ReviewService {
                 findReview(++riceId)
         );
 
-        List<ReviewResponse> result = new ArrayList<>();
+        List<ReviewResponse> reviewResponseList = new ArrayList<>();
 
-        for (ReviewListResponse reviewListResponse : review)
-            result.addAll(reviewListResponse.getReviewResponseList());
+        for (ReviewListResponse reviewListResponse : review) {
+            reviewResponseList.addAll(reviewListResponse.getReviewResponseList());
+        }
 
         return ReviewListResponse.builder()
-                .reviewResponseList(result)
+                .reviewResponseList(reviewResponseList)
                 .build();
     }
 
