@@ -67,9 +67,9 @@ public class AuthService {
         authenticatedMailRepository.deleteById(request.getMail());
     }
 
-    public boolean checkAccountIdDuplicate(AccountIdDuplicateCheckRequest request) {
+    public boolean checkAccountIdDuplicate(String accountId) {
 
-        return userRepository.existsByAccountId(request.getAccountId());
+        return userRepository.existsByAccountId(accountId);
     }
 
     public LoginResponse login(UserLoginRequest request){
