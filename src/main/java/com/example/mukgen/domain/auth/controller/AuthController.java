@@ -1,6 +1,5 @@
 package com.example.mukgen.domain.auth.controller;
 
-import com.example.mukgen.domain.auth.controller.request.AccountIdDuplicateCheckRequest;
 import com.example.mukgen.domain.auth.controller.request.ReIssueRequest;
 import com.example.mukgen.domain.auth.controller.request.UserLoginRequest;
 import com.example.mukgen.domain.auth.controller.request.UserSignupRequest;
