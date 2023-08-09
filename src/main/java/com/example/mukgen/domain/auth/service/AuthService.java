@@ -1,6 +1,7 @@
 package com.example.mukgen.domain.auth.service;
 
 
+import com.example.mukgen.domain.auth.controller.request.AccountIdDuplicateCheckRequest;
 import com.example.mukgen.domain.auth.controller.request.UserLoginRequest;
 import com.example.mukgen.domain.auth.controller.request.UserSignupRequest;
 import com.example.mukgen.domain.auth.controller.response.LoginResponse;
@@ -64,6 +65,11 @@ public class AuthService {
         userRepository.save(user);
 
         authenticatedMailRepository.deleteById(request.getMail());
+    }
+
+    public boolean checkAccountIdDuplicate(AccountIdDuplicateCheckRequest request) {
+
+        return userRepository.existsByAccountId(request.getAccountId());
     }
 
     public LoginResponse login(UserLoginRequest request){
