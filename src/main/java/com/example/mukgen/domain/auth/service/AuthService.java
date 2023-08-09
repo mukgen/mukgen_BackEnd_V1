@@ -1,13 +1,13 @@
 package com.example.mukgen.domain.auth.service;
 
 
-import com.example.mukgen.domain.auth.controller.request.AccountIdDuplicateCheckRequest;
 import com.example.mukgen.domain.auth.controller.request.UserLoginRequest;
 import com.example.mukgen.domain.auth.controller.request.UserSignupRequest;
 import com.example.mukgen.domain.auth.controller.response.LoginResponse;
 import com.example.mukgen.domain.auth.controller.response.TokenResponse;
 import com.example.mukgen.domain.auth.service.exception.InvalidMailException;
 import com.example.mukgen.domain.auth.service.exception.PassWordCheckMismatchException;
+import com.example.mukgen.domain.mail.repository.AuthenticatedMailRepository;
 import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.entity.type.UserRole;
 import com.example.mukgen.domain.user.repository.UserRepository;
@@ -16,7 +16,6 @@ import com.example.mukgen.domain.user.service.exception.PasswordMismatchExceptio
 import com.example.mukgen.domain.user.service.exception.UserAlreadyExistException;
 import com.example.mukgen.domain.user.service.exception.UserNotFoundException;
 import com.example.mukgen.global.config.security.jwt.JwtTokenProvider;
-import com.example.mukgen.domain.mail.repository.AuthenticatedMailRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -67,9 +66,9 @@ public class AuthService {
         authenticatedMailRepository.deleteById(request.getMail());
     }
 
-    public boolean checkAccountIdDuplicate(AccountIdDuplicateCheckRequest request) {
+    public boolean checkAccountIdDuplicate(String accountId) {
 
-        return userRepository.existsByAccountId(request.getAccountId());
+        return userRepository.existsByAccountId(accountId);
     }
 
     public LoginResponse login(UserLoginRequest request){
