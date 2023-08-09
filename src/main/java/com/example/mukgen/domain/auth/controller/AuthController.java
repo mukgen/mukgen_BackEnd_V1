@@ -45,8 +45,8 @@ public class AuthController {
         return authService.reIssue(request.getRefreshToken());
     }
 
-    @GetMapping("/duplicate/{accountId}")
-    public boolean accountIdDuplicateCheck(@PathVariable String accountId) {
+    @GetMapping("/duplicate")
+    public boolean accountIdDuplicateCheck(@RequestParam("accountId") String accountId) {
         return authService.checkAccountIdDuplicate(accountId);
     }
 }
