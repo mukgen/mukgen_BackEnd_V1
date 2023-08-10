@@ -37,7 +37,7 @@ public class BoardCommentService {
                 .isDeleted(false)
                 .board(board)
                 .content(request.getContent())
-                .writer(userFacade.currentUser().getName())
+                .writer(userFacade.currentUser().getNickname())
                 .build();
 
          board.addCommentCount();

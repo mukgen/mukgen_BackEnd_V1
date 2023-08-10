@@ -33,7 +33,7 @@ public class UserInfoResponse {
                 .grade(user.getGrade())
                 .profileUrl(user.getProfileUrl())
                 .accountId(user.getAccountId())
-                .name(user.getName())
+                .name(user.getNickname())
                 .build();
     }
 

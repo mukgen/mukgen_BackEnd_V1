@@ -31,18 +31,18 @@ public class LikeService {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(()-> BoardNotFoundException.EXCEPTION);
 
-        if(likeRepository.existsByBoardAndUserName(board,curUser.getName())){
+        if(likeRepository.existsByBoardAndUserName(board,curUser.getNickname())){
             board.removeLike();
-            likeRepository.removeByBoardAndUserName(board,curUser.getName());
+            likeRepository.removeByBoardAndUserName(board,curUser.getNickname());
         }
         else{
-            Like like = new Like(board,curUser.getName());
+            Like like = new Like(board,curUser.getNickname());
             likeRepository.save(like);
             board.addLike();
         }
 
         return  LikeClickResponse.builder()
-                    .isLiked(likeRepository.existsByBoardAndUserName(board,curUser.getName()))
+                    .isLiked(likeRepository.existsByBoardAndUserName(board,curUser.getNickname()))
                     .boardLike(board.getLikeCount())
                     .build();
     }

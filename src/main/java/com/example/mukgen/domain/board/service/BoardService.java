@@ -183,7 +183,7 @@ public class BoardService {
     private boolean isLiked(Board board) {
         User user = userFacade.currentUser();
 
-        boolean isLiked = likeRepository.existsByBoardAndUserName(board, user.getName());
+        boolean isLiked = likeRepository.existsByBoardAndUserName(board, user.getNickname());
         return isLiked;
     }
 

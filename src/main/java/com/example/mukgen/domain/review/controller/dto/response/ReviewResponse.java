@@ -34,7 +34,7 @@ public class ReviewResponse {
                 .riceType(review.getRice().getRiceType())
                 .riceId(review.getRice().getId())
                 .count(review.getCount())
-                .userName(review.getUser().getName()).build();
+                .userName(review.getUser().getNickname()).build();
 
     }
 }

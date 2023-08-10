@@ -55,7 +55,7 @@ public class AuthService {
         User user = User.builder()
                 .role(UserRole.STUDENT)
                 .accountId(request.getAccountId())
-                .name(request.getName())
+                .nickname(request.getName())
                 .password(password)
                 .phoneNumber(request.getPhoneNumber())
                 .mail(request.getMail())
@@ -82,7 +82,7 @@ public class AuthService {
 
        return LoginResponse.builder()
                .tokenResponse(jwtTokenProvider.createToken(user.getAccountId()))
-               .message(user.getName() + "님 환영합니다!")
+               .message(user.getNickname() + "님 환영합니다!")
                .build();
 
     }
