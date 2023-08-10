@@ -49,7 +49,7 @@ public class BoardMaximumResponse {
                 .title(board.getTitle())
                 .likeResponseList(likeResponses)
                 .content(board.getContent())
-                .userName(board.getUser().getName())
+                .userName(board.getUser().getNickname())
                 .likeCount(board.getLikeCount())
                 .viewCount(board.getViewCount())
                 .createdAt(board.getCreatedAt())

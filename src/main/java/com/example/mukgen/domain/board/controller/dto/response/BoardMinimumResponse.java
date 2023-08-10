@@ -2,7 +2,6 @@ package com.example.mukgen.domain.board.controller.dto.response;
 
 import com.example.mukgen.domain.board.entity.Board;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -39,7 +38,7 @@ public class BoardMinimumResponse {
                 .commentCount(board.getCommentCount())
                 .title(board.getTitle())
                 .content(board.getContent())
-                .userName(board.getUser().getName())
+                .userName(board.getUser().getNickname())
                 .likeCount(board.getLikeCount())
                 .viewCount(board.getViewCount())
                 .isUpdated(board.getIsUpdated())

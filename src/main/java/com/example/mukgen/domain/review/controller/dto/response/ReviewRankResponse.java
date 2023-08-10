@@ -26,7 +26,7 @@ public class ReviewRankResponse {
 
         return ReviewRankResponse.builder()
                 .profileUrl(user.getProfileUrl())
-                .userName(user.getName())
+                .userName(user.getNickname())
                 .reviewCount(user.getReviewList().size())
                 .averageReview(String.format("%.2f", aveCount))
                 .build();

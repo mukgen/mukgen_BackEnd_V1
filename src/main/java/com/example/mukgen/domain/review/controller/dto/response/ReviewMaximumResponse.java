@@ -32,7 +32,7 @@ public class ReviewMaximumResponse {
                 .createdAt(review.getCreatedAt())
                 .content(review.getReview())
                 .count(review.getCount())
-                .userName(review.getUser().getName())
+                .userName(review.getUser().getNickname())
                 .reviewCommentResponseList(reviewCommentResponseList)
                 .build();
     }
