@@ -25,6 +25,7 @@ public class ReviewController {
             @RequestParam("review") @Valid String review,
             @RequestPart(value = "images", required = false) MultipartFile multipartFile
     ) throws IOException {
+
         ReviewCreateRequest request = new ReviewCreateRequest(count, review);
         if(multipartFile != null) {
             reviewService.addReview(request, mealId, multipartFile);
