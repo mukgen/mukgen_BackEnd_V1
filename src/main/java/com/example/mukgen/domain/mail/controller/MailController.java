@@ -15,14 +15,14 @@ public class MailController {
 
     private final MailService mailService;
 
-    @GetMapping
+    @PostMapping("/send")
     public void mailSend(
             @RequestBody @Valid SendMailRequest request
     ) {
         mailService.sendMail(request);
     }
 
-    @PostMapping
+    @PostMapping("/authenticate")
     public void mailAuthenticate(
             @RequestBody @Valid AuthenticateMailRequest request
     ) {
