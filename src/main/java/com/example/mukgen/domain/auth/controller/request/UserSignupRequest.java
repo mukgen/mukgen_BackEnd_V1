@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 public class UserSignupRequest {
 
 
-    @Size(min = 1, max = 4, message = "이름은 최소 1자, 최대 4자 입니다.")
+    @Size(min = 1, max = 8, message = "별명은 최소 1자, 최대 8자 입니다.")
     private String name;
 
     @Size(min = 5, max = 15, message = "아이디는 최소 5자, 최대 15자 입니다.")
