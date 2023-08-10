@@ -27,7 +27,7 @@ public class User {
     @Column(name = "profile_url",length = 550)
     private String profileUrl = "";
 
-    @Column(name = "name", nullable = false, length = 4)
+    @Column(name = "name", nullable = false, length = 8)
     private String name;
 
     @Column(name = "grade")
