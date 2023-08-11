@@ -70,6 +70,9 @@ cloud:
     stack:
       auto: false
 
+kafka:
+  serverAddress: ${KAFKA_ADDRESS}
+
 management:
   endpoints:
     prometheus:
