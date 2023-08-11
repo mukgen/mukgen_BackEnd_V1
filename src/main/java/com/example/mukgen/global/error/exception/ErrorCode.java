@@ -20,6 +20,7 @@ public enum ErrorCode {
     DELIVERY_PARTY_WRITER_CANT_LEAVE(400, "배달파티 작성자는 떠날 수 없습니다."),
     REVIEW_YET_TIME(400, "아직 작성할 수 없는 급식 입니다."),
     PASSWORD_MISMATCH(400, "비밀번호가 일치하지 않습니다."),
+    RICE_INACCESSIBLE(400,"없는 급식입니다."),
 
     // UnAuthorized
     EXPIRED_TOKEN(401 , "Expired token"),

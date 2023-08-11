@@ -4,10 +4,7 @@ import com.example.mukgen.domain.review.controller.dto.request.ReviewCreateReque
 import com.example.mukgen.domain.review.controller.dto.response.*;
 import com.example.mukgen.domain.review.entity.Review;
 import com.example.mukgen.domain.review.repository.ReviewRepository;
-import com.example.mukgen.domain.review.service.exception.ReviewAlreadyExistsException;
-import com.example.mukgen.domain.review.service.exception.ReviewNotFoundException;
-import com.example.mukgen.domain.review.service.exception.ReviewWriterMismatchException;
-import com.example.mukgen.domain.review.service.exception.ReviewYetTimeException;
+import com.example.mukgen.domain.review.service.exception.*;
 import com.example.mukgen.domain.rice.entity.Rice;
 import com.example.mukgen.domain.rice.repository.RiceRepository;
 import com.example.mukgen.domain.rice.service.exception.RiceNotFoundException;
@@ -53,7 +50,7 @@ public class ReviewService {
                 .orElseThrow(()-> RiceNotFoundException.EXCEPTION);
 
         if(rice.getItem().equals("등록된 급식이 없습니다.")){
-            throw RiceNotTodayException.EXCEPTION;
+            throw RiceInaccessibleException.EXCEPTION;
         }
 
         ZonedDateTime curDate = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
