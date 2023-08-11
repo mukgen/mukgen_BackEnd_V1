@@ -6,6 +6,8 @@ import com.example.mukgen.domain.rice.controller.dto.response.RiceMonthListRespo
 import com.example.mukgen.domain.rice.controller.dto.response.RiceResponse;
 import com.example.mukgen.domain.rice.controller.dto.response.RiceTodayResponse;
 import com.example.mukgen.domain.rice.entity.MukgenPick;
+import com.example.mukgen.domain.rice.entity.RiceType;
+import com.example.mukgen.domain.rice.service.RiceScheduledService;
 import com.example.mukgen.domain.rice.service.RiceService;
 import com.example.mukgen.infra.feign.rice.NeisUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -20,6 +22,8 @@ import java.time.ZonedDateTime;
 @RestController
 public class RiceController {
 
+    private final RiceScheduledService notificationService;
+
     private final RiceService riceService;
 
     private final NeisUtil neisUtil;
@@ -27,18 +31,18 @@ public class RiceController {
     @GetMapping("/meal")
     public RiceResponse mealDetails(
             @RequestBody RiceRequest request
-            ){
+    ) {
         return riceService.findRice(request);
     }
 
     @GetMapping("/meal/today")
-    public RiceTodayResponse mealTodayList(){
+    public RiceTodayResponse mealTodayList() {
         return riceService.findTodayRice();
     }
 
     @PostMapping("/meal/download")
     @ResponseStatus(HttpStatus.CREATED)
-    public void mealDownload(){
+    public void mealDownload() {
         ZonedDateTime curDate = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
         riceService.downLoadAllRice(curDate.getMonthValue());
     }
@@ -50,13 +54,22 @@ public class RiceController {
     }
 
     @GetMapping("/mukgen-pick")
-    public MukgenPickResponse mukgenPickDetails(){
+    public MukgenPickResponse mukgenPickDetails() {
         return riceService.findMukgenPick();
     }
 
     @GetMapping("/meal/month/{month}")
-    public RiceMonthListResponse mealMonthList(@PathVariable int month){
+    public RiceMonthListResponse mealMonthList(@PathVariable int month) {
         return riceService.findMonthRices(month);
+    }
+
+    @PostMapping("/notification")
+    public void sendRiceNotification(@RequestParam("riceType") RiceType riceType){
+        switch (riceType){
+            case BREAKFAST -> notificationService.morningTask();
+            case LUNCH -> notificationService.afternoonTask();
+            case DINNER -> notificationService.eveningTask();
+        }
     }
 
 }

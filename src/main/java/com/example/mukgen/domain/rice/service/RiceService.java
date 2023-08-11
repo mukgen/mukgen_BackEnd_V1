@@ -17,6 +17,7 @@ import com.example.mukgen.domain.user.entity.User;
 import com.example.mukgen.domain.user.entity.type.UserRole;
 import com.example.mukgen.domain.user.service.UserFacade;
 import com.example.mukgen.domain.user.service.exception.NoPermissionException;
+import com.example.mukgen.infra.fcm.FlareLaneUtil;
 import com.example.mukgen.infra.feign.gpt.GptFeignClient;
 import com.example.mukgen.infra.feign.gpt.GptFeignRequest;
 import com.example.mukgen.infra.feign.gpt.GptResponse;
@@ -41,6 +42,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @Transactional
 @Service
 public class RiceService {
+
+    private final FlareLaneUtil flareLaneUtil;
 
     private final GptFeignClient gptFeignClient;
 
@@ -262,6 +265,30 @@ public class RiceService {
             }
         }
         return Integer.parseInt(riceId.toString());
+    }
+
+    public void sendPushMessage(String title, RiceType riceType){
+        ZonedDateTime curDate = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
+
+        int day = curDate.getDayOfMonth();
+        int month = curDate.getMonthValue();
+        int year = curDate.getYear();
+        RiceRequest request = new RiceRequest(riceType,day,month,year);
+
+        RiceResponse rice = findRice(request);
+
+        List<String> items = rice.getItems();
+
+        String body = "";
+        for(String element : items){
+            body += element;
+            body += ", ";
+        }
+
+        if(!items.contains("등록된 급식이 없습니다.")){
+            flareLaneUtil.sendMessage(title, body);
+        }
+
     }
 
 }
