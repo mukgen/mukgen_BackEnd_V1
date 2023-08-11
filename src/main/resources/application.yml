@@ -81,5 +81,9 @@ management:
       exposure:
         include: prometheus
 
+flarelane:
+  segments-id: ${SEGMENTS_ID}
+  api-secret-key: ${FLARELANE_API_KEY}
+
 server:
   port: 80
