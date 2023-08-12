@@ -273,7 +273,7 @@ public class RiceService {
         int day = curDate.getDayOfMonth();
         int month = curDate.getMonthValue();
         int year = curDate.getYear();
-        RiceRequest request = new RiceRequest(riceType,day,month,year);
+        RiceRequest request = new RiceRequest(riceType,year,month,day);
 
         RiceResponse rice = findRice(request);
 
