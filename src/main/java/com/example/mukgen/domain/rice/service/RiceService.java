@@ -77,7 +77,7 @@ public class RiceService {
         };
 
         int id = (year * 10000 + month * 100 + day) * 10 + addId;
-
+        System.out.println(id);
         Rice rice = mealCache.get(id);
 
         if (rice == null) {
@@ -280,11 +280,16 @@ public class RiceService {
         List<String> items = rice.getItems();
 
         String body = "";
-        for(String element : items){
+        for (int i = 0; i < items.size(); i++) {
+            String element = items.get(i);
             body += element;
-            body += ", ";
+
+            if (i != items.size() - 1) {
+                body += ", ";
+            }
         }
-            flareLaneUtil.sendMessage(title, body);
+
+        flareLaneUtil.sendMessage(title, body);
     }
 
 }
