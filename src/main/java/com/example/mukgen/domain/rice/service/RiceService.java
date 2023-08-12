@@ -284,11 +284,7 @@ public class RiceService {
             body += element;
             body += ", ";
         }
-
-        if(!items.contains("등록된 급식이 없습니다.")){
             flareLaneUtil.sendMessage(title, body);
-        }
-
     }
 
 }
