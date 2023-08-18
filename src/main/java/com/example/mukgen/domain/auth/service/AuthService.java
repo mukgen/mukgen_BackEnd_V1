@@ -55,7 +55,7 @@ public class AuthService {
         User user = User.builder()
                 .role(UserRole.STUDENT)
                 .accountId(request.getAccountId())
-                .nickname(request.getName())
+                .nickname(request.getNickname())
                 .password(password)
                 .phoneNumber(request.getPhoneNumber())
                 .mail(request.getMail())

@@ -15,26 +15,18 @@ public class UserInfoResponse {
 
     private String name;
 
-    private Integer grade;
-
-    private Integer classNum;
-
-    private Integer studentNum;
-
     private String profileUrl;
 
+    private String mail;
 
     public static UserInfoResponse of(User user){
 
         return UserInfoResponse.builder()
-                .userRole(user.getRole())
-                .studentNum(user.getStudentNum())
-                .classNum(user.getClassNum())
-                .grade(user.getGrade())
-                .profileUrl(user.getProfileUrl())
                 .accountId(user.getAccountId())
+                .userRole(user.getRole())
                 .name(user.getNickname())
+                .profileUrl(user.getProfileUrl())
+                .mail(user.getMail())
                 .build();
     }
-
 }

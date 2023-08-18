@@ -15,7 +15,7 @@ public class BoardMaximumResponse {
 
     private String content;
 
-    private String userName;
+    private String userNickname;
 
     private int likeCount;
 
@@ -37,7 +37,7 @@ public class BoardMaximumResponse {
 
         List<LikeResponse> likeResponses = board.getLikeList().stream()
                 .map(it -> LikeResponse.builder()
-                        .userName(it.getUserName()).build()).toList();
+                        .userNickname(it.getUserName()).build()).toList();
 
         List<BoardCommentResponse> boardCommentResponseList = board.getBoardCommentList().stream()
                 .map(BoardCommentResponse::of).toList();
@@ -49,7 +49,7 @@ public class BoardMaximumResponse {
                 .title(board.getTitle())
                 .likeResponseList(likeResponses)
                 .content(board.getContent())
-                .userName(board.getUser().getNickname())
+                .userNickname(board.getUser().getNickname())
                 .likeCount(board.getLikeCount())
                 .viewCount(board.getViewCount())
                 .createdAt(board.getCreatedAt())

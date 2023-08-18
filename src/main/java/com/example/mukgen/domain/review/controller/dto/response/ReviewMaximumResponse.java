@@ -13,7 +13,7 @@ public class ReviewMaximumResponse {
 
     private Integer count;
 
-    private String userName;
+    private String userNickname;
 
     private String content;
 
@@ -32,7 +32,7 @@ public class ReviewMaximumResponse {
                 .createdAt(review.getCreatedAt())
                 .content(review.getReview())
                 .count(review.getCount())
-                .userName(review.getUser().getNickname())
+                .userNickname(review.getUser().getNickname())
                 .reviewCommentResponseList(reviewCommentResponseList)
                 .build();
     }
