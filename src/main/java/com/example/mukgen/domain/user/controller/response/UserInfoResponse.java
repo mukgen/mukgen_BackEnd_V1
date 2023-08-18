@@ -11,11 +11,11 @@ public class UserInfoResponse {
 
     private String accountId;
 
-    private UserRole userRole;
-
     private String name;
 
     private String profileUrl;
+
+    private String phoneNumber;
 
     private String mail;
 
@@ -23,9 +23,9 @@ public class UserInfoResponse {
 
         return UserInfoResponse.builder()
                 .accountId(user.getAccountId())
-                .userRole(user.getRole())
                 .name(user.getNickname())
                 .profileUrl(user.getProfileUrl())
+                .phoneNumber(user.getPhoneNumber())
                 .mail(user.getMail())
                 .build();
     }
