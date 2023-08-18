@@ -77,7 +77,7 @@ public class RiceService {
         };
 
         int id = (year * 10000 + month * 100 + day) * 10 + addId;
-
+        System.out.println(id);
         Rice rice = mealCache.get(id);
 
         if (rice == null) {
@@ -273,22 +273,23 @@ public class RiceService {
         int day = curDate.getDayOfMonth();
         int month = curDate.getMonthValue();
         int year = curDate.getYear();
-        RiceRequest request = new RiceRequest(riceType,day,month,year);
+        RiceRequest request = new RiceRequest(riceType,year,month,day);
 
         RiceResponse rice = findRice(request);
 
         List<String> items = rice.getItems();
 
         String body = "";
-        for(String element : items){
+        for (int i = 0; i < items.size(); i++) {
+            String element = items.get(i);
             body += element;
-            body += ", ";
+
+            if (i != items.size() - 1) {
+                body += ", ";
+            }
         }
 
-        if(!items.contains("등록된 급식이 없습니다.")){
-            flareLaneUtil.sendMessage(title, body);
-        }
-
+        flareLaneUtil.sendMessage(title, body);
     }
 
 }
