@@ -30,15 +30,6 @@ public class User {
     @Column(name = "nickname", nullable = false, length = 8)
     private String nickname;
 
-    @Column(name = "grade")
-    private Integer grade;
-
-    @Column(name = "classNum")
-    private Integer classNum;
-
-    @Column(name = "studentNum")
-    private Integer studentNum;
-
     @Column(name = "password", nullable = false, length = 1000)
     private String password;
 
