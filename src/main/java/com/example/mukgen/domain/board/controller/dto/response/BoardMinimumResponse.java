@@ -16,7 +16,7 @@ public class BoardMinimumResponse {
 
     private String content;
 
-    private String userName;
+    private String userNickname;
 
     private int likeCount;
 
@@ -38,7 +38,7 @@ public class BoardMinimumResponse {
                 .commentCount(board.getCommentCount())
                 .title(board.getTitle())
                 .content(board.getContent())
-                .userName(board.getUser().getNickname())
+                .userNickname(board.getUser().getNickname())
                 .likeCount(board.getLikeCount())
                 .viewCount(board.getViewCount())
                 .isUpdated(board.getIsUpdated())
