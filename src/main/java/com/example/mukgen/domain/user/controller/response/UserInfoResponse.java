@@ -23,6 +23,7 @@ public class UserInfoResponse {
 
     private String profileUrl;
 
+    private String mail;
 
     public static UserInfoResponse of(User user){
 
@@ -34,6 +35,7 @@ public class UserInfoResponse {
                 .profileUrl(user.getProfileUrl())
                 .accountId(user.getAccountId())
                 .name(user.getNickname())
+                .mail(user.getMail())
                 .build();
     }
 
