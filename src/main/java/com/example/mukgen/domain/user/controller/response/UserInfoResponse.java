@@ -1,7 +1,6 @@
 package com.example.mukgen.domain.user.controller.response;
 
 import com.example.mukgen.domain.user.entity.User;
-import com.example.mukgen.domain.user.entity.type.UserRole;
 import lombok.Builder;
 import lombok.Data;
 
@@ -11,7 +10,7 @@ public class UserInfoResponse {
 
     private String accountId;
 
-    private String name;
+    private String nickname;
 
     private String profileUrl;
 
@@ -23,7 +22,7 @@ public class UserInfoResponse {
 
         return UserInfoResponse.builder()
                 .accountId(user.getAccountId())
-                .name(user.getNickname())
+                .nickname(user.getNickname())
                 .profileUrl(user.getProfileUrl())
                 .phoneNumber(user.getPhoneNumber())
                 .mail(user.getMail())
