@@ -1,3 +1,5 @@
 config:
   name: mukgen
+  service_type: be
+  port: 8080
   prefix: "/mukgen"
