@@ -1,7 +1,6 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${DB_URL}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
 
@@ -35,18 +34,12 @@ spring:
           starttls:
             enable: true
 
-info:
-  oauth:
-    clientId: ${CLIENT_ID}
-    clientSecret: ${CLIENT_SECRET}
-    redirectUri: ${REDIRECT_URI}
-
 jwt:
-  secretKey: ${JWT_SECRET_KEY:asdjfkasdhfjkashdfkashdfkahsdjkfahskdf}
-  accessExpiredExp: ${JWT_ACCESS_EXP:1800000}
-  refreshExpiredExp: ${JWT_REFRESH_EXP:432000000}
-  header: ${JWT_HEADER:Authorization}
-  prefix: ${JWT_PREFIX:Bearer}
+  secretKey: ${JWT_SECRET_KEY}
+  accessExpiredExp: ${JWT_ACCESS_EXP}
+  refreshExpiredExp: ${JWT_REFRESH_EXP}
+  header: ${JWT_HEADER}
+  prefix: ${JWT_PREFIX}
 
 logging:
   level:
@@ -70,9 +63,6 @@ cloud:
     stack:
       auto: false
 
-kafka:
-  serverAddress: ${KAFKA_ADDRESS}
-
 management:
   endpoints:
     prometheus:
@@ -86,9 +76,4 @@ flarelane:
   api-secret-key: ${FLARELANE_API_KEY}
 
 server:
-  port: 443
-
-  ssl:
-    key-store: classpath:keystore.p12
-    key-store-password: ${KEY_STORE_PASSWORD:qpwoeiru1768}
-    key-store-type: PKCS12
+  port: 8080

@@ -2,6 +2,7 @@ package com.example.mukgen.infra.mail.event.configuration;
 
 import com.example.mukgen.domain.mail.controller.dto.request.SendMailRequest;
 import lombok.RequiredArgsConstructor;
+import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -27,17 +28,25 @@ public class KafkaConfiguration {
     @Bean
     public ConsumerFactory<String, SendMailRequest> sendMailRequestConsumerFactory(){
         return new DefaultKafkaConsumerFactory<>(
-                factoryConfigs(),
+                consumerConfigs(),
                 new StringDeserializer(),
                 new JsonDeserializer<>(SendMailRequest.class)
         );
     }
 
-    public Map<String, Object> factoryConfigs(){
+    public Map<String, Object> producerConfigs(){
         Map<String, Object> configs = new HashMap<>();
         configs.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperty.getServerAddress());
         configs.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configs.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+        return configs;
+    }
+
+    public Map<String, Object> consumerConfigs(){
+        Map<String, Object> configs = new HashMap<>();
+        configs.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperty.getServerAddress());
+        configs.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        configs.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
         return configs;
     }
 
@@ -51,7 +60,7 @@ public class KafkaConfiguration {
 
     @Bean
     public DefaultKafkaProducerFactory<String, SendMailRequest> sendMailRequestDefaultKafkaProducerFactory(){
-        return new DefaultKafkaProducerFactory<>(factoryConfigs());
+        return new DefaultKafkaProducerFactory<>(producerConfigs());
     }
 
     @Bean
