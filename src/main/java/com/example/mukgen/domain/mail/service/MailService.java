@@ -19,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class MailService {
 
+    private final MailUtil mailUtil;
+
     private final KafkaTemplate<String, SendMailRequest> sendMailRequestKafkaTemplate;
 
     private final CodeRepository codeRepository;
@@ -26,7 +28,7 @@ public class MailService {
     private final AuthenticatedMailRepository authenticatedMailRepository;
 
     public void sendMail(SendMailRequest request) {
-        sendMailRequestKafkaTemplate.send("SEND_MAIL", request);
+        mailUtil.sendMail(request);
     }
 
     public void authenticateMail(
