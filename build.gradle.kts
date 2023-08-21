@@ -77,7 +77,4 @@ dependencies {
     // Mail
     implementation("org.springframework.boot:spring-boot-starter-mail")
 
-    // Kafka
-    implementation ("org.springframework.kafka:spring-kafka")
-
 }
