@@ -10,7 +10,6 @@ import com.example.mukgen.domain.mail.repository.AuthenticatedMailRepository;
 import com.example.mukgen.domain.mail.service.exception.UnAuthenticatedMailException;
 import com.example.mukgen.infra.mail.MailUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,8 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class MailService {
 
     private final MailUtil mailUtil;
-
-    private final KafkaTemplate<String, SendMailRequest> sendMailRequestKafkaTemplate;
 
     private final CodeRepository codeRepository;
 
