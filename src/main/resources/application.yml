@@ -77,4 +77,10 @@ flarelane:
   api-secret-key: ${FLARELANE_API_KEY}
 
 server:
-  port: 8080
+  port: 443
+
+  ssl:
+    key-store: classpath:keystore.p12
+    key-store-password: ${KEY_STORE_PASSWORD}
+    key-store-type: PKCS12
+
