@@ -32,7 +32,7 @@ jobs:
           environment: stag
           access_key: ${{ secrets.ACCESS_KEY }}
           github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          build_args: |
+          buildargs: |
               PROFILE=stag
               DB_USERNAME=${{ secrets.DB_USERNAME }}
               DB_PASSWORD=${{ secrets.DB_PASSWORD }}
