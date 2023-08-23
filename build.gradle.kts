@@ -46,7 +46,7 @@ dependencies {
     // Database
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
-    runtimeOnly("com.mysql:mysql-connector-j")
+    runtimeOnly("mysql:mysql-connector-java")
 
     // Security JWT
     implementation("io.jsonwebtoken:jjwt:0.9.1")
