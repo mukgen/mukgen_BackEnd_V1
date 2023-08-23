@@ -36,6 +36,7 @@ jobs:
               PROFILE=stag
               DB_USERNAME=${{ secrets.DB_USERNAME }}
               DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+              DB_URL=${{ secrets.DB_URL }}
               REDIS_PORT=${{ secrets.REDIS_PORT }}
               REDIS_HOST=${{ secrets.REDIS_HOST }}
               MAIL_USERNAME=${{ secrets.MAIL_USERNAME }}
@@ -50,3 +51,4 @@ jobs:
               AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
               SEGMENTS_ID=${{ secrets.SEGMENTS_ID }}
               FLARELANE_API_KEY=${{ secrets.FLARELANE_API_KEY }}
+
