@@ -49,3 +49,4 @@ jobs:
               AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
               SEGMENTS_ID=${{ secrets.SEGMENTS_ID }}
               FLARELANE_API_KEY=${{ secrets.FLARELANE_API_KEY }}
+              FLARELANE_PROJECT_ID=${{ secrets.FLARELANE_PROJECT_ID }}
