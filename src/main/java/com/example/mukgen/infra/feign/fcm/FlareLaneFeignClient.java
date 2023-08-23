@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient(
         name = "flarelaneclient",
-        url = "https://api.flarelane.com/v1/projects/${FLARELANE_PROJECT_ID}/notifications"
+        url = "https://api.flarelane.com/v1/projects/69fd408c-75cb-4e90-ae68-6e5bfd84fcbc/notifications"
 )
 public interface FlareLaneFeignClient {
     @PostMapping(consumes = "application/json", headers = "Authorization=Bearer ${FLARELANE_API_KEY}")
