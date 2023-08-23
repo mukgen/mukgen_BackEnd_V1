@@ -13,6 +13,7 @@ spring:
       hibernate:
         show_sql: false
         format_sql: true
+
   redis:
     port: 6379
     host: redis.redis.svc.cluster.local
