@@ -14,8 +14,8 @@ spring:
         show_sql: false
         format_sql: true
   redis:
-    port: ${REDIS_PORT}
-    host: ${REDIS_HOST}
+    port: 6379
+    host: redis.redis.svc.cluster.local
 
   servlet:
     multipart:
