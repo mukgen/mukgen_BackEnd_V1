@@ -1,9 +1,9 @@
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
-    url: ${DB_URL}
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
@@ -13,9 +13,10 @@ spring:
       hibernate:
         show_sql: false
         format_sql: true
+
   redis:
-    port: ${REDIS_PORT}
-    host: ${REDIS_HOST}
+    port: 6379
+    host: redis.redis.svc.cluster.local
 
   servlet:
     multipart:
