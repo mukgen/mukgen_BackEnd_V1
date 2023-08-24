@@ -3,6 +3,7 @@ package com.example.mukgen.domain.auth.controller;
 import com.example.mukgen.domain.auth.controller.request.ReIssueRequest;
 import com.example.mukgen.domain.auth.controller.request.UserLoginRequest;
 import com.example.mukgen.domain.auth.controller.request.UserSignupRequest;
+import com.example.mukgen.domain.auth.controller.response.DuplicateUserResponse;
 import com.example.mukgen.domain.auth.controller.response.LoginResponse;
 import com.example.mukgen.domain.auth.controller.response.TokenResponse;
 import com.example.mukgen.domain.auth.service.AuthService;
@@ -46,7 +47,7 @@ public class AuthController {
     }
 
     @GetMapping("/duplicate")
-    public boolean accountIdDuplicateCheck(@RequestParam("accountId") String accountId) {
+    public DuplicateUserResponse accountIdDuplicateCheck(@RequestParam("accountId") String accountId) {
         return authService.checkAccountIdDuplicate(accountId);
     }
 }
