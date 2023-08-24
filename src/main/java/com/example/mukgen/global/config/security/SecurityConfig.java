@@ -56,11 +56,11 @@ public class SecurityConfig{
 
                 .and()
                 .authorizeRequests()
-                .antMatchers("/chef/**").hasRole("CHEF")
-                .antMatchers("/auth/**").permitAll()
-                .antMatchers("/actuator/**").permitAll()
-                .antMatchers("/mail/**").permitAll()
-                .antMatchers("/").permitAll()
+                .antMatchers("/mukgen/chef/**").hasRole("CHEF")
+                .antMatchers("/mukgen/auth/**").permitAll()
+                .antMatchers("/mukgen/actuator/**").permitAll()
+                .antMatchers("/mukgen/mail/**").permitAll()
+                .antMatchers("/mukgen").permitAll()
                 .anyRequest().authenticated()
 
                 .and()
