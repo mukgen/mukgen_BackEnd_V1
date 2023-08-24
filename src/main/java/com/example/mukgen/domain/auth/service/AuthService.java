@@ -3,6 +3,7 @@ package com.example.mukgen.domain.auth.service;
 
 import com.example.mukgen.domain.auth.controller.request.UserLoginRequest;
 import com.example.mukgen.domain.auth.controller.request.UserSignupRequest;
+import com.example.mukgen.domain.auth.controller.response.DuplicateUserResponse;
 import com.example.mukgen.domain.auth.controller.response.LoginResponse;
 import com.example.mukgen.domain.auth.controller.response.TokenResponse;
 import com.example.mukgen.domain.auth.service.exception.InvalidMailException;
@@ -66,9 +67,9 @@ public class AuthService {
         authenticatedMailRepository.deleteById(request.getMail());
     }
 
-    public boolean checkAccountIdDuplicate(String accountId) {
+    public DuplicateUserResponse checkAccountIdDuplicate(String accountId) {
 
-        return userRepository.existsByAccountId(accountId);
+        return new DuplicateUserResponse(userRepository.existsByAccountId(accountId));
     }
 
     public LoginResponse login(UserLoginRequest request){
