@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RequiredArgsConstructor
-@RequestMapping("/mail")
+@RequestMapping("/mukgen/mail")
 @RestController
 public class MailController {
 

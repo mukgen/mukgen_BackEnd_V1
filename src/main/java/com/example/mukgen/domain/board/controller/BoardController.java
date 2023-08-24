@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RequiredArgsConstructor
-@RequestMapping("/board")
+@RequestMapping("/mukgen/board")
 @RestController
 public class BoardController {
 

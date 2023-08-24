@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RequiredArgsConstructor
-@RequestMapping("/meal-suggestion")
+@RequestMapping("/mukgen/meal-suggestion")
 @RestController
 public class MealSuggestionController {
 
