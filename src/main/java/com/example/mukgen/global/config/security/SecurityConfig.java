@@ -60,7 +60,7 @@ public class SecurityConfig{
                 .antMatchers("/mukgen/auth/**").permitAll()
                 .antMatchers("/mukgen/actuator/**").permitAll()
                 .antMatchers("/mukgen/mail/**").permitAll()
-                .antMatchers("/mukgen").permitAll()
+                .antMatchers("/mukgen/**").permitAll()
                 .anyRequest().authenticated()
 
                 .and()
