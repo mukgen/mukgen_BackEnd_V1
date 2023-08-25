@@ -20,6 +20,7 @@ import java.time.ZonedDateTime;
 
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/mukgen")
 public class RiceController {
 
     private final RiceScheduledService notificationService;

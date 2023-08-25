@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RequiredArgsConstructor
-@RequestMapping("/board-comment")
+@RequestMapping("/mukgen/board-comment")
 @RestController
 public class BoardCommentController {
 

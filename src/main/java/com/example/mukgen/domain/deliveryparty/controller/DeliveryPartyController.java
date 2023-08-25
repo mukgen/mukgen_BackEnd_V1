@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RequiredArgsConstructor
-@RequestMapping("/delivery-party")
+@RequestMapping("/mukgen/delivery-party")
 @RestController
 public class DeliveryPartyController {
 

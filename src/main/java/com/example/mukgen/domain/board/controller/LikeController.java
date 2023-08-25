@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
-@RequestMapping("/like")
+@RequestMapping("/mukgen/like")
 @RestController
 public class LikeController {
 
