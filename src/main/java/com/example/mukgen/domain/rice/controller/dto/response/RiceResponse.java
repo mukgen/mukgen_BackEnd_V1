@@ -34,7 +34,7 @@ public class RiceResponse {
             if(item.charAt(i)!=',' && item.charAt(i)!='\"'){
                 addItem+=item.charAt(i);
             }
-            else if(item.charAt(i)==','){
+            else if(item.charAt(i)==',' || i == item.length()-1){
                 items.add(addItem);
                 addItem="";
             }
