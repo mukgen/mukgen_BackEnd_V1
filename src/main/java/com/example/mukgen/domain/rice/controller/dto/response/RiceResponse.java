@@ -31,12 +31,14 @@ public class RiceResponse {
         List<String> items = new ArrayList<>();
         String addItem = "";
         for(int i=0;i<item.length();i++){
-            if(item.charAt(i)!=',' && item.charAt(i)!='\"'){
+            System.out.println(item.length() + " " + i);
+            if(item.charAt(i)==',' || i == item.length()-1){
                 addItem+=item.charAt(i);
-            }
-            else if(item.charAt(i)==',' || i == item.length()-1){
                 items.add(addItem);
                 addItem="";
+            }
+            if(item.charAt(i)!=',' && item.charAt(i)!='\"'){
+                addItem+=item.charAt(i);
             }
         }
         return RiceResponse.builder()
