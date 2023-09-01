@@ -68,6 +68,7 @@ public class SecurityConfig{
                 .antMatchers("/mukgen/board/**").authenticated()
                 .antMatchers("/mukgen/delivery-party/**").authenticated()
                 .antMatchers("/mukgen/actuator/**").permitAll()
+                .antMatchers("/mukgen/mukgen-pick/**").permitAll()
                 .antMatchers("/mukgen/mail/**").permitAll()
                 .anyRequest().authenticated()
 
