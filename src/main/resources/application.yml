@@ -16,7 +16,7 @@ spring:
 
   redis:
     port: 6379
-    host: redis.redis.svc.cluster.local
+    host: redis.xquare.app
 
   servlet:
     multipart:
