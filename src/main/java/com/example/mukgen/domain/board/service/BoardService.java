@@ -74,7 +74,7 @@ public class BoardService {
     public BoardTabListResponse findAllBoard(){
         List<BoardMinimumResponse> boardMinimumResponseList = boardRepository
                 .findAll(Sort.by(Sort.Direction.DESC,"createdAt")).stream()
-                .map(BoardMinimumResponse::of)
+                .map(board -> BoardMinimumResponse.of(board, isLiked(board)))
                 .toList();
 
         BoardListResponse boardListResponse = BoardListResponse.builder()
@@ -136,7 +136,7 @@ public class BoardService {
         List<BoardMinimumResponse> boardMinimumResponseList =
                 boardRepository.findAllByCreatedAtGreaterThan(curDateTime, Sort.by(Sort.Direction.DESC, "createdAt"))
                         .stream()
-                        .map(BoardMinimumResponse::of)
+                        .map(board -> BoardMinimumResponse.of(board, isLiked(board)))
                         .toList();
 
         BoardListResponse boardListResponse = BoardListResponse.builder()
@@ -156,7 +156,7 @@ public class BoardService {
 
         List<BoardMinimumResponse> boardMinimumResponseList =
                 boardRepository.findByWeek(thisWeek).stream()
-                        .map(BoardMinimumResponse::of).toList();
+                        .map(board -> BoardMinimumResponse.of(board, isLiked(board))).toList();
 
         return BoardTabListResponse.builder()
                 .boardListResponse(BoardListResponse.builder()
@@ -172,7 +172,8 @@ public class BoardService {
         User user = userFacade.currentUser();
 
         List<BoardMinimumResponse> boardMinimumResponseList = boardRepository.findAllByUser(user)
-                .stream().map(BoardMinimumResponse::of).toList();
+                .stream().map(board -> BoardMinimumResponse.of(board, isLiked(board)))
+                .toList();
 
         return BoardListResponse.builder()
                 .boardMinimumResponseList(boardMinimumResponseList)

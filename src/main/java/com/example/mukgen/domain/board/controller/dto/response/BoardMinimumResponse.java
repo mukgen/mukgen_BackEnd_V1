@@ -30,7 +30,9 @@ public class BoardMinimumResponse {
 
     private boolean isUpdated;
 
-    public static BoardMinimumResponse of(Board board){
+    private boolean isLiked;
+
+    public static BoardMinimumResponse of(Board board, boolean isLiked){
 
         return BoardMinimumResponse.builder()
                 .boardId(board.getId())
@@ -43,6 +45,7 @@ public class BoardMinimumResponse {
                 .viewCount(board.getViewCount())
                 .isUpdated(board.getIsUpdated())
                 .updatedAt(board.getUpdatedAt())
+                .isLiked(isLiked)
                 .build();
     }
 }
