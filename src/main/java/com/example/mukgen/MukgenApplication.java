@@ -16,7 +16,6 @@ import java.util.TimeZone;
 @ConfigurationPropertiesScan
 @SpringBootApplication
 public class MukgenApplication {
-
     @PostConstruct
     public void started(){
         TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
