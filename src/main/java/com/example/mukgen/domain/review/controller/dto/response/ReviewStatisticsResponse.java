@@ -20,7 +20,7 @@ public class ReviewStatisticsResponse {
 
     private int score1;
 
-    private String average;
+    private float average;
 
     public static ReviewStatisticsResponse fromReviewList(List<Review> reviews) {
         int score5 = 0;
@@ -52,7 +52,7 @@ public class ReviewStatisticsResponse {
                 .score3(score3)
                 .score2(score2)
                 .score1(score1)
-                .average(String.format("%.2f", (total / reviews.size())))
+                .average(Float.parseFloat(String.format("%.2f", (total / reviews.size()))))
                 .build();
     }
 
