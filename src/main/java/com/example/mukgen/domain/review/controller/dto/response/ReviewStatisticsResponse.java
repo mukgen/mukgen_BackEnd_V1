@@ -20,15 +20,19 @@ public class ReviewStatisticsResponse {
 
     private int score1;
 
+    private String average;
+
     public static ReviewStatisticsResponse fromReviewList(List<Review> reviews) {
         int score5 = 0;
         int score4 = 0;
         int score3 = 0;
         int score2 = 0;
         int score1 = 0;
+        float total = 0;
 
         for (Review review : reviews) {
             int count = review.getCount();
+            total += count;
             if (count >= 5) {
                 score5++;
             } else if (count >= 4) {
@@ -48,6 +52,7 @@ public class ReviewStatisticsResponse {
                 .score3(score3)
                 .score2(score2)
                 .score1(score1)
+                .average(String.format("%.2f", (total / reviews.size())))
                 .build();
     }
 
