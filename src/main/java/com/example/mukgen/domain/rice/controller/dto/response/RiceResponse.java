@@ -33,7 +33,6 @@ public class RiceResponse {
         for(int i=0;i<item.length();i++){
             System.out.println(item.length() + " " + i);
             if(item.charAt(i)==',' || i == item.length()-1){
-                addItem+=item.charAt(i);
                 items.add(addItem);
                 addItem="";
             }
