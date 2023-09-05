@@ -282,14 +282,13 @@ public class RiceService {
         String body = "";
         for (int i = 0; i < items.size(); i++) {
             String element = items.get(i);
-            body += element;
-
-            if (i != items.size() - 1) {
-                body += ", ";
+            if(i != items.size()){
+                body +=", ";
             }
+            body += element;
         }
-
-        flareLaneUtil.sendMessage(title, body);
+        System.out.println(body);
+            flareLaneUtil.sendMessage(title, body);
     }
 
 }
