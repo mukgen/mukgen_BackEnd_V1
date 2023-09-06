@@ -282,10 +282,10 @@ public class RiceService {
         String body = "";
         for (int i = 0; i < items.size(); i++) {
             String element = items.get(i);
+            body += element;
             if(i != items.size()){
                 body +=", ";
             }
-            body += element;
         }
         System.out.println(body);
             flareLaneUtil.sendMessage(title, body);
