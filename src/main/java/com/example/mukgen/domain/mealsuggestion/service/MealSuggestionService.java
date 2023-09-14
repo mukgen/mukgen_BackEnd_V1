@@ -90,7 +90,7 @@ public class MealSuggestionService {
 
         User user = userFacade.currentUser();
 
-        if (user.getRole() != UserRole.TEACHER)
+        if (user.getRole() != UserRole.CHEF)
             throw NoPermissionException.EXCEPTION;
 
         mealSuggestion.clickCheck();
