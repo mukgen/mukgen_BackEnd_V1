@@ -184,7 +184,7 @@ public class ReviewService {
 
     }
 
-    public  ReviewListResponse findDateReview(int date) {
+    public ReviewListResponse findDateReview(int date) {
 
         int riceId = date * 10;
 

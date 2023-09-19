@@ -19,6 +19,8 @@ public class ReviewMaximumResponse {
 
     private LocalDateTime createdAt;
 
+    private String imageUrl;
+
     private List<ReviewCommentResponse> reviewCommentResponseList;
 
     public static ReviewMaximumResponse of(Review review){
@@ -29,6 +31,7 @@ public class ReviewMaximumResponse {
                         .toList();
 
         return ReviewMaximumResponse.builder()
+                .imageUrl(review.getImageUrl())
                 .createdAt(review.getCreatedAt())
                 .content(review.getReview())
                 .count(review.getCount())
