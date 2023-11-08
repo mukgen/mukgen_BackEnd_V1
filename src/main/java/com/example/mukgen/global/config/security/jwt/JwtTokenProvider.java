@@ -38,9 +38,13 @@ public class JwtTokenProvider {
                 .build()
         );
 
+        Date now = new Date();
+
         return TokenResponse.builder()
                 .accessToken(accessToken)
+                .accessTokenExp(Date(now.getTime() + jwtProperties.getAccessExpiredExp))
                 .refreshToken(refreshToken)
+                .refreshTokenExp(Date(now.getTime() + jwtProperties.getRefreshExpiredExp))
                 .build();
     }
 
