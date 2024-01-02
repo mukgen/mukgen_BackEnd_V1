@@ -13,6 +13,8 @@ spring:
       hibernate:
         show_sql: false
         format_sql: true
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
 
   redis:
     port: 6379
