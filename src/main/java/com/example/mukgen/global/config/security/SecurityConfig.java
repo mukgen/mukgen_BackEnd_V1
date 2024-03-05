@@ -57,7 +57,7 @@ public class SecurityConfig{
                 .and()
                 .authorizeRequests()
                 .antMatchers("/mukgen/chef/**").hasRole("CHEF")
-                .antMatchers("/mukgen/meal/**").authenticated()
+                .antMatchers("/mukgen/meal/**").permitAll()
                 .antMatchers("/mukgen/like/**").authenticated()
                 .antMatchers("/mukgen/board-comment/**").authenticated()
                 .antMatchers("/mukgen/review/**").authenticated()
@@ -70,7 +70,6 @@ public class SecurityConfig{
                 .antMatchers("/mukgen/actuator/**").permitAll()
                 .antMatchers("/mukgen/mukgen-pick/**").permitAll()
                 .antMatchers("/mukgen/mail/**").permitAll()
-                .antMatchers("/mukgen/meal/today").permitAll()
                 .anyRequest().authenticated()
 
                 .and()
