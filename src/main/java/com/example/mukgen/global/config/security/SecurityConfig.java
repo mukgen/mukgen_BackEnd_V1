@@ -70,6 +70,7 @@ public class SecurityConfig{
                 .antMatchers("/mukgen/actuator/**").permitAll()
                 .antMatchers("/mukgen/mukgen-pick/**").permitAll()
                 .antMatchers("/mukgen/mail/**").permitAll()
+                .antMatchers("/mukgen/meal/today").permitAll()
                 .anyRequest().authenticated()
 
                 .and()
